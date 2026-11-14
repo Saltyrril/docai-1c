@@ -1,0 +1,31 @@
+{
+  "documents": 100,
+  "xsd_valid": 100,
+  "round_trip_exact": 100,
+  "field_checks": 2700,
+  "field_mismatches": 0,
+  "failures": [],
+  "composition": {
+    "status_1": 60,
+    "status_2": 40,
+    "seller_ip": 19,
+    "buyer_ip": 21,
+    "without_basis": 14,
+    "lines": 555,
+    "vat_rates": {
+      "10%": 54,
+      "20%": 189,
+      "22%": 214,
+      "5%": 2,
+      "7%": 18,
+      "без НДС": 78
+    }
+  },
+  "xml_bytes_min_max": [
+    2144,
+    8780
+  ],
+  "xml_sha256": "0cd777a9831baef1edd555e38ab714a356a3739b65027baf89c7e0d0380cd1cb",
+  "xsd_sha256": "9bd06a0c6eaffd33e011efc0a7bf96346bcbf14ea1da9b88049c96a30f1b8221",
+  "seconds": 0.1
+}

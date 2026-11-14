@@ -6,6 +6,8 @@
 - 22% и 22/122 — с 01.01.2026 (425-ФЗ);
 - 5%, 7%, 5/105, 7/107 — с 01.01.2025, для плательщиков УСН (176-ФЗ);
 - 0%, 10%, 10/110, «без НДС» — весь поддерживаемый период.
+- 9,09%, 16,67%, 18,03% — запись 10/110, 20/120, 22/122 процентом (допускает XSD ФНС 5.03),
+  периоды те же, что у дробной записи; «НДС исчисляется налоговым агентом» — весь период (D31).
 
 Поддерживаются даты с 01.01.2004: до этого основная ставка была 20%, а такие
 документы проекту не нужны — по ним выдаётся предупреждение, а не ошибка.
@@ -36,6 +38,11 @@ RATE_PERIODS: dict[VatRate, RatePeriod] = {
     VatRate.R20_120: RatePeriod(date(2019, 1, 1), date(2025, 12, 31)),
     VatRate.R22: RatePeriod(date(2026, 1, 1), None),
     VatRate.R22_122: RatePeriod(date(2026, 1, 1), None),
+    # Те же ставки в записи «процент от суммы с налогом» (XSD ФНС 5.03, D31).
+    VatRate.R9_09: RatePeriod(None, None),
+    VatRate.R16_67: RatePeriod(date(2019, 1, 1), date(2025, 12, 31)),
+    VatRate.R18_03: RatePeriod(date(2026, 1, 1), None),
+    VatRate.TAX_AGENT: RatePeriod(None, None),
     VatRate.R5: RatePeriod(date(2025, 1, 1), None),
     VatRate.R7: RatePeriod(date(2025, 1, 1), None),
     VatRate.R5_105: RatePeriod(date(2025, 1, 1), None),

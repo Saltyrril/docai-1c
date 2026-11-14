@@ -6,6 +6,7 @@ from rich.console import Console
 from docai import __version__
 from docai.augment.cli import augment
 from docai.dataset.cli import app as dataset_app
+from docai.edo.cli import app as edo_app
 from docai.render.cli import render
 from docai.synth.cli import app as synth_app
 
@@ -13,6 +14,7 @@ app = typer.Typer(help="docai-1c: извлечение реквизитов, п�
 console = Console()
 app.add_typer(synth_app, name="synth")
 app.add_typer(dataset_app, name="dataset")
+app.add_typer(edo_app, name="edo")
 app.command(name="render")(render)
 app.command(name="augment")(augment)
 

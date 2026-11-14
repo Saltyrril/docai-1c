@@ -91,6 +91,11 @@ def test_doc_type_titles() -> None:
         (VatRate.R22_122, Decimal(22), Decimal(22) / Decimal(122), True),
         (VatRate.R10_110, Decimal(10), Decimal(10) / Decimal(110), True),
         (VatRate.NO_VAT, None, Decimal(0), False),
+        # Расчётные ставки, записанные процентом (XSD ФНС 5.03): те же доли, что у дробей.
+        (VatRate.R18_03, Decimal(22), Decimal(22) / Decimal(122), True),
+        (VatRate.R16_67, Decimal(20), Decimal(20) / Decimal(120), True),
+        (VatRate.R9_09, Decimal(10), Decimal(10) / Decimal(110), True),
+        (VatRate.TAX_AGENT, None, Decimal(0), False),
     ],
 )
 def test_vat_rate_properties(

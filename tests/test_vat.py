@@ -88,5 +88,37 @@ def test_allowed_rates_on_boundaries() -> None:
     assert {VatRate.R5, VatRate.R7, VatRate.R10, VatRate.R0, VatRate.NO_VAT} <= before & after
 
 
+@pytest.mark.parametrize(
+    ("rate", "twin"),
+    [
+        (VatRate.R9_09, VatRate.R10_110),
+        (VatRate.R16_67, VatRate.R20_120),
+        (VatRate.R18_03, VatRate.R22_122),
+    ],
+)
+def test_percent_notation_has_same_period_as_fraction(rate: VatRate, twin: VatRate) -> None:
+    assert RATE_PERIODS[rate] == RATE_PERIODS[twin]
+    assert rate.fraction == twin.fraction
+
+
+def test_18_03_only_from_2026() -> None:
+    assert validate_vat_rate(VatRate.R18_03, FIRST_DAY_22) == []
+    assert codes(validate_vat_rate(VatRate.R18_03, LAST_DAY_20)) == [
+        IssueCode.VAT_RATE_BEFORE_START
+    ]
+
+
+def test_16_67_until_2025() -> None:
+    assert validate_vat_rate(VatRate.R16_67, LAST_DAY_20) == []
+    assert codes(validate_vat_rate(VatRate.R16_67, FIRST_DAY_22)) == [
+        IssueCode.VAT_RATE_NOT_IN_FORCE
+    ]
+
+
+@pytest.mark.parametrize("day", [date(2004, 1, 1), LAST_DAY_20, FIRST_DAY_22])
+def test_tax_agent_always_valid(day: date) -> None:
+    assert validate_vat_rate(VatRate.TAX_AGENT, day) == []
+
+
 def test_every_rate_has_period() -> None:
     assert set(RATE_PERIODS) == set(VatRate)

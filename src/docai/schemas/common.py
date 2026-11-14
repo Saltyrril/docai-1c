@@ -57,28 +57,52 @@ class VatRate(StrEnum):
     R18_118 = "18/118"
     R20_120 = "20/120"
     R22_122 = "22/122"
+    # Значения, которые допускает XSD формата ФНС 5.03 (атрибут НалСт), но в печатных
+    # формах их почти нет. Расчётные ставки, записанные процентом от суммы с налогом:
+    # 9,09% = 10/110, 16,67% = 20/120, 18,03% = 22/122 (D31).
+    R9_09 = "9,09%"
+    R16_67 = "16,67%"
+    R18_03 = "18,03%"
+    TAX_AGENT = "НДС исчисляется налоговым агентом"
+
+    @property
+    def is_untaxed(self) -> bool:
+        """Продавец налог не предъявляет: «без НДС» или налог исчисляет налоговый агент."""
+        return self in _UNTAXED_RATES
 
     @property
     def percent(self) -> Decimal | None:
-        """Число процентов: 22 для «22%» и для «22/122»; None для «без НДС»."""
-        if self is VatRate.NO_VAT:
+        """Число процентов: 22 для «22%», «22/122» и «18,03%»; None, если налога нет."""
+        if self.is_untaxed:
             return None
+        if self in _PERCENT_NOTATION:
+            return _PERCENT_NOTATION[self]
         return Decimal(self.value.split("%")[0].split("/")[0])
 
     @property
     def is_calculated(self) -> bool:
-        """Расчётная ставка вида 22/122."""
-        return "/" in self.value
+        """Расчётная ставка вида 22/122 (в том числе записанная как 18,03%)."""
+        return "/" in self.value or self in _PERCENT_NOTATION
 
     @property
     def fraction(self) -> Decimal:
-        """Доля налога от базы: 0.22 для «22%», 22/122 для «22/122», 0 для «без НДС»."""
+        """Доля налога от базы: 0.22 для «22%», 22/122 для «22/122» и «18,03%», 0 без налога."""
         percent = self.percent
         if percent is None:
             return Decimal(0)
         if self.is_calculated:
             return percent / (100 + percent)
         return percent / 100
+
+
+_UNTAXED_RATES = frozenset({VatRate.NO_VAT, VatRate.TAX_AGENT})
+
+# Расчётная ставка, записанная процентом: к какой ставке «N/(100+N)» она относится.
+_PERCENT_NOTATION = {
+    VatRate.R9_09: Decimal(10),
+    VatRate.R16_67: Decimal(20),
+    VatRate.R18_03: Decimal(22),
+}
 
 
 class _Model(BaseModel):

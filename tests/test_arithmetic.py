@@ -129,6 +129,21 @@ def test_line_without_numbers_has_nothing_to_check() -> None:
 def test_expected_vat_without_base() -> None:
     assert expected_vat(VatRate.R22, None, None) is None
     assert expected_vat(VatRate.NO_VAT, None, None) == 0
+    assert expected_vat(VatRate.TAX_AGENT, None, None) == 0
+
+
+def test_tax_agent_behaves_like_no_vat() -> None:
+    agent = "НДС исчисляется налоговым агентом"
+    assert validate_line(make_line("1", "500.00", "500.00", agent, None, "500.00"), 0) == []
+    issues = validate_line(make_line("1", "500.00", "500.00", agent, "90.00", "590.00"), 0)
+    assert IssueCode.LINE_VAT_FOR_NO_VAT in codes(issues)
+
+
+def test_calculated_rate_in_percent_notation() -> None:
+    # 18,03% — то же, что 22/122: НДС выделяется из суммы с налогом.
+    assert expected_vat(VatRate.R18_03, None, Decimal("122.00")) == Decimal("22.00")
+    line = make_line("1", "122.00", None, "18,03%", "22.00", "122.00")
+    assert validate_line(line, 0) == []
 
 
 def test_format_money() -> None:

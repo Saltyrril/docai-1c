@@ -10,3 +10,6 @@
 *.jpeg binary
 *.pdf binary
 *.epf binary
+
+# Официальная XSD ФНС хранится байт в байт (windows-1251, CRLF), хуки её не правят
+src/docai/edo/xsd/*.xsd -text

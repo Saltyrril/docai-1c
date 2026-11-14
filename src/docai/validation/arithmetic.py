@@ -40,7 +40,7 @@ def expected_vat(
     Процентная ставка берётся от суммы без НДС, расчётная (22/122) — от суммы с НДС.
     Если суммы без НДС нет, процентная ставка пересчитывается из суммы с НДС.
     """
-    if rate is VatRate.NO_VAT:
+    if rate.is_untaxed:
         return ZERO
     if not rate.is_calculated and amount_without_vat is not None:
         return amount_without_vat * rate.fraction
@@ -53,7 +53,7 @@ def expected_vat(
 
 def _line_vat(line: LineItem) -> Decimal | None:
     """НДС строки для сложения: «без НДС» без суммы считается нулём."""
-    if line.vat_amount is None and line.vat_rate is VatRate.NO_VAT:
+    if line.vat_amount is None and line.vat_rate is not None and line.vat_rate.is_untaxed:
         return ZERO
     return line.vat_amount
 
@@ -80,11 +80,11 @@ def validate_line(line: LineItem, index: int) -> list[ValidationIssue]:
             )
 
     rate = line.vat_rate
-    if rate is VatRate.NO_VAT and line.vat_amount not in (None, ZERO):
+    if rate is not None and rate.is_untaxed and line.vat_amount not in (None, ZERO):
         issues.append(
             issue(
                 IssueCode.LINE_VAT_FOR_NO_VAT,
-                f"{title}: ставка «без НДС», а сумма НДС {format_money(line.vat_amount)}",
+                f"{title}: ставка «{rate.value}», а сумма НДС {format_money(line.vat_amount)}",
                 f"{prefix}.vat_amount",
             )
         )
@@ -151,7 +151,7 @@ def validate_totals(lines: Sequence[LineItem], totals: Totals) -> list[Validatio
     rates = {line.vat_rate for line in lines}
     single_rate = rates.pop() if len(rates) == 1 else None
     total_vat = totals.vat_amount
-    if total_vat is None and single_rate is VatRate.NO_VAT:
+    if total_vat is None and single_rate is not None and single_rate.is_untaxed:
         total_vat = ZERO
 
     if None not in (totals.amount_without_vat, total_vat, totals.amount_with_vat):

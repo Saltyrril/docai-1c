@@ -198,6 +198,8 @@ def parse_vat_rate(value: str | VatRate) -> VatRate:
     if isinstance(value, VatRate):
         return value
     text = value.strip().lower()
+    if "налоговым агентом" in text:
+        return VatRate.TAX_AGENT
     if "без" in text:
         return VatRate.NO_VAT
     match = _VAT_RE.search(text)
@@ -206,11 +208,13 @@ def parse_vat_rate(value: str | VatRate) -> VatRate:
         if number < 1 and match[2] is None and "%" not in text and number > 0:
             number *= 100  # 0.22 → 22
         key = f"{number.normalize():f}"
-        candidate = f"{key}/{match[2]}" if match[2] else f"{key}%"
-        try:
-            return VatRate(candidate)
-        except ValueError:
-            pass
+        suffix = f"/{match[2]}" if match[2] else "%"
+        # «18,03%» в перечне ФНС пишется с запятой, а Decimal выводит точку.
+        for candidate in (f"{key}{suffix}", f"{key.replace('.', ',')}{suffix}"):
+            try:
+                return VatRate(candidate)
+            except ValueError:
+                continue
     raise ValueError(f"неизвестная ставка НДС «{value}»")
 
 

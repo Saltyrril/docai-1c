@@ -178,8 +178,12 @@ def test_normalize_okei_and_text() -> None:
         ("7 %", VatRate.R7),
         ("22/122", VatRate.R22_122),
         ("22 / 122", VatRate.R22_122),
+        ("9,09%", VatRate.R9_09),
+        ("16,67 %", VatRate.R16_67),
+        ("18.03%", VatRate.R18_03),
         ("Без НДС", VatRate.NO_VAT),
         ("без налога (НДС)", VatRate.NO_VAT),
+        ("НДС исчисляется налоговым агентом", VatRate.TAX_AGENT),
         (VatRate.R10_110, VatRate.R10_110),
     ],
 )

@@ -1,0 +1,8 @@
+# P7: УПД из ЭДО. Туда и обратно: JSON → XML (ФНС 5.03, windows-1251) → проверка по XSD → JSON.
+step: P7
+run: uv run python reports/2026-11-14_p7_edo_roundtrip/run.py
+seed: 20261114        # серия синтетических документов (docai.synth), без намеренных ошибок
+documents: 100        # подряд идущие УПД серии (документы других типов пропускаются)
+error_rate: 0.0
+xsd: src/docai/edo/xsd/ON_NSCHFDOPPR_1_997_01_05_03_05.xsd
+signer: DEMO_SIGNER   # вымышленный подписант, в JSON его нет
