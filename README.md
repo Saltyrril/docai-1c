@@ -53,6 +53,7 @@ uv run docai --help                # CLI проекта
 | `src/docai/synth` | Генератор синтетических данных |
 | `src/docai/render` | HTML-шаблоны → PDF → «сканы» |
 | `src/docai/edo` | УПД в XML формата ФНС |
+| `src/docai/labeling` | Разметка реальных документов (Gradio) и обезличивание |
 | `src/docai/extract` | Извлечение полей |
 | `src/docai/rag` | Поиск по договорам |
 | `src/docai/service` | HTTP-сервис (FastAPI) |

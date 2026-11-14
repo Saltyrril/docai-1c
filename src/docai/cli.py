@@ -7,6 +7,7 @@ from docai import __version__
 from docai.augment.cli import augment
 from docai.dataset.cli import app as dataset_app
 from docai.edo.cli import app as edo_app
+from docai.labeling.cli import app as label_app
 from docai.render.cli import render
 from docai.synth.cli import app as synth_app
 
@@ -15,6 +16,7 @@ console = Console()
 app.add_typer(synth_app, name="synth")
 app.add_typer(dataset_app, name="dataset")
 app.add_typer(edo_app, name="edo")
+app.add_typer(label_app, name="label")
 app.command(name="render")(render)
 app.command(name="augment")(augment)
 

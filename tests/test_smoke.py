@@ -14,6 +14,7 @@ SUBPACKAGES = [
     "synth",
     "render",
     "edo",
+    "labeling",
     "extract",
     "rag",
     "service",

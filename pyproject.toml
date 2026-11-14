@@ -18,6 +18,8 @@ dependencies = [
     "opencv-python-headless>=5.0.0.93",
     "pyyaml>=6.0.3",
     "lxml>=6.1.3",
+    "gradio>=6.32.0",
+    "pillow>=13.0.0",
 ]
 
 [project.scripts]
