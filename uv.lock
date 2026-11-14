@@ -82,6 +82,7 @@ dependencies = [
     { name = "playwright" },
     { name = "pydantic" },
     { name = "pypdfium2" },
+    { name = "pyyaml" },
     { name = "rich" },
     { name = "typer" },
 ]
@@ -102,6 +103,7 @@ requires-dist = [
     { name = "playwright", specifier = ">=1.65.2" },
     { name = "pydantic", specifier = ">=2" },
     { name = "pypdfium2", specifier = ">=5.15.2" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "rich" },
     { name = "typer" },
 ]

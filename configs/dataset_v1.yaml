@@ -1,0 +1,15 @@
+# Конфиг сборки датасета v1 (шаг P6). Запуск:
+#   uv run docai dataset build --config configs/dataset_v1.yaml
+name: docai-1c-synth
+version: v1
+seed: 42
+n_documents: 3000
+error_rate: 0.05           # доля документов с намеренной ошибкой (арифметика, ИНН)
+out: data/datasets/v1      # папка не коммитится (data/ в .gitignore)
+levels: [clean, scan, photo]
+dpi: [200]
+split:                     # доли по ДОКУМЕНТАМ; делит по продавцам, поэтому фактические доли чуть отличаются
+  train: 0.8
+  val: 0.1
+  test: 0.1
+workers: 6                 # процессов для растеризации и искажений

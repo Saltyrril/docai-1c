@@ -16,6 +16,7 @@ dependencies = [
     "playwright>=1.65.2",
     "pypdfium2>=5.15.2",
     "opencv-python-headless>=5.0.0.93",
+    "pyyaml>=6.0.3",
 ]
 
 [project.scripts]
@@ -73,3 +74,7 @@ line-ending = "lf"
 # Покрытие: uv run pytest --cov=docai.validation --cov-report=term-missing
 branch = true
 source = ["docai"]
+
+[tool.ruff.lint.per-file-ignores]
+# Шаблон карточки датасета — это markdown, длинные строки абзацев в нём нормальны.
+"src/docai/dataset/card.py" = ["E501"]
