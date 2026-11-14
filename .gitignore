@@ -1,0 +1,33 @@
+# Данные (synth, real, rag) — никогда не коммитим, особенно data/real/
+data/
+
+# Модели и веса
+models/
+*.gguf
+*.safetensors
+
+# Секреты
+.env
+.env.*
+
+# Окружение и инструменты
+.venv/
+
+# Кэши
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.cache/
+
+# Сборка
+build/
+dist/
+*.egg-info/
+
+# Системный мусор
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,19 @@
+# P0: проверка окружения. Параметры восстановлены по vision_test.py (эксперимент проводился до каркаса).
+experiment: p0_env_check
+date: 2026-11-14
+models:
+  - qwen3.5:2b-q8_0
+  - qwen3.5:2b-q4_K_M
+runs_per_model: 2
+ollama:
+  url: http://127.0.0.1:11434/api/chat
+  think: false
+  format: json
+  keep_alive: 0
+  options:
+    temperature: 0
+    num_ctx: 4096
+input:
+  image: test_invoice.png
+  text: "ИНН 7707083893, сумма 12 200,00 руб."
+vram_threshold_gb: 3.8

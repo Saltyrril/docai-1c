@@ -1,0 +1,64 @@
+[project]
+name = "docai-1c"
+version = "0.1.0"
+description = "Локальный ИИ-сервис: извлечение реквизитов из первичных документов, проверка и создание документов в 1С:Бухгалтерии; RAG-поиск по договорам с цитатами."
+readme = "README.md"
+authors = [
+    { name = "Saltyrril", email = "78341238+Saltyrril@users.noreply.github.com" }
+]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pydantic>=2",
+    "typer",
+    "rich",
+]
+
+[project.scripts]
+docai = "docai.cli:app"
+
+[dependency-groups]
+# Инструменты разработчика: в готовый пакет не попадают.
+dev = [
+    "pytest",
+    "ruff",
+    "pre-commit",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.8,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# Дистрибутив называется docai-1c, а импортируется как `docai`.
+module-name = "docai"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+extend-exclude = ["notebooks", "onec", "data"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle: ошибки
+    "W",   # pycodestyle: предупреждения
+    "F",   # pyflakes: неиспользуемые имена, опечатки
+    "I",   # isort: порядок импортов
+    "UP",  # pyupgrade: современный синтаксис Python
+    "B",   # bugbear: типичные ошибки
+    "SIM", # упрощения
+    "RUF", # правила самого ruff
+]
+ignore = [
+    # Кириллица в строках, комментариях и docstring — это норма для проекта.
+    "RUF001",
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.format]
+line-ending = "lf"
