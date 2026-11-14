@@ -1,0 +1,15 @@
+# P9: конвейер извлечения работает на всех путях. Качество здесь НЕ меряется (это P11):
+# проверяется, что на 10 документах каждого пути возвращается JSON, валидный по схеме,
+# и что пиковая VRAM не выходит за 3,8 ГиБ.
+step: P9
+run: uv run python reports/2026-11-14_p9_extract_smoke/run.py
+extract_config: configs/extract.yaml
+dataset: data/datasets/v1          # сборка P6 (seed 42), сплит test
+split: test
+image_level: scan                  # vision и OCR получают «сканы» страниц (JPEG 200 dpi)
+# Отбор: для каждого из 5 типов — первый одностраничный и первый двухстраничный документ
+# сплита (по doc_id); если двухстраничного нет — второй одностраничный. Итого 10.
+# XML: первые 10 УПД сплита, JSON → XML ФНС 5.03 (upd_to_xml) → путь xml.
+per_type: 2
+routes: [xml, text, vision, ocr]
+work_dir: data/experiments/p9_extract_smoke   # полные JSON результатов (не коммитятся)

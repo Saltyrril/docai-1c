@@ -1,0 +1,26 @@
+# Настройки конвейера извлечения (шаг P9). Значения совпадают с умолчаниями ExtractConfig.
+# Запуск: uv run docai extract <файл> --mode auto|text|vision|ocr --config configs/extract.yaml
+model: qwen3.5:2b-q8_0
+ollama_url: http://127.0.0.1:11434
+think: false              # у Qwen3.5 в Ollama рассуждения включены по умолчанию (D38)
+keep_alive: 5m
+timeout_s: 600
+options:                  # уходят в options запроса; сэмплинг задан явно, Modelfile не влияет
+  temperature: 0
+  seed: 42
+  top_k: 20
+  top_p: 0.95
+  presence_penalty: 0     # в Modelfile qwen3.5 стоит 1.5
+  num_ctx: 8192
+  num_predict: 4096
+text_prompt: text_v1      # src/docai/extract/prompts/text_v1.md (текст и OCR)
+vision_prompt: vision_v1  # src/docai/extract/prompts/vision_v1.md
+min_text_chars_per_page: 30
+max_image_side: 1280
+max_text_chars: 12000
+tesseract_cmd: null       # null — искать в PATH и в C:\Program Files\Tesseract-OCR
+ocr_lang: rus
+ocr_psm: 3
+ocr_dpi: 300
+vram_poll_s: 0.5
+vram_limit_gib: 3.8

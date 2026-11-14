@@ -1,0 +1,1220 @@
+{
+  "config": {
+    "step": "P9",
+    "run": "uv run python reports/2026-11-14_p9_extract_smoke/run.py",
+    "extract_config": "configs/extract.yaml",
+    "dataset": "data/datasets/v1",
+    "split": "test",
+    "image_level": "scan",
+    "per_type": 2,
+    "routes": [
+      "xml",
+      "text",
+      "vision",
+      "ocr"
+    ],
+    "work_dir": "data/experiments/p9_extract_smoke"
+  },
+  "extract_config": {
+    "model": "qwen3.5:2b-q8_0",
+    "ollama_url": "http://127.0.0.1:11434",
+    "think": false,
+    "keep_alive": "5m",
+    "timeout_s": 600.0,
+    "options": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_k": 20,
+      "top_p": 0.95,
+      "presence_penalty": 0.0,
+      "num_ctx": 8192,
+      "num_predict": 4096
+    },
+    "text_prompt": "text_v1",
+    "vision_prompt": "vision_v1",
+    "min_text_chars_per_page": 30,
+    "max_image_side": 1280,
+    "max_text_chars": 12000,
+    "tesseract_cmd": null,
+    "ocr_lang": "rus",
+    "ocr_psm": 3,
+    "ocr_dpi": 300,
+    "vram_poll_s": 0.5,
+    "vram_limit_gib": 3.8
+  },
+  "documents": [
+    "00016_upd",
+    "00224_upd",
+    "00043_bill",
+    "00144_bill",
+    "00069_act",
+    "00088_act",
+    "00158_torg12",
+    "00449_torg12",
+    "00024_vat_invoice",
+    "00051_vat_invoice"
+  ],
+  "summary": {
+    "xml": {
+      "documents": 10,
+      "valid": 10,
+      "schema_ok": 10,
+      "with_errors": 0,
+      "pages": 0,
+      "llm_calls": 0,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "time_total_s": 0.7,
+      "time_mean_s": 0.1,
+      "time_max_s": 0.1,
+      "peak_vram_mib": 2615,
+      "vram_ok": true
+    },
+    "text": {
+      "documents": 10,
+      "valid": 10,
+      "schema_ok": 10,
+      "with_errors": 0,
+      "pages": 13,
+      "llm_calls": 10,
+      "prompt_tokens": 18797,
+      "completion_tokens": 15234,
+      "time_total_s": 1357.1,
+      "time_mean_s": 135.7,
+      "time_max_s": 364.0,
+      "peak_vram_mib": 2622,
+      "vram_ok": true
+    },
+    "vision": {
+      "documents": 10,
+      "valid": 10,
+      "schema_ok": 10,
+      "with_errors": 0,
+      "pages": 13,
+      "llm_calls": 13,
+      "prompt_tokens": 20961,
+      "completion_tokens": 16992,
+      "time_total_s": 1879.6,
+      "time_mean_s": 188.0,
+      "time_max_s": 446.0,
+      "peak_vram_mib": 2615,
+      "vram_ok": true
+    },
+    "ocr": {
+      "documents": 10,
+      "valid": 10,
+      "schema_ok": 10,
+      "with_errors": 1,
+      "pages": 13,
+      "llm_calls": 12,
+      "prompt_tokens": 13879,
+      "completion_tokens": 18328,
+      "time_total_s": 1985.1,
+      "time_mean_s": 198.5,
+      "time_max_s": 997.0,
+      "peak_vram_mib": 2545,
+      "vram_ok": true
+    }
+  },
+  "skipped": {},
+  "rows": [
+    {
+      "route": "xml",
+      "doc_id": "00016_upd",
+      "inputs": [
+        "00016_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.006,
+        "xml": 0.004,
+        "total": 0.082
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00026_upd",
+      "inputs": [
+        "00026_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 5,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.006,
+        "xml": 0.001,
+        "total": 0.063
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00038_upd",
+      "inputs": [
+        "00038_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.006,
+        "xml": 0.001,
+        "total": 0.062
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00111_upd",
+      "inputs": [
+        "00111_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.006,
+        "xml": 0.001,
+        "total": 0.067
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00187_upd",
+      "inputs": [
+        "00187_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 3,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.006,
+        "xml": 0.001,
+        "total": 0.067
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00191_upd",
+      "inputs": [
+        "00191_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 1,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.007,
+        "xml": 0.001,
+        "total": 0.064
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00201_upd",
+      "inputs": [
+        "00201_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 8,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.007,
+        "xml": 0.001,
+        "total": 0.07
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00224_upd",
+      "inputs": [
+        "00224_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 12,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.007,
+        "xml": 0.001,
+        "total": 0.083
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00232_upd",
+      "inputs": [
+        "00232_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 1,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.015,
+        "xml": 0.002,
+        "total": 0.117
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "xml",
+      "doc_id": "00269_upd",
+      "inputs": [
+        "00269_upd.xml"
+      ],
+      "actual_route": "xml",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": null,
+      "lines": 1,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "llm_calls": 0,
+      "timings_s": {
+        "route": 0.006,
+        "xml": 0.001,
+        "total": 0.072
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00016_upd",
+      "inputs": [
+        "00016_upd.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 1,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1392,
+      "completion_tokens": 623,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.017,
+        "pdf_text": 0.123,
+        "llm": 23.945,
+        "assemble": 0.0,
+        "total": 24.154
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00224_upd",
+      "inputs": [
+        "00224_upd.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 2,
+      "lines": 12,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 2292,
+      "completion_tokens": 1877,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.039,
+        "pdf_text": 0.33,
+        "llm": 69.904,
+        "assemble": 0.0,
+        "total": 70.396
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00043_bill",
+      "inputs": [
+        "00043_bill.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "bill",
+      "pages": 1,
+      "lines": 5,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1311,
+      "completion_tokens": 1056,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.02,
+        "pdf_text": 0.143,
+        "llm": 45.144,
+        "assemble": 0.0,
+        "total": 45.397
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00144_bill",
+      "inputs": [
+        "00144_bill.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "bill",
+      "pages": 1,
+      "lines": 4,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1214,
+      "completion_tokens": 925,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.022,
+        "pdf_text": 0.152,
+        "llm": 89.39,
+        "assemble": 0.0,
+        "total": 89.667
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00069_act",
+      "inputs": [
+        "00069_act.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "act",
+      "pages": 1,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1133,
+      "completion_tokens": 710,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.019,
+        "pdf_text": 0.107,
+        "llm": 77.092,
+        "assemble": 0.0,
+        "total": 77.312
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00088_act",
+      "inputs": [
+        "00088_act.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "act",
+      "pages": 1,
+      "lines": 5,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1261,
+      "completion_tokens": 1022,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.015,
+        "pdf_text": 0.108,
+        "llm": 108.408,
+        "assemble": 0.0,
+        "total": 108.6
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00158_torg12",
+      "inputs": [
+        "00158_torg12.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "torg12",
+      "pages": 1,
+      "lines": 8,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1791,
+      "completion_tokens": 1354,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.016,
+        "pdf_text": 0.193,
+        "llm": 139.548,
+        "assemble": 0.0,
+        "total": 139.849
+      },
+      "peak_vram_mib": 2622,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00449_torg12",
+      "inputs": [
+        "00449_torg12.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "torg12",
+      "pages": 2,
+      "lines": 24,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 3538,
+      "completion_tokens": 3468,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.023,
+        "pdf_text": 0.336,
+        "llm": 363.599,
+        "assemble": 0.0,
+        "total": 364.03
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00024_vat_invoice",
+      "inputs": [
+        "00024_vat_invoice.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 1,
+      "lines": 7,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1671,
+      "completion_tokens": 1209,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.019,
+        "pdf_text": 0.238,
+        "llm": 124.829,
+        "assemble": 0.0,
+        "total": 125.16
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "text",
+      "doc_id": "00051_vat_invoice",
+      "inputs": [
+        "00051_vat_invoice.pdf"
+      ],
+      "actual_route": "text",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 2,
+      "lines": 21,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 3194,
+      "completion_tokens": 2990,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.023,
+        "pdf_text": 0.322,
+        "llm": 312.106,
+        "assemble": 0.0,
+        "total": 312.526
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00016_upd",
+      "inputs": [
+        "00016_upd_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": 1,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 627,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.028,
+        "resize": 0.056,
+        "llm": 69.389,
+        "assemble": 0.0,
+        "total": 69.717
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00224_upd",
+      "inputs": [
+        "00224_upd_p1_scan_200dpi.jpg",
+        "00224_upd_p2_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": 2,
+      "lines": 15,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 3228,
+      "completion_tokens": 2503,
+      "llm_calls": 2,
+      "timings_s": {
+        "route": 0.003,
+        "render": 0.043,
+        "resize": 0.121,
+        "llm": 265.969,
+        "assemble": 0.0,
+        "total": 266.518
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00043_bill",
+      "inputs": [
+        "00043_bill_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "bill",
+      "pages": 1,
+      "lines": 5,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 1082,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.029,
+        "resize": 0.058,
+        "llm": 115.688,
+        "assemble": 0.0,
+        "total": 115.977
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00144_bill",
+      "inputs": [
+        "00144_bill_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "bill",
+      "pages": 1,
+      "lines": 4,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 934,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.024,
+        "resize": 0.055,
+        "llm": 100.594,
+        "assemble": 0.0,
+        "total": 100.88
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00069_act",
+      "inputs": [
+        "00069_act_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "act",
+      "pages": 1,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 786,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.025,
+        "resize": 0.058,
+        "llm": 86.212,
+        "assemble": 0.0,
+        "total": 86.515
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00088_act",
+      "inputs": [
+        "00088_act_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "act",
+      "pages": 1,
+      "lines": 5,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 1117,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.028,
+        "resize": 0.059,
+        "llm": 120.065,
+        "assemble": 0.0,
+        "total": 120.351
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00158_torg12",
+      "inputs": [
+        "00158_torg12_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "torg12",
+      "pages": 1,
+      "lines": 10,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 1496,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.031,
+        "resize": 0.056,
+        "llm": 161.464,
+        "assemble": 0.0,
+        "total": 161.764
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00449_torg12",
+      "inputs": [
+        "00449_torg12_p1_scan_200dpi.jpg",
+        "00449_torg12_p2_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "torg12",
+      "pages": 2,
+      "lines": 26,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 3228,
+      "completion_tokens": 3982,
+      "llm_calls": 2,
+      "timings_s": {
+        "route": 0.003,
+        "render": 0.087,
+        "resize": 0.165,
+        "llm": 445.324,
+        "assemble": 0.001,
+        "total": 445.958
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00024_vat_invoice",
+      "inputs": [
+        "00024_vat_invoice_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 1,
+      "lines": 7,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1611,
+      "completion_tokens": 1228,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "render": 0.023,
+        "resize": 0.057,
+        "llm": 141.238,
+        "assemble": 0.0,
+        "total": 141.493
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "vision",
+      "doc_id": "00051_vat_invoice",
+      "inputs": [
+        "00051_vat_invoice_p1_scan_200dpi.jpg",
+        "00051_vat_invoice_p2_scan_200dpi.jpg"
+      ],
+      "actual_route": "vision",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 2,
+      "lines": 21,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 3228,
+      "completion_tokens": 3237,
+      "llm_calls": 2,
+      "timings_s": {
+        "route": 0.002,
+        "render": 0.053,
+        "resize": 0.128,
+        "llm": 369.889,
+        "assemble": 0.0,
+        "total": 370.443
+      },
+      "peak_vram_mib": 2615,
+      "baseline_vram_mib": 2615
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00016_upd",
+      "inputs": [
+        "00016_upd_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": 1,
+      "lines": 0,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 917,
+      "completion_tokens": 358,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.09,
+        "render": 0.023,
+        "ocr": 1.268,
+        "llm": 37.701,
+        "assemble": 0.0,
+        "total": 39.151
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00224_upd",
+      "inputs": [
+        "00224_upd_p1_scan_200dpi.jpg",
+        "00224_upd_p2_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 2,
+      "lines": 4,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 968,
+      "completion_tokens": 899,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "ocr_init": 0.068,
+        "render": 0.043,
+        "ocr": 2.461,
+        "llm": 93.006,
+        "assemble": 0.0,
+        "total": 95.657
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00043_bill",
+      "inputs": [
+        "00043_bill_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "bill",
+      "pages": 1,
+      "lines": 1,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 925,
+      "completion_tokens": 594,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.065,
+        "render": 0.028,
+        "ocr": 1.425,
+        "llm": 61.978,
+        "assemble": 0.0,
+        "total": 63.574
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00144_bill",
+      "inputs": [
+        "00144_bill_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "bill",
+      "pages": 1,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 918,
+      "completion_tokens": 667,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.06,
+        "render": 0.024,
+        "ocr": 1.375,
+        "llm": 69.087,
+        "assemble": 0.0,
+        "total": 70.615
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00069_act",
+      "inputs": [
+        "00069_act_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "act",
+      "pages": 1,
+      "lines": 3,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 896,
+      "completion_tokens": 833,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.064,
+        "render": 0.025,
+        "ocr": 1.39,
+        "llm": 85.245,
+        "assemble": 0.0,
+        "total": 86.797
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00088_act",
+      "inputs": [
+        "00088_act_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "act",
+      "pages": 1,
+      "lines": 2,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 834,
+      "completion_tokens": 613,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.066,
+        "render": 0.027,
+        "ocr": 1.325,
+        "llm": 62.24,
+        "assemble": 0.0,
+        "total": 63.736
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00158_torg12",
+      "inputs": [
+        "00158_torg12_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "torg12",
+      "pages": 1,
+      "lines": 4,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1213,
+      "completion_tokens": 904,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.065,
+        "render": 0.026,
+        "ocr": 1.745,
+        "llm": 92.005,
+        "assemble": 0.0,
+        "total": 93.921
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00449_torg12",
+      "inputs": [
+        "00449_torg12_p1_scan_200dpi.jpg",
+        "00449_torg12_p2_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "torg12",
+      "pages": 2,
+      "lines": 22,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1811,
+      "completion_tokens": 3323,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.001,
+        "ocr_init": 0.058,
+        "render": 0.046,
+        "ocr": 3.734,
+        "llm": 342.175,
+        "assemble": 0.0,
+        "total": 346.076
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00024_vat_invoice",
+      "inputs": [
+        "00024_vat_invoice_p1_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "vat_invoice",
+      "pages": 1,
+      "lines": 7,
+      "warnings": 0,
+      "errors": [],
+      "prompt_tokens": 1505,
+      "completion_tokens": 1233,
+      "llm_calls": 1,
+      "timings_s": {
+        "route": 0.0,
+        "ocr_init": 0.067,
+        "render": 0.025,
+        "ocr": 2.355,
+        "llm": 126.035,
+        "assemble": 0.0,
+        "total": 128.562
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    },
+    {
+      "route": "ocr",
+      "doc_id": "00051_vat_invoice",
+      "inputs": [
+        "00051_vat_invoice_p1_scan_200dpi.jpg",
+        "00051_vat_invoice_p2_scan_200dpi.jpg"
+      ],
+      "actual_route": "ocr",
+      "valid": true,
+      "schema_ok": true,
+      "doc_type": "upd",
+      "pages": 2,
+      "lines": 4,
+      "warnings": 1,
+      "errors": [
+        "page 1/2: ответ обрезан по num_predict=4096"
+      ],
+      "prompt_tokens": 3892,
+      "completion_tokens": 8904,
+      "llm_calls": 3,
+      "timings_s": {
+        "route": 0.001,
+        "ocr_init": 0.066,
+        "render": 0.052,
+        "ocr": 3.613,
+        "llm": 993.22,
+        "assemble": 0.0,
+        "total": 997.033
+      },
+      "peak_vram_mib": 2545,
+      "baseline_vram_mib": 2545
+    }
+  ]
+}

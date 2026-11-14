@@ -30,6 +30,20 @@ uv run docai render --in data/synth/json --out data/synth/pdf
 выбираются по `--seed`; `--variant 1|2|3` фиксирует вариант, `--limit N` и `--stem <имя>` ограничивают набор.
 Chromium хранится в `%LOCALAPPDATA%\ms-playwright`, в репозиторий не входит.
 
+## Извлечение полей
+
+```powershell
+uv run docai extract path\to\file.pdf                 # auto: XML → парсер, PDF с текстом → text, иначе vision
+uv run docai extract scan.jpg --mode vision --out result.json
+uv run docai extract p1.jpg p2.jpg                    # несколько картинок — страницы одного документа
+uv run docai extract file.pdf --mode ocr              # для сравнения: Tesseract → текст → LLM
+```
+
+Нужна Ollama с моделью `qwen3.5:2b-q8_0`; для `--mode ocr` — Tesseract с русским языком:
+`winget install --id UB-Mannheim.TesseractOCR -e` и `rus.traineddata` в папку `tessdata`.
+На выходе JSON: `document` (по схеме `docai.schemas.Document`), `warnings`, `errors` и `meta`
+(маршрут, версия промпта, время этапов, токены, пиковая VRAM). Настройки — `configs/extract.yaml`.
+
 ## Команды разработки
 
 ```powershell
