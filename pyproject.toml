@@ -11,6 +11,7 @@ dependencies = [
     "pydantic>=2",
     "typer",
     "rich",
+    "faker>=40.54.0",
 ]
 
 [project.scripts]
