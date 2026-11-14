@@ -1,0 +1,59 @@
+{
+ "seed": 42,
+ "documents": [
+  {
+   "cell": 1,
+   "pdf": "00001_bill.pdf",
+   "dpi": 150,
+   "type": "bill"
+  },
+  {
+   "cell": 2,
+   "pdf": "00002_upd.pdf",
+   "dpi": 200,
+   "type": "upd"
+  },
+  {
+   "cell": 3,
+   "pdf": "00003_bill.pdf",
+   "dpi": 300,
+   "type": "bill"
+  },
+  {
+   "cell": 4,
+   "pdf": "00005_upd.pdf",
+   "dpi": 150,
+   "type": "upd"
+  },
+  {
+   "cell": 5,
+   "pdf": "00007_vat_invoice.pdf",
+   "dpi": 200,
+   "type": "vat_invoice"
+  },
+  {
+   "cell": 6,
+   "pdf": "00014_act.pdf",
+   "dpi": 300,
+   "type": "act"
+  },
+  {
+   "cell": 7,
+   "pdf": "00019_torg12.pdf",
+   "dpi": 150,
+   "type": "torg12"
+  },
+  {
+   "cell": 8,
+   "pdf": "00020_torg12.pdf",
+   "dpi": 200,
+   "type": "torg12"
+  },
+  {
+   "cell": 9,
+   "pdf": "00027_act.pdf",
+   "dpi": 300,
+   "type": "act"
+  }
+ ]
+}

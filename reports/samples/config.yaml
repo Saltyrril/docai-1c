@@ -1,0 +1,8 @@
+# Как получены примеры: PDF из P4 (1000 документов, seed 42), 9 документов по порядку имён
+step: P5
+render: uv run docai render --in data/synth/json --out data/synth/pdf --seed 42
+samples: uv run python reports/samples/make_samples.py
+seed: 42
+documents: manifest.json   # ячейки сетки слева направо, сверху вниз; dpi 150/200/300 по кругу
+levels: [clean, scan, photo]
+overlays: красный — bbox, зелёный — четырёхугольник поля; три картинки на уровень
