@@ -21,6 +21,10 @@ __pycache__/
 .mypy_cache/
 .ipynb_checkpoints/
 .cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
 
 # Сборка
 build/

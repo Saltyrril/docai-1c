@@ -22,6 +22,7 @@ dev = [
     "pytest",
     "ruff",
     "pre-commit",
+    "pytest-cov>=7.1.0",
 ]
 
 [build-system]
@@ -62,3 +63,8 @@ ignore = [
 
 [tool.ruff.format]
 line-ending = "lf"
+
+[tool.coverage.run]
+# Покрытие: uv run pytest --cov=docai.validation --cov-report=term-missing
+branch = true
+source = ["docai"]
