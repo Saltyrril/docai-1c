@@ -4,11 +4,13 @@ import typer
 from rich.console import Console
 
 from docai import __version__
+from docai.render.cli import render
 from docai.synth.cli import app as synth_app
 
 app = typer.Typer(help="docai-1c: извлечение реквизитов, проверка, 1С и RAG.", no_args_is_help=True)
 console = Console()
 app.add_typer(synth_app, name="synth")
+app.command(name="render")(render)
 
 
 @app.callback()

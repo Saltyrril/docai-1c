@@ -1,0 +1,49 @@
+{% extends "upd/base.html.j2" %}
+{% block style %}
+:root{--m:9mm}
+.v2 .page{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;font-size:8pt;line-height:1.2}
+.v2 h1{font-size:12pt;margin:0;text-align:center}
+.v2 .headrow{display:flex;align-items:center;gap:5mm;margin-bottom:2mm}
+.v2 .headrow .t{flex:1}
+.v2 .st{border:1.5px solid #000;padding:1mm 3mm;font-weight:bold;font-size:11pt}
+.v2 .two{display:grid;grid-template-columns:1fr 1fr;border:1px solid #000;margin-bottom:2mm}
+.v2 .two>div{padding:1.5mm 2.5mm}
+.v2 .two>div+div{border-left:1px solid #000}
+.v2 .two .h{font-weight:bold;font-size:7pt;text-transform:uppercase;color:#333}
+.v2 table.items th,.v2 table.items td{border:1px solid #444;font-size:7pt}
+.v2 table.items td.nb{border:0}
+.v2 table.items thead th{background:#ececec}
+.v2 .foot{display:grid;grid-template-columns:1fr 1fr;gap:8mm;margin-top:3mm;font-size:7.5pt}
+.v2 .ln{border-bottom:1px solid #000;height:9mm;position:relative}
+.v2 .cap{font-size:6.5pt;color:#444;text-align:center}
+{% endblock %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 13) }}
+ <div class="t"><h1>Универсальный передаточный документ № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</h1>
+ <div style="text-align:center;font-size:7pt">Счёт-фактура № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }} (1); исправление № -- от -- (1а)</div></div>
+ <div class="st">Статус {{ m.f('upd_status', d.upd_status|string) }}</div></div>
+<div class="two">
+ <div><div class="h">Продавец (2)</div>
+  <b>{{ m.f('seller.name', d.seller.name) }}</b><br>Адрес (2а): {{ m.f('seller.address', d.seller.address) }}<br>ИНН/КПП продавца (2б): {{ m.inn_kpp('seller', d.seller) }}<br>Грузоотправитель (3): он же</div>
+ <div><div class="h">Покупатель (6)</div>
+  <b>{{ m.f('buyer.name', d.buyer.name) }}</b><br>Адрес (6а): {{ m.f('buyer.address', d.buyer.address) }}<br>ИНН/КПП покупателя (6б): {{ m.inn_kpp('buyer', d.buyer) }}<br>Грузополучатель (4): он же</div>
+</div>
+<div style="margin-bottom:2mm">К платёжно-расчётному документу (5): -- &nbsp;•&nbsp; Валюта (7): Российский рубль, 643 &nbsp;•&nbsp; Госконтракт (8): -- &nbsp;•&nbsp; Основание: {{ m.basis(d.basis) }}</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="foot">
+ <div class="sigbox">
+  <b>Документ подготовил (составитель):</b> {{ m.f('seller.name', d.seller.name) }}
+  <div class="ln">{{ m.sign(deco, 26, '6mm', '-1mm') }}</div><div class="cap">подпись руководителя / ф. и. о.</div>
+  <div class="ln"></div><div class="cap">подпись главного бухгалтера / ф. и. о.</div>
+  <div style="height:14mm;position:relative">{{ m.stamp(deco, 26, '50mm', '-14mm') }}</div>
+ </div>
+ <div>
+  <b>Груз принял (получатель):</b> {{ m.f('buyer.name', d.buyer.name) }}
+  <div class="ln"></div><div class="cap">должность, подпись, ф. и. о.</div>
+  <div style="margin-top:3mm">Дата отгрузки: {{ m.f('date', d.date|dnum) }} &nbsp;•&nbsp; Дата получения: «___» ___________ 20__ г.</div>
+ </div>
+</div>
+{% endblock %}

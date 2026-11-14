@@ -1,0 +1,31 @@
+{% extends "vat_invoice/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div style="text-align:right;font-size:7pt">Приложение № 1<br>к постановлению Правительства Российской Федерации<br>от 26 декабря 2011 г. № 1137</div>
+<div class="title" style="text-align:left;margin-top:1mm">Счёт-фактура № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }} (1)<br>
+<span style="font-size:10pt;font-weight:normal">Исправление № -- от -- (1а)</span></div>
+<div class="req">
+ <div class="k">Продавец</div><div class="val">{{ m.f('seller.name', d.seller.name) }}</div><div>(2)</div>
+ <div class="k">Адрес</div><div class="val">{{ m.f('seller.address', d.seller.address) }}</div><div>(2а)</div>
+ <div class="k">ИНН/КПП продавца</div><div class="val">{{ m.inn_kpp('seller', d.seller) }}</div><div>(2б)</div>
+ <div class="k">Грузоотправитель и его адрес</div><div class="val">он же</div><div>(3)</div>
+ <div class="k">Грузополучатель и его адрес</div><div class="val">он же</div><div>(4)</div>
+ <div class="k">К платёжно-расчётному документу №</div><div class="val">--</div><div>(5)</div>
+ <div class="k">Покупатель</div><div class="val">{{ m.f('buyer.name', d.buyer.name) }}</div><div>(6)</div>
+ <div class="k">Адрес</div><div class="val">{{ m.f('buyer.address', d.buyer.address) }}</div><div>(6а)</div>
+ <div class="k">ИНН/КПП покупателя</div><div class="val">{{ m.inn_kpp('buyer', d.buyer) }}</div><div>(6б)</div>
+ <div class="k">Валюта: наименование, код</div><div class="val">Российский рубль, 643</div><div>(7)</div>
+ <div class="k">Идентификатор госконтракта</div><div class="val">--</div><div>(8)</div>
+</div>
+<div style="height:2mm"></div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="sg sg2" style="margin-top:3mm">
+ <div class="sigbox"><div style="height:11mm">Руководитель организации или иное уполномоченное лицо{{ m.sign(deco, 24, '70mm', '1mm') }}</div>
+  <div class="sigline">(подпись) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (ф. и. о.)</div>
+  <div style="height:14mm;position:relative">{{ m.stamp(deco, 26, '30mm', '-4mm') }}</div></div>
+ <div><div style="height:11mm">Главный бухгалтер или иное уполномоченное лицо</div>
+  <div class="sigline">(подпись) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (ф. и. о.)</div></div>
+</div>
+{% endblock %}

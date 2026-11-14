@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru" class="{{ orientation }} v{{ v }}">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<style>@page{size:A4 {{ orientation }};margin:0}</style>
+<style>{{ base_css|safe }}</style>
+<style>{% block style %}{% endblock %}</style>
+</head>
+<body>
+<div id="pages"></div>
+<div id="source" style="display:none">
+<div class="blk-head">{% block head %}{% endblock %}</div>
+{% block table %}{% endblock %}
+<div class="blk-foot">{% block foot %}{% endblock %}</div>
+</div>
+<script>{{ paginate_js|safe }}</script>
+</body>
+</html>

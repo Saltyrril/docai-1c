@@ -1,0 +1,12 @@
+# Как получены примеры: полный прогон на синтетике P3 (1000 документов, seed 42)
+step: P4
+generate: uv run docai synth generate --n 1000 --seed 42 --out data/synth/json
+render: uv run docai render --in data/synth/json --out data/synth/pdf --seed 42
+examples:
+  - 00026_upd          # УПД, вариант 2, с логотипом
+  - 00023_bill         # счёт на оплату, вариант 1, с логотипом
+  - 00027_act          # акт, вариант 3, с логотипом
+  - 00085_torg12       # ТОРГ-12, вариант 1 (официальная форма)
+  - 00100_vat_invoice  # счёт-фактура, вариант 2, с логотипом
+  - 00080_torg12       # дополнительно: ТОРГ-12, вариант 3, две страницы
+png: uv run --with pillow python png.py <pdf> <префикс> 1.6

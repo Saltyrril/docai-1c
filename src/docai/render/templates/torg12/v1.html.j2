@@ -1,0 +1,44 @@
+{% extends "torg12/base.html.j2" %}
+{% block style %}
+.v1 .codes{border-collapse:collapse;font-size:8pt}
+.v1 .codes td{border:1px solid #000;padding:0 3mm;text-align:center}
+{% endblock %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div style="display:flex;justify-content:space-between">
+ <div class="small">Унифицированная форма № ТОРГ-12<br>Утверждена постановлением Госкомстата России от 25.12.98 № 132</div>
+ <table class="codes"><tr><td class="nb" style="border:0">Форма по ОКУД</td><td>0330212</td></tr><tr><td style="border:0;text-align:right">по ОКПО</td><td>&nbsp;</td></tr></table>
+</div>
+<div class="req" style="margin-top:2mm">
+ <div class="k">Грузоотправитель</div><div class="val">{{ m.f('seller.name', d.seller.name) }}{% if d.seller.address %}, {{ m.f('seller.address', d.seller.address) }}{% endif %}, ИНН/КПП {{ m.inn_kpp('seller', d.seller) }}</div><div></div>
+ <div class="k">Грузополучатель</div><div class="val">{{ m.f('buyer.name', d.buyer.name) }}{% if d.buyer.address %}, {{ m.f('buyer.address', d.buyer.address) }}{% endif %}, ИНН/КПП {{ m.inn_kpp('buyer', d.buyer) }}</div><div></div>
+ <div class="k">Поставщик</div><div class="val">{{ m.f('seller.name', d.seller.name) }}{% if d.seller_bank %}, {{ m.bank_inline(d.seller_bank) }}{% endif %}</div><div></div>
+ <div class="k">Плательщик</div><div class="val">{{ m.f('buyer.name', d.buyer.name) }}, ИНН/КПП {{ m.inn_kpp('buyer', d.buyer) }}</div><div></div>
+ <div class="k">Основание</div><div class="val">{{ m.basis(d.basis) }}</div><div></div>
+ <div class="k">Транспортная накладная</div><div class="val">&nbsp;</div><div></div>
+</div>
+<div style="display:flex;justify-content:flex-end;margin:2mm 0">
+ <table class="codes" style="border-collapse:collapse;font-size:8pt"><tr><td style="border:1px solid #000;padding:1mm 3mm">Номер документа</td><td style="border:1px solid #000;padding:1mm 3mm">Дата составления</td></tr>
+ <tr><td style="border:1px solid #000;padding:1mm 3mm;text-align:center;font-weight:bold">{{ m.f('number', d.number) }}</td><td style="border:1px solid #000;padding:1mm 3mm;text-align:center;font-weight:bold">{{ m.f('date', d.date|dnum) }}</td></tr></table>
+</div>
+<div class="title" style="text-align:left;font-size:13pt;margin-bottom:2mm">ТОВАРНАЯ НАКЛАДНАЯ</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="small" style="margin-top:2mm">Товарная накладная имеет приложение на ____ листах. Всего мест ____. Масса груза (нетто) ______________ прописью.</div>
+<div class="sg sg2" style="margin-top:3mm;font-size:8pt">
+ <div class="sigbox">
+  <div>Всего отпущено на сумму: <b>{{ d.totals.amount_with_vat|words }}</b></div>
+  <div class="sigline" style="margin-top:7mm">Отпуск разрешил (должность, подпись, расшифровка){{ m.sign(deco, 22, '10mm', '-8mm') }}</div>
+  <div class="sigline">Главный (старший) бухгалтер</div>
+  <div class="sigline">Груз отпустил</div>
+  <div style="height:14mm;position:relative">М.П. «___» __________ 20__ года{{ m.stamp(deco, 26, '45mm', '-8mm') }}</div>
+ </div>
+ <div>
+  <div>По доверенности № ______ от «___» ________ 20__ г.</div>
+  <div class="sigline" style="margin-top:7mm">Груз принял</div>
+  <div class="sigline">Груз получил грузополучатель</div>
+  <div style="margin-top:3mm">М.П. «___» __________ 20__ года</div>
+ </div>
+</div>
+{% endblock %}

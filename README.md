@@ -13,9 +13,22 @@
 
 ```powershell
 uv sync
+uv run playwright install chromium   # один раз: браузер для печатных форм
 uv run pytest
 uv run docai version
 ```
+
+## Печатные формы (PDF)
+
+```powershell
+uv run docai synth generate --n 100 --seed 42 --out data/synth/json
+uv run docai render --in data/synth/json --out data/synth/pdf
+```
+
+Для каждого `NNNNN_<тип>.json` создаются `NNNNN_<тип>.pdf` и `NNNNN_<тип>.layout.json`
+(страница и bbox каждого поля, в пунктах PDF). Вариант вёрстки и заглушки логотипа, печати и подписи
+выбираются по `--seed`; `--variant 1|2|3` фиксирует вариант, `--limit N` и `--stem <имя>` ограничивают набор.
+Chromium хранится в `%LOCALAPPDATA%\ms-playwright`, в репозиторий не входит.
 
 ## Команды разработки
 

@@ -1,0 +1,22 @@
+{% extends "torg12/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 12) }}
+ <div class="t"><div class="title">Товарная накладная № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</div>
+ <div class="small" style="text-align:center">Унифицированная форма № ТОРГ-12, утв. постановлением Госкомстата России от 25.12.1998 № 132 &nbsp;•&nbsp; ОКУД 0330212</div></div></div>
+<div class="two">
+ <div><div class="h">Поставщик / грузоотправитель</div><b>{{ m.f('seller.name', d.seller.name) }}</b><br>{{ m.f('seller.address', d.seller.address) }}<br>ИНН/КПП: {{ m.inn_kpp('seller', d.seller) }}
+  {% if d.seller_bank %}<br>{{ m.bank_inline(d.seller_bank) }}{% endif %}</div>
+ <div><div class="h">Покупатель / грузополучатель / плательщик</div><b>{{ m.f('buyer.name', d.buyer.name) }}</b><br>{{ m.f('buyer.address', d.buyer.address) }}<br>ИНН/КПП: {{ m.inn_kpp('buyer', d.buyer) }}</div>
+</div>
+<div style="margin-bottom:2mm">Основание: {{ m.basis(d.basis) }}</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div style="margin-top:2mm">Всего отпущено на сумму: <b>{{ d.totals.amount_with_vat|words }}</b></div>
+<div class="sg sg2">
+ <div class="sigbox"><div class="ln">{{ m.sign(deco, 24, '40mm', '-1mm') }}</div><div class="cap">Отпуск разрешил / груз отпустил (подпись, ф. и. о.)</div>
+  <div style="height:12mm;position:relative">{{ m.stamp(deco, 26, '70mm', '-14mm') }}</div></div>
+ <div><div class="ln"></div><div class="cap">Груз принял (подпись, ф. и. о.)</div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "bill/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 16) }}<div class="t"><div class="title" style="text-align:right">СЧЁТ № {{ m.f('number', d.number) }}</div><div style="text-align:right">от {{ m.f('date', d.date|dnum) }}</div></div></div>
+<div class="two">
+ <div><div class="h">Поставщик</div><b>{{ m.f('seller.name', d.seller.name) }}</b><br>ИНН {{ m.f('seller.inn', d.seller.inn) }}{% if d.seller.kpp %} / КПП {{ m.f('seller.kpp', d.seller.kpp) }}{% endif %}<br>{{ m.f('seller.address', d.seller.address) }}</div>
+ <div><div class="h">Покупатель</div><b>{{ m.f('buyer.name', d.buyer.name) }}</b><br>ИНН {{ m.f('buyer.inn', d.buyer.inn) }}{% if d.buyer.kpp %} / КПП {{ m.f('buyer.kpp', d.buyer.kpp) }}{% endif %}<br>{{ m.f('buyer.address', d.buyer.address) }}</div>
+</div>
+<div style="margin-bottom:2mm">{% if d.basis %}Основание: {{ m.basis(d.basis) }}{% endif %}</div>
+<div class="small" style="margin-bottom:1mm"><b>Платёжные реквизиты поставщика</b></div>
+{{ m.bank_table(d) }}
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+{{ m.summary(d) }}
+<div class="sg sg2" style="margin-top:6mm">
+ <div class="sigbox"><div class="ln">{{ m.sign(deco, 26, '20mm', '-2mm') }}</div><div class="cap">Руководитель (подпись, расшифровка)</div></div>
+ <div><div class="ln"></div><div class="cap">Главный бухгалтер (подпись, расшифровка)</div></div>
+</div>
+<div class="sigbox" style="height:30mm">{{ m.stamp(deco, 30, '20mm', '2mm') }}</div>
+{% endblock %}

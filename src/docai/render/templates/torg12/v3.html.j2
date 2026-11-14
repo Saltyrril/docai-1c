@@ -1,0 +1,26 @@
+{% extends "torg12/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 11) }}<div class="title t">Товарная накладная ТОРГ-12 № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</div>
+ <div class="small" style="text-align:right">Форма по ОКУД 0330212</div></div>
+<div class="cards" style="margin-top:2.5mm">
+ <div class="card"><div class="l">Грузоотправитель / поставщик</div>{{ m.f('seller.name', d.seller.name) }}</div>
+ <div class="card"><div class="l">Адрес</div>{{ m.f('seller.address', d.seller.address) }}</div>
+ <div class="card"><div class="l">ИНН/КПП</div>{{ m.inn_kpp('seller', d.seller) }}</div>
+ <div class="card"><div class="l">Грузополучатель / плательщик</div>{{ m.f('buyer.name', d.buyer.name) }}</div>
+ <div class="card"><div class="l">Адрес</div>{{ m.f('buyer.address', d.buyer.address) }}</div>
+ <div class="card"><div class="l">ИНН/КПП</div>{{ m.inn_kpp('buyer', d.buyer) }}</div>
+ <div class="card"><div class="l">Основание</div>{{ m.basis(d.basis) }}</div>
+ <div class="card" style="grid-column:span 2"><div class="l">Банковские реквизиты поставщика</div>{{ m.bank_inline(d.seller_bank) }}</div>
+</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div style="margin-top:2mm">Всего отпущено на сумму: <b>{{ d.totals.amount_with_vat|words }}</b></div>
+<div class="sg sg3">
+ <div class="sigbox sigline">Отпуск разрешил{{ m.sign(deco, 24, '3mm', '-9mm') }}</div>
+ <div class="sigline">Главный бухгалтер</div>
+ <div class="sigline">Груз принял</div>
+</div>
+<div class="sigbox" style="height:20mm">{{ m.stamp(deco, 26, '30mm', '-6mm') }}</div>
+{% endblock %}

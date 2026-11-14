@@ -1,0 +1,43 @@
+{% extends "upd/base.html.j2" %}
+{% block style %}
+:root{--m:10mm}
+.v3 .page{font-family:Calibri,Carlito,"Segoe UI","Liberation Sans",sans-serif;font-size:9pt;line-height:1.2}
+.v3 .title{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #1f3b73;padding-bottom:1.5mm;margin-bottom:2.5mm}
+.v3 h1{font-size:15pt;color:#1f3b73;margin:0}
+.v3 .meta{font-size:9pt;text-align:right}
+.v3 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2mm;margin-bottom:2.5mm}
+.v3 .card{border:1px solid #9aa7bf;border-radius:2px;padding:1.2mm 2mm;min-height:11mm}
+.v3 .card .l{font-size:6.5pt;color:#5a6785;text-transform:uppercase;letter-spacing:.3px}
+.v3 .card .vv{font-size:8.5pt}
+.v3 table.items th,.v3 table.items td{border:1px solid #9aa7bf;font-size:7.5pt}
+.v3 table.items td.nb{border:0}
+.v3 table.items thead th{background:#e3e9f5;color:#1f3b73}
+.v3 table.items tr.tot td{background:#f2f5fb}
+.v3 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:4mm}
+.v3 .sg .box{border-top:1px solid #1f3b73;padding-top:1mm;font-size:7pt;color:#444;min-height:15mm;position:relative}
+{% endblock %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="title"><div style="display:flex;gap:4mm;align-items:center">{{ m.logo(deco, 11) }}<h1>УПД № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</h1></div>
+ <div class="meta">Статус: <b>{{ m.f('upd_status', d.upd_status|string) }}</b><br>Счёт-фактура № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }} (1)</div></div>
+<div class="grid">
+ <div class="card"><div class="l">Продавец (2)</div><div class="vv">{{ m.f('seller.name', d.seller.name) }}</div></div>
+ <div class="card"><div class="l">Адрес продавца (2а)</div><div class="vv">{{ m.f('seller.address', d.seller.address) }}</div></div>
+ <div class="card"><div class="l">ИНН/КПП продавца (2б)</div><div class="vv">{{ m.inn_kpp('seller', d.seller) }}</div></div>
+ <div class="card"><div class="l">Покупатель (6)</div><div class="vv">{{ m.f('buyer.name', d.buyer.name) }}</div></div>
+ <div class="card"><div class="l">Адрес покупателя (6а)</div><div class="vv">{{ m.f('buyer.address', d.buyer.address) }}</div></div>
+ <div class="card"><div class="l">ИНН/КПП покупателя (6б)</div><div class="vv">{{ m.inn_kpp('buyer', d.buyer) }}</div></div>
+ <div class="card"><div class="l">Грузоотправитель (3) / Грузополучатель (4)</div><div class="vv">он же / он же</div></div>
+ <div class="card"><div class="l">Основание передачи</div><div class="vv">{{ m.basis(d.basis) }}</div></div>
+ <div class="card"><div class="l">Валюта (7) / платёжный документ (5)</div><div class="vv">Российский рубль, 643 / --</div></div>
+</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="sg">
+ <div class="box">Руководитель или иное уполномоченное лицо (подпись, ф. и. о.){{ m.sign(deco, 24, '3mm', '2mm') }}</div>
+ <div class="box">Главный бухгалтер или иное уполномоченное лицо (подпись, ф. и. о.)</div>
+ <div class="box">Груз принял: {{ m.f('buyer.name', d.buyer.name) }}, дата получения «___» ________ 20__ г.</div>
+</div>
+<div class="sigbox" style="height:20mm">{{ m.stamp(deco, 26, '120mm', '-10mm') }}</div>
+{% endblock %}

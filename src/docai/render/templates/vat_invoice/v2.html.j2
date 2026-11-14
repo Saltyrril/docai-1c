@@ -1,0 +1,19 @@
+{% extends "vat_invoice/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 13) }}
+ <div class="t"><div class="title">СЧЁТ-ФАКТУРА № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</div>
+ <div class="small" style="text-align:center">Исправление № -- от -- &nbsp;•&nbsp; Валюта: Российский рубль, код 643 &nbsp;•&nbsp; Платёжно-расчётный документ: --</div></div></div>
+<div class="two">
+ <div><div class="h">Продавец (2)</div><b>{{ m.f('seller.name', d.seller.name) }}</b><br>Адрес (2а): {{ m.f('seller.address', d.seller.address) }}<br>ИНН/КПП (2б): {{ m.inn_kpp('seller', d.seller) }}<br>Грузоотправитель (3): он же</div>
+ <div><div class="h">Покупатель (6)</div><b>{{ m.f('buyer.name', d.buyer.name) }}</b><br>Адрес (6а): {{ m.f('buyer.address', d.buyer.address) }}<br>ИНН/КПП (6б): {{ m.inn_kpp('buyer', d.buyer) }}<br>Грузополучатель (4): он же</div>
+</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="sg sg2" style="margin-top:3mm">
+ <div class="sigbox"><div class="ln">{{ m.sign(deco, 26, '40mm', '-1mm') }}</div><div class="cap">Руководитель организации (подпись, ф. и. о.)</div>
+  <div style="height:12mm;position:relative">{{ m.stamp(deco, 26, '70mm', '-16mm') }}</div></div>
+ <div><div class="ln"></div><div class="cap">Главный бухгалтер (подпись, ф. и. о.)</div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{# Поле с привязкой к схеме: data-field читает JS для bbox. Пустое значение не печатается. #}
+{% macro f(path, text) -%}{% if text %}<span data-field="{{ path }}">{{ text }}</span>{% endif %}{%- endmacro %}
+
+{% macro inn_kpp(side, p) -%}
+{{ f(side ~ '.inn', p.inn) }}{% if p.kpp %}/{{ f(side ~ '.kpp', p.kpp) }}{% endif %}
+{%- endmacro %}
+
+{% macro basis(b) -%}
+{% if b %}{{ f('basis.name', b.name) }}{% if b.number %} № {{ f('basis.number', b.number) }}{% endif %}{% if b.date %} от {{ f('basis.date', b.date|dnum) }}{% endif %}{% endif %}
+{%- endmacro %}
+
+{% macro bank_inline(b) -%}
+{% if b %}р/с {{ f('seller_bank.account', b.account) }}{% if b.bank_name %} в {{ f('seller_bank.bank_name', b.bank_name) }}{% endif %}{% if b.bik %}, БИК {{ f('seller_bank.bik', b.bik) }}{% endif %}{% if b.corr_account %}, к/с {{ f('seller_bank.corr_account', b.corr_account) }}{% endif %}{% endif %}
+{%- endmacro %}
+
+{# --- заглушки: только геометрия, без текста, чтобы не попадать в текстовый слой --- #}
+{% macro logo(deco, size=14) -%}
+{% if deco.logo %}{% set c = deco.logo.color %}
+<svg class="logo" width="{{ size }}mm" height="{{ size }}mm" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+{% if deco.logo.shape == 0 %}<circle cx="24" cy="24" r="22" fill="{{ c }}"/><path d="M10 30 L24 10 L38 30 Z" fill="#fff"/>
+{% elif deco.logo.shape == 1 %}<rect x="3" y="3" width="42" height="42" rx="8" fill="{{ c }}"/><rect x="12" y="12" width="10" height="24" fill="#fff"/><rect x="26" y="20" width="10" height="16" fill="#fff"/>
+{% else %}<polygon points="24,2 46,24 24,46 2,24" fill="{{ c }}"/><circle cx="24" cy="24" r="9" fill="#fff"/>{% endif %}
+</svg>{% endif %}
+{%- endmacro %}
+
+{% macro stamp(deco, size=30, left='10mm', top='-6mm') -%}
+{% if deco.stamp %}
+<svg class="stamp" style="left:{{ left }};top:{{ top }};width:{{ size }}mm;height:{{ size }}mm;transform:rotate({{ deco.stamp.angle }}deg);opacity:.82" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<g fill="none" stroke="{{ deco.stamp.color }}" stroke-width="2.4"><circle cx="60" cy="60" r="56"/><circle cx="60" cy="60" r="47" stroke-width="1"/><circle cx="60" cy="60" r="22" stroke-width="1.2"/></g>
+<polygon fill="{{ deco.stamp.color }}" points="60,44 64,55 76,55 66,62 70,74 60,67 50,74 54,62 44,55 56,55"/>
+<g fill="{{ deco.stamp.color }}" opacity=".75"><rect x="22" y="30" width="76" height="3.5" rx="1.5"/><rect x="30" y="38" width="60" height="3" rx="1.5"/><rect x="28" y="82" width="64" height="3" rx="1.5"/><rect x="24" y="90" width="72" height="3.5" rx="1.5"/></g>
+</svg>{% endif %}
+{%- endmacro %}
+
+{% macro sign(deco, width=24, left='4mm', top='-7mm') -%}
+{% if deco.sign %}
+<svg class="sign" style="left:{{ left }};top:{{ top }};width:{{ width }}mm;height:{{ width * 0.5 }}mm" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+<path fill="none" stroke="#12327a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+{% if deco.sign.kind == 0 %}d="M4 38 C14 6, 22 6, 24 30 S34 44, 42 16 S52 40, 60 30 S74 10, 96 32"
+{% elif deco.sign.kind == 1 %}d="M6 34 C20 4, 30 44, 40 22 C48 6, 52 40, 64 26 L96 14 M30 42 L88 40"
+{% else %}d="M8 30 Q20 2 32 28 T58 24 T84 22 M10 40 L70 36"{% endif %}/>
+</svg>{% endif %}
+{%- endmacro %}
+
+{# Банковский блок счёта на оплату: банк получателя, БИК, счета, получатель #}
+{% macro bank_table(d) -%}
+{% set b = d.seller_bank %}
+<table class="bank">
+<tr><td colspan="2" rowspan="2" style="width:56%">Банк получателя<br>{{ f('seller_bank.bank_name', b.bank_name) }}</td><td style="width:10%">БИК</td><td>{{ f('seller_bank.bik', b.bik) }}</td></tr>
+<tr><td>Сч. №</td><td>{{ f('seller_bank.corr_account', b.corr_account) }}</td></tr>
+<tr><td style="width:28%">ИНН {{ f('seller.inn', d.seller.inn) }}</td><td>{% if d.seller.kpp %}КПП {{ f('seller.kpp', d.seller.kpp) }}{% endif %}</td><td rowspan="2">Сч. №</td><td rowspan="2">{{ f('seller_bank.account', b.account) }}</td></tr>
+<tr><td colspan="2">Получатель<br>{{ f('seller.name', d.seller.name) }}</td></tr>
+</table>
+{%- endmacro %}
+
+{% macro summary(d) -%}
+<div class="words">Всего наименований {{ d.lines|length }}, на сумму {{ f('totals.amount_with_vat', d.totals.amount_with_vat|money) }} руб.<br>
+<b>{{ d.totals.amount_with_vat|words }}</b></div>
+{%- endmacro %}

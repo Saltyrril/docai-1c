@@ -1,0 +1,49 @@
+{% extends "_layout.html.j2" %}
+{% import "_macros.html.j2" as m %}
+{% block table %}
+{# Графы ТОРГ-12 по унифицированной форме (постановление Госкомстата России от 25.12.1998 № 132) #}
+<table class="items torg">
+<colgroup>
+{% for w in [4.5,17,4,5,4.5,5,5,5,6,6.5,7.5,9,4.5,7,9.5] %}<col style="width:{{ w }}%">{% endfor %}
+</colgroup>
+<thead>
+<tr>
+<th rowspan="2">Номер по порядку</th>
+<th colspan="2">Товар</th><th colspan="2">Единица измерения</th>
+<th rowspan="2">Вид упаковки</th><th colspan="2">Количество</th>
+<th rowspan="2">Масса брутто</th><th rowspan="2">Количество (масса нетто)</th>
+<th rowspan="2">Цена, руб. коп.</th><th rowspan="2">Сумма без учёта НДС, руб. коп.</th>
+<th colspan="2">НДС</th><th rowspan="2">Сумма с учётом НДС, руб. коп.</th>
+</tr>
+<tr><th>наименование, характеристика, сорт, артикул товара</th><th>код</th><th>наиме&shy;нование</th><th>код по ОКЕИ</th>
+<th>в одном месте</th><th>мест, штук</th><th>ставка, %</th><th>сумма, руб. коп.</th></tr>
+<tr class="nums">{% for x in range(1, 16) %}<th>{{ x }}</th>{% endfor %}</tr>
+</thead>
+<tbody>
+{% for l in d.lines %}{% set i = loop.index0 %}
+<tr>
+<td class="c">{{ loop.index }}</td>
+<td data-field="lines[{{ i }}].name">{{ l.name }}</td><td class="c"></td>
+<td class="c">{{ m.f('lines[%d].unit_name' % i, l.unit_name) }}</td>
+<td class="c">{{ m.f('lines[%d].unit_code' % i, l.unit_code) }}</td>
+<td></td><td></td><td></td><td></td>
+<td class="n">{{ m.f('lines[%d].quantity' % i, l.quantity|qty) }}</td>
+<td class="n">{{ m.f('lines[%d].price' % i, l.price|price) }}</td>
+<td class="n">{{ m.f('lines[%d].amount_without_vat' % i, l.amount_without_vat|money) }}</td>
+<td class="c">{{ m.f('lines[%d].vat_rate' % i, l.vat_rate|vat) }}</td>
+<td class="n">{% if l.vat_amount is not none %}{{ m.f('lines[%d].vat_amount' % i, l.vat_amount|money) }}{% else %}без НДС{% endif %}</td>
+<td class="n">{{ m.f('lines[%d].amount_with_vat' % i, l.amount_with_vat|money) }}</td>
+</tr>
+{% endfor %}
+{% for label in ['Итого', 'Всего по накладной'] %}
+<tr class="tot">
+<td colspan="9" class="r b">{{ label }}</td><td class="c">X</td><td class="c">X</td>
+<td class="n b">{{ m.f('totals.amount_without_vat', d.totals.amount_without_vat|money) }}</td>
+<td class="c">X</td>
+<td class="n b">{% if d.totals.vat_amount is not none %}{{ m.f('totals.vat_amount', d.totals.vat_amount|money) }}{% else %}без НДС{% endif %}</td>
+<td class="n b">{{ m.f('totals.amount_with_vat', d.totals.amount_with_vat|money) }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "act/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 15) }}<div class="t"><div class="title" style="text-align:left">Акт № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</div><div class="small">об оказании услуг (выполнении работ)</div></div></div>
+<div class="two">
+ <div><div class="h">Исполнитель</div><b>{{ m.f('seller.name', d.seller.name) }}</b><br>ИНН {{ m.f('seller.inn', d.seller.inn) }}{% if d.seller.kpp %} / КПП {{ m.f('seller.kpp', d.seller.kpp) }}{% endif %}<br>{{ m.f('seller.address', d.seller.address) }}{% if d.seller_bank %}<br>{{ m.bank_inline(d.seller_bank) }}{% endif %}</div>
+ <div><div class="h">Заказчик</div><b>{{ m.f('buyer.name', d.buyer.name) }}</b><br>ИНН {{ m.f('buyer.inn', d.buyer.inn) }}{% if d.buyer.kpp %} / КПП {{ m.f('buyer.kpp', d.buyer.kpp) }}{% endif %}<br>{{ m.f('buyer.address', d.buyer.address) }}</div>
+</div>
+{% if d.basis %}<div style="margin-bottom:2mm">Договор: {{ m.basis(d.basis) }}</div>{% endif %}
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+{{ m.summary(d) }}
+<div style="margin:2mm 0 4mm">Услуги оказаны в полном объёме. Претензий по объёму, качеству и срокам у Заказчика нет.</div>
+<div class="sg sg2">
+ <div class="sigbox"><div class="small"><b>Исполнитель</b></div><div class="ln">{{ m.sign(deco, 24, '20mm', '-1mm') }}</div><div class="cap">подпись / расшифровка</div><div style="height:26mm;position:relative">{{ m.stamp(deco, 28, '6mm', '-8mm') }}</div></div>
+ <div><div class="small"><b>Заказчик</b></div><div class="ln"></div><div class="cap">подпись / расшифровка</div></div>
+</div>
+{% endblock %}

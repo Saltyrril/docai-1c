@@ -1,0 +1,21 @@
+{% extends "bill/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 14) }}<div class="title t">Счёт на оплату № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</div></div>
+<div class="cards" style="grid-template-columns:1fr 1fr;margin-top:3mm">
+ <div class="card"><div class="l">Поставщик</div>{{ m.f('seller.name', d.seller.name) }}<br>ИНН {{ m.f('seller.inn', d.seller.inn) }}{% if d.seller.kpp %}, КПП {{ m.f('seller.kpp', d.seller.kpp) }}{% endif %}<br>{{ m.f('seller.address', d.seller.address) }}</div>
+ <div class="card"><div class="l">Покупатель</div>{{ m.f('buyer.name', d.buyer.name) }}<br>ИНН {{ m.f('buyer.inn', d.buyer.inn) }}{% if d.buyer.kpp %}, КПП {{ m.f('buyer.kpp', d.buyer.kpp) }}{% endif %}<br>{{ m.f('buyer.address', d.buyer.address) }}</div>
+</div>
+{% if d.basis %}<div style="margin-bottom:2mm"><span class="small">Основание:</span> {{ m.basis(d.basis) }}</div>{% endif %}
+<div class="card" style="margin-bottom:3mm"><div class="l">Реквизиты для оплаты</div>
+ Получатель: {{ m.f('seller.name', d.seller.name) }}; р/с {{ m.f('seller_bank.account', d.seller_bank.account) }}; банк {{ m.f('seller_bank.bank_name', d.seller_bank.bank_name) }}; БИК {{ m.f('seller_bank.bik', d.seller_bank.bik) }}; к/с {{ m.f('seller_bank.corr_account', d.seller_bank.corr_account) }}</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+{{ m.summary(d) }}
+<div class="sg sg2" style="margin-top:4mm">
+ <div class="sigbox sigline">Руководитель{{ m.sign(deco, 24, '5mm', '-9mm') }}</div>
+ <div class="sigline">Главный бухгалтер</div>
+</div>
+<div class="sigbox" style="height:30mm">{{ m.stamp(deco, 30, '10mm', '2mm') }}</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "vat_invoice/base.html.j2" %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="headrow">{{ m.logo(deco, 11) }}<div class="title t">Счёт-фактура № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }}</div>
+ <div class="small" style="text-align:right">Исправление № -- от --<br>Валюта: Российский рубль, 643</div></div>
+<div class="cards" style="margin-top:2.5mm">
+ <div class="card"><div class="l">Продавец (2)</div>{{ m.f('seller.name', d.seller.name) }}</div>
+ <div class="card"><div class="l">Адрес (2а)</div>{{ m.f('seller.address', d.seller.address) }}</div>
+ <div class="card"><div class="l">ИНН/КПП продавца (2б)</div>{{ m.inn_kpp('seller', d.seller) }}</div>
+ <div class="card"><div class="l">Покупатель (6)</div>{{ m.f('buyer.name', d.buyer.name) }}</div>
+ <div class="card"><div class="l">Адрес (6а)</div>{{ m.f('buyer.address', d.buyer.address) }}</div>
+ <div class="card"><div class="l">ИНН/КПП покупателя (6б)</div>{{ m.inn_kpp('buyer', d.buyer) }}</div>
+</div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="sg sg3">
+ <div class="sigbox sigline">Руководитель организации или иное уполномоченное лицо{{ m.sign(deco, 24, '3mm', '-9mm') }}</div>
+ <div class="sigline">Главный бухгалтер или иное уполномоченное лицо</div>
+ <div class="sigline">Индивидуальный предприниматель / реквизиты свидетельства</div>
+</div>
+<div class="sigbox" style="height:20mm">{{ m.stamp(deco, 26, '30mm', '-6mm') }}</div>
+{% endblock %}

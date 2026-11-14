@@ -1,0 +1,34 @@
+{% extends "_layout.html.j2" %}
+{% import "_macros.html.j2" as m %}
+{% block table %}
+{# Счёт на оплату: утверждённой формы нет, колонки — по обычной практике (в духе печати 1С) #}
+<table class="items bill">
+<colgroup>
+{% for w in [4,30,8,7,11,11,7,10,12] %}<col style="width:{{ w }}%">{% endfor %}
+</colgroup>
+<thead>
+<tr><th>№</th><th>Товары (работы, услуги)</th><th>Кол-во</th><th>Ед.</th><th>Цена</th><th>Сумма без НДС</th><th>Ставка НДС</th><th>Сумма НДС</th><th>Всего с НДС</th></tr>
+</thead>
+<tbody>
+{% for l in d.lines %}{% set i = loop.index0 %}
+<tr>
+<td class="c">{{ loop.index }}</td>
+<td data-field="lines[{{ i }}].name">{{ l.name }}</td>
+<td class="n">{{ m.f('lines[%d].quantity' % i, l.quantity|qty) }}</td>
+<td class="c">{{ m.f('lines[%d].unit_name' % i, l.unit_name) }}</td>
+<td class="n">{{ m.f('lines[%d].price' % i, l.price|price) }}</td>
+<td class="n">{{ m.f('lines[%d].amount_without_vat' % i, l.amount_without_vat|money) }}</td>
+<td class="c">{{ m.f('lines[%d].vat_rate' % i, l.vat_rate|vat) }}</td>
+<td class="n">{% if l.vat_amount is not none %}{{ m.f('lines[%d].vat_amount' % i, l.vat_amount|money) }}{% else %}без НДС{% endif %}</td>
+<td class="n">{{ m.f('lines[%d].amount_with_vat' % i, l.amount_with_vat|money) }}</td>
+</tr>
+{% endfor %}
+<tr class="tot">
+<td colspan="5" class="r b">Итого:</td>
+<td class="n b">{{ m.f('totals.amount_without_vat', d.totals.amount_without_vat|money) }}</td><td class="c"></td>
+<td class="n b">{% if d.totals.vat_amount is not none %}{{ m.f('totals.vat_amount', d.totals.vat_amount|money) }}{% else %}без НДС{% endif %}</td>
+<td class="n b">{{ m.f('totals.amount_with_vat', d.totals.amount_with_vat|money) }}</td>
+</tr>
+</tbody>
+</table>
+{% endblock %}

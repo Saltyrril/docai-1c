@@ -1,0 +1,62 @@
+{% extends "upd/base.html.j2" %}
+{% block style %}
+:root{--m:8mm}
+.v1 .page{font-family:"Times New Roman","Liberation Serif",serif;font-size:8.5pt;line-height:1.15}
+.v1 .top{display:flex;justify-content:space-between;gap:8mm}
+.v1 .status{border:1px solid #000;padding:2mm 3mm;width:62mm;font-size:8pt}
+.v1 .status .big{font-size:11pt;font-weight:bold}
+.v1 .appx{text-align:right;font-size:7pt;width:110mm}
+.v1 h1{font-size:13pt;margin:0 0 1mm}
+.v1 .req{display:grid;grid-template-columns:62mm 1fr 9mm;column-gap:2mm;margin-top:1mm}
+.v1 .req .k{white-space:nowrap}
+.v1 .req .val{border-bottom:1px solid #000;min-height:4mm}
+.v1 table.items th,.v1 table.items td{border:1px solid #000;font-size:7.5pt}
+.v1 table.items td.nb{border:0}
+.v1 .sigs{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:4mm;font-size:7.5pt}
+.v1 .sigrow{display:flex;gap:6mm;margin-top:5mm}
+.v1 .sigrow .line{flex:1;border-top:1px solid #000;text-align:center;font-size:6.5pt;position:relative}
+{% endblock %}
+{% block head %}
+{% import "_macros.html.j2" as m %}
+<div class="top">
+  <div class="status"><div class="big">Статус: {{ m.f('upd_status', d.upd_status|string) }}</div>
+  1 — счёт-фактура и передаточный документ (акт)<br>2 — передаточный документ (акт)</div>
+  <div class="appx">Приложение № 1<br>к письму ФНС России от 21.10.2013 № ММВ-20-3/96@</div>
+</div>
+<h1>Счёт-фактура № {{ m.f('number', d.number) }} от {{ m.f('date', d.date|dnum) }} (1)<br>
+<span style="font-size:10pt;font-weight:normal">Исправление № -- от -- (1а)</span></h1>
+<div class="req">
+ <div class="k">Продавец</div><div class="val">{{ m.f('seller.name', d.seller.name) }}</div><div>(2)</div>
+ <div class="k">Адрес</div><div class="val">{{ m.f('seller.address', d.seller.address) }}</div><div>(2а)</div>
+ <div class="k">ИНН/КПП продавца</div><div class="val">{{ m.inn_kpp('seller', d.seller) }}</div><div>(2б)</div>
+ <div class="k">Грузоотправитель и его адрес</div><div class="val">он же</div><div>(3)</div>
+ <div class="k">Грузополучатель и его адрес</div><div class="val">он же</div><div>(4)</div>
+ <div class="k">К платёжно-расчётному документу №</div><div class="val">--</div><div>(5)</div>
+ <div class="k">Покупатель</div><div class="val">{{ m.f('buyer.name', d.buyer.name) }}</div><div>(6)</div>
+ <div class="k">Адрес</div><div class="val">{{ m.f('buyer.address', d.buyer.address) }}</div><div>(6а)</div>
+ <div class="k">ИНН/КПП покупателя</div><div class="val">{{ m.inn_kpp('buyer', d.buyer) }}</div><div>(6б)</div>
+ <div class="k">Валюта: наименование, код</div><div class="val">Российский рубль, 643</div><div>(7)</div>
+ <div class="k">Идентификатор госконтракта</div><div class="val">--</div><div>(8)</div>
+</div>
+<div style="height:2mm"></div>
+{% endblock %}
+{% block foot %}
+{% import "_macros.html.j2" as m %}
+<div class="sigs">
+ <div class="sigbox">
+  <div><b>Основание передачи (сдачи) / получения (приёмки):</b> {{ m.basis(d.basis) }}</div>
+  <div>Дата отгрузки, передачи (сдачи): {{ m.f('date', d.date|dnum) }} [11]</div>
+  <div>Составитель документа: {{ m.f('seller.name', d.seller.name) }}, ИНН/КПП {{ m.inn_kpp('seller', d.seller) }} [15]</div>
+  <div class="sigrow" style="height:12mm"><div class="line">{{ m.sign(deco) }}Руководитель организации или иное уполномоченное лицо (подпись)</div><div class="line">(ф. и. о.)</div></div>
+  <div class="sigrow"><div class="line">Главный бухгалтер или иное уполномоченное лицо (подпись)</div><div class="line">(ф. и. о.)</div></div>
+  <div style="height:16mm;position:relative">{{ m.stamp(deco, 28, '8mm', '-2mm') }}М.П.</div>
+ </div>
+ <div>
+  <div><b>Иные сведения об отгрузке, передаче:</b> --</div>
+  <div>Дата получения (приёмки): «___» __________ 20__ г. [16]</div>
+  <div>Принял: {{ m.f('buyer.name', d.buyer.name) }}, ИНН/КПП {{ m.inn_kpp('buyer', d.buyer) }}</div>
+  <div class="sigrow" style="height:12mm"><div class="line">Должность / подпись / ф. и. о. лица, принявшего груз</div></div>
+  <div class="sigrow"><div class="line">Наименование экономического субъекта — составителя документа о приёмке</div></div>
+ </div>
+</div>
+{% endblock %}

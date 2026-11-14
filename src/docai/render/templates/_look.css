@@ -1,0 +1,61 @@
+/* Внешний вид вариантов: v1 — официальная форма (шрифт с засечками), v2 — печать 1С (Arial),
+   v3 — современный стиль электронных сервисов (Calibri, цветные карточки). */
+.v1 .page{--m:9mm;font-family:"Times New Roman","Liberation Serif",serif;font-size:9pt;line-height:1.15}
+.v2 .page{--m:10mm;font-family:Arial,"Liberation Sans",Helvetica,sans-serif;font-size:8.5pt;line-height:1.2}
+.v3 .page{--m:11mm;font-family:Calibri,Carlito,"Segoe UI","Liberation Sans",sans-serif;font-size:9.5pt;line-height:1.2}
+
+.v1 table.items th,.v1 table.items td{border:1px solid #000;font-size:8pt}
+.v2 table.items th,.v2 table.items td{border:1px solid #555;font-size:7.5pt}
+.v2 table.items thead th{background:#ececec}
+.v3 table.items th,.v3 table.items td{border:1px solid #9aa7bf;font-size:8pt}
+.v3 table.items thead th{background:#e3e9f5;color:#1f3b73}
+.v3 table.items tr.tot td{background:#f2f5fb}
+table.items td.nb{border:0 !important;background:none !important}
+table.items td.r{text-align:right}
+
+/* реквизиты построчно: подпись, значение с подчёркиванием, номер строки формы */
+.req{display:grid;grid-template-columns:62mm 1fr 9mm;column-gap:2mm;margin-top:1mm}
+.req .k{white-space:nowrap}
+.v1 .req .val{border-bottom:1px solid #000;min-height:4mm}
+.req .val{min-height:4mm}
+
+/* две колонки «продавец / покупатель» */
+.two{display:grid;grid-template-columns:1fr 1fr;margin-bottom:2mm}
+.two>div{padding:1.5mm 2.5mm}
+.v2 .two{border:1px solid #000}
+.v2 .two>div+div{border-left:1px solid #000}
+.v3 .two{gap:3mm}
+.v3 .two>div{border:1px solid #9aa7bf;border-radius:2px}
+.two .h{font-weight:bold;font-size:7pt;text-transform:uppercase;color:#444}
+
+/* карточки */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2mm;margin-bottom:2.5mm}
+.card{border:1px solid #9aa7bf;border-radius:2px;padding:1.2mm 2mm;min-height:11mm}
+.card .l{font-size:6.5pt;color:#5a6785;text-transform:uppercase;letter-spacing:.3px}
+
+/* подписи */
+.sg{display:grid;gap:6mm;margin-top:4mm}
+.sg2{grid-template-columns:1fr 1fr}
+.sg3{grid-template-columns:repeat(3,1fr)}
+.ln{border-bottom:1px solid #000;height:9mm;position:relative}
+.cap{font-size:6.5pt;color:#444;text-align:center}
+.sigline{border-top:1px solid #000;text-align:center;font-size:6.5pt;position:relative;margin-top:8mm}
+.v3 .sigline{border-top-color:#1f3b73}
+.title{margin:0;text-align:center;font-weight:bold}
+.v1 .title{font-size:13pt}
+.v2 .title{font-size:12.5pt}
+.v3 .title{font-size:16pt;color:#1f3b73;text-align:left}
+.headrow{display:flex;align-items:center;gap:5mm;margin-bottom:2mm}
+.headrow .t{flex:1}
+.v3 .headrow{border-bottom:2px solid #1f3b73;padding-bottom:1.5mm}
+.small{font-size:7pt}
+.box{border:1px solid #000;padding:1mm 3mm}
+
+/* банковский блок счёта */
+table.bank{border-collapse:collapse;width:100%;margin-bottom:3mm}
+table.bank td{border:1px solid #000;padding:1mm 2mm;vertical-align:top}
+.v3 table.bank td{border-color:#9aa7bf}
+.req2{display:grid;grid-template-columns:27mm 1fr;column-gap:2mm;row-gap:1.5mm;margin:2mm 0}
+.req2 .k{font-weight:bold}
+.words{margin:2mm 0;font-size:9pt}
+.v1 .words b,.v2 .words b{font-weight:bold}

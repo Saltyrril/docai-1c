@@ -1,0 +1,53 @@
+{% extends "_layout.html.j2" %}
+{% import "_macros.html.j2" as m %}
+{% block table %}
+{# Графы УПД по форме из приложения № 1 к письму ФНС от 21.10.2013 № ММВ-20-3/96@ #}
+<table class="items upd">
+<colgroup>
+{% for w in [2.5,4,16,4,3.5,6,6,7,8.5,5,6.5,8,8.5,3.5,5.5,5.5] %}<col style="width:{{ w }}%">{% endfor %}
+</colgroup>
+<thead>
+<tr>
+<th rowspan="2">№ п/п</th><th rowspan="2">Код товара/ работ, услуг</th>
+<th rowspan="2">Наименование товара (описание выполненных работ, оказанных услуг), имущественного права</th>
+<th rowspan="2">Код вида товара</th>
+<th colspan="2">Единица измерения</th><th rowspan="2">Количе&shy;ство (объём)</th>
+<th rowspan="2">Цена (тариф) за единицу измерения</th>
+<th rowspan="2">Стоимость товаров (работ, услуг), имущественных прав без налога — всего</th>
+<th rowspan="2">В том числе сумма акциза</th><th rowspan="2">Налоговая ставка</th>
+<th rowspan="2">Сумма налога, предъявляемая покупателю</th>
+<th rowspan="2">Стоимость товаров (работ, услуг), имущественных прав с налогом — всего</th>
+<th colspan="2">Страна происхождения товара</th>
+<th rowspan="2">Регист&shy;рационный номер таможен&shy;ной декла&shy;рации</th>
+</tr>
+<tr><th>код</th><th>условное обозначение (нац.)</th><th>цифровой код</th><th>краткое наимено&shy;вание</th></tr>
+<tr class="nums">{% for x in ['А','Б','1','1а','2','2а','3','4','5','6','7','8','9','10','10а','11'] %}<th>{{ x }}</th>{% endfor %}</tr>
+</thead>
+<tbody>
+{% for l in d.lines %}{% set i = loop.index0 %}
+<tr>
+<td class="c">{{ loop.index }}</td><td class="c">--</td>
+<td data-field="lines[{{ i }}].name">{{ l.name }}</td><td class="c">--</td>
+<td class="c">{{ m.f('lines[%d].unit_code' % i, l.unit_code) }}</td>
+<td class="c">{{ m.f('lines[%d].unit_name' % i, l.unit_name) }}</td>
+<td class="n">{{ m.f('lines[%d].quantity' % i, l.quantity|qty) }}</td>
+<td class="n">{{ m.f('lines[%d].price' % i, l.price|price) }}</td>
+<td class="n">{{ m.f('lines[%d].amount_without_vat' % i, l.amount_without_vat|money) }}</td>
+<td class="c">без акциза</td>
+<td class="c">{{ m.f('lines[%d].vat_rate' % i, l.vat_rate|vat) }}</td>
+<td class="n">{% if l.vat_amount is not none %}{{ m.f('lines[%d].vat_amount' % i, l.vat_amount|money) }}{% else %}без НДС{% endif %}</td>
+<td class="n">{{ m.f('lines[%d].amount_with_vat' % i, l.amount_with_vat|money) }}</td>
+<td class="c">--</td><td class="c">--</td><td class="c">--</td>
+</tr>
+{% endfor %}
+<tr class="tot">
+<td colspan="8" class="r b">Всего к оплате (9)</td>
+<td class="n b">{{ m.f('totals.amount_without_vat', d.totals.amount_without_vat|money) }}</td>
+<td class="c">X</td><td class="c">X</td>
+<td class="n b">{% if d.totals.vat_amount is not none %}{{ m.f('totals.vat_amount', d.totals.vat_amount|money) }}{% else %}без НДС{% endif %}</td>
+<td class="n b">{{ m.f('totals.amount_with_vat', d.totals.amount_with_vat|money) }}</td>
+<td colspan="3" class="nb"></td>
+</tr>
+</tbody>
+</table>
+{% endblock %}
