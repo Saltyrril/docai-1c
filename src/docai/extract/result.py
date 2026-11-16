@@ -5,6 +5,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from docai.extract.vram import VramStats
+from docai.postprocess import PostprocessReport
 
 
 class LlmCall(BaseModel):
@@ -44,6 +45,9 @@ class Meta(BaseModel):
     tokens: Tokens = Field(default_factory=Tokens)
     llm_calls: list[LlmCall] = Field(default_factory=list)
     vram: VramStats | None = None
+    # Второй путь, запущенный для сверки (--cross-check), и его время.
+    cross_check: str | None = None
+    cross_check_total_s: float | None = None
 
 
 class ExtractionResult(BaseModel):
@@ -58,4 +62,6 @@ class ExtractionResult(BaseModel):
     valid: bool
     warnings: list[str] = Field(default_factory=list)
     errors: list[str] = Field(default_factory=list)
+    # Нормализация, исправления, уверенность по полям и статус документа.
+    postprocess: PostprocessReport | None = None
     meta: Meta

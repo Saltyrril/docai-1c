@@ -24,3 +24,14 @@ ocr_psm: 3
 ocr_dpi: 300
 vram_poll_s: 0.5
 vram_limit_gib: 3.8
+postprocess:              # шаг P10: исправления, уверенность, статус (D41–D43); остальные константы — в PostprocessConfig
+  autofix: true           # исправлять суммы там, где ответ однозначен
+  review_threshold: 0.8   # уверенность поля ниже — «нужна проверка»
+  reject_threshold: 0.5   # поле ниже считается не прочитанным
+  reject_low_share: 0.5   # доля непрочитанных полей, с которой документ отклоняется
+  corrected_cap: 0.85     # потолок уверенности у автоисправленного поля
+  priors:                 # P(поле верно) до проверок: путь × группа поля
+    xml:    {id: 0.995, money: 0.995, date: 0.995, text: 0.995, enum: 0.995, code: 0.995}
+    text:   {id: 0.93, money: 0.97, date: 0.6, text: 0.93, enum: 0.95, code: 0.8}
+    vision: {id: 0.7, money: 0.6, date: 0.3, text: 0.63, enum: 0.85, code: 0.45}
+    ocr:    {id: 0.5, money: 0.2, date: 0.4, text: 0.2, enum: 0.5, code: 0.2}

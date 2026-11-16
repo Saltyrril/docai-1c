@@ -41,6 +41,7 @@ from docai.extract.prompts import render_prompt
 from docai.extract.result import ExtractionResult, LlmCall, Meta
 from docai.extract.router import InputKind, Mode, Route, route_inputs
 from docai.extract.vram import VramMonitor
+from docai.postprocess import SourceKind, postprocess
 from docai.schemas.documents import AnyDocument
 
 log = logging.getLogger("docai.extract")
@@ -57,6 +58,8 @@ class _Run:
         self.schema = draft_json_schema()
         # Сообщение об обрезанном ответе последнего запроса (None, если ответ полный).
         self.truncated: str | None = None
+        # Тексты-источники (текстовый слой, OCR) для проверки «значение дословно есть».
+        self.texts: list[tuple[SourceKind, str]] = []
 
     @contextmanager
     def stage(self, name: str) -> Iterator[None]:
@@ -192,6 +195,7 @@ def _run_text(run: _Run, path: Path) -> list[Draft]:
     with run.stage("pdf_text"):
         pages = pdf_pages_text(path)
     run.meta.pages = len(pages)
+    run.texts.append(("text_layer", "\n".join(pages)))
     return _drafts_from_texts(run, pages, "текстовый слой PDF", "Текст документа")
 
 
@@ -225,6 +229,7 @@ def _run_ocr(run: _Run, paths: Sequence[Path], kind: InputKind) -> list[Draft]:
     for image in images:
         with run.stage("ocr"):
             texts.append(ocr_image(cmd, image, config.ocr_lang, config.ocr_psm))
+    run.texts.append(("ocr", "\n".join(texts)))
     source = "текст, распознанный OCR; в нём возможны ошибки распознавания"
     return _drafts_from_texts(run, texts, source, "Распознанный текст")
 
@@ -239,13 +244,10 @@ def _run_xml(run: _Run, path: Path) -> AnyDocument | None:
         return None
 
 
-def extract(
-    paths: Sequence[Path],
-    mode: Mode = Mode.AUTO,
-    config: ExtractConfig | None = None,
-) -> ExtractionResult:
-    """Извлечь документ из файла (или нескольких картинок-страниц одного документа)."""
-    config = config or ExtractConfig()
+def _extract_raw(
+    paths: Sequence[Path], mode: Mode, config: ExtractConfig
+) -> tuple[ExtractionResult, AnyDocument | None, _Run]:
+    """Один путь извлечения без постобработки."""
     meta = Meta(
         docai_version=__version__,
         started_at=datetime.now(UTC).isoformat(timespec="seconds"),
@@ -293,10 +295,49 @@ def extract(
         if peak > config.vram_limit_gib:
             run.warnings.append(f"пиковая VRAM {peak:.2f} ГиБ выше порога {config.vram_limit_gib}")
 
-    return ExtractionResult(
+    result = ExtractionResult(
         document=document.model_dump(mode="json") if document is not None else None,
         valid=document is not None,
         warnings=run.warnings,
         errors=run.errors,
         meta=meta,
     )
+    return result, document, run
+
+
+def extract(
+    paths: Sequence[Path],
+    mode: Mode = Mode.AUTO,
+    config: ExtractConfig | None = None,
+    cross_check: Mode | None = None,
+) -> ExtractionResult:
+    """Извлечь документ из файла (или нескольких картинок-страниц одного документа).
+
+    После LLM документ нормализуется, проверяется, при однозначной ошибке исправляется,
+    по каждому полю считается уверенность и выставляется статус (`result.postprocess`, D41–D43).
+    `cross_check` — второй путь для сверки (например, ocr при основном vision): значения,
+    совпавшие на двух путях, получают больше уверенности, расхождения — меньше.
+    """
+    config = config or ExtractConfig()
+    result, document, run = _extract_raw(paths, mode, config)
+    route = result.meta.route or "vision"
+    texts = list(run.texts)
+    alternates = []
+    if cross_check is not None and route != str(Route.XML):
+        second, second_doc, second_run = _extract_raw(paths, cross_check, config)
+        result.meta.cross_check = str(second.meta.route)
+        result.meta.cross_check_total_s = second.meta.timings_s.get("total")
+        result.warnings.extend(f"cross-check: {w}" for w in second.warnings)
+        result.errors.extend(f"cross-check: {e}" for e in second.errors)
+        texts += second_run.texts
+        if second_doc is not None:
+            alternates.append(second_doc)
+    with run.stage("postprocess"):
+        done = postprocess(
+            document, route=route, texts=texts, alternates=alternates, config=config.postprocess
+        )
+    result.meta.timings_s["postprocess"] = run.meta.timings_s["postprocess"]
+    result.postprocess = done.report
+    if done.document is not None:
+        result.document = done.document.model_dump(mode="json")
+    return result

@@ -1,0 +1,1063 @@
+{
+  "n_docs": 250,
+  "seed": 2026,
+  "postprocess_config": {
+    "autofix": true,
+    "priors": {
+      "xml": {
+        "id": 0.995,
+        "money": 0.995,
+        "date": 0.995,
+        "text": 0.995,
+        "enum": 0.995,
+        "code": 0.995
+      },
+      "text": {
+        "id": 0.93,
+        "money": 0.97,
+        "date": 0.6,
+        "text": 0.93,
+        "enum": 0.95,
+        "code": 0.8
+      },
+      "vision": {
+        "id": 0.7,
+        "money": 0.6,
+        "date": 0.3,
+        "text": 0.63,
+        "enum": 0.85,
+        "code": 0.45
+      },
+      "ocr": {
+        "id": 0.5,
+        "money": 0.2,
+        "date": 0.4,
+        "text": 0.2,
+        "enum": 0.5,
+        "code": 0.2
+      }
+    },
+    "lr_error_named": 0.01,
+    "lr_error_involved": 0.2,
+    "lr_warning": 0.4,
+    "lr_inn10": 10.0,
+    "lr_inn12": 100.0,
+    "lr_kpp": 2.0,
+    "lr_bik_weak": 3.0,
+    "lr_key": 10.0,
+    "lr_date_vat": 2.0,
+    "lr_vat_rate": 10.0,
+    "lr_untaxed_rate": 2.0,
+    "lr_product": 20.0,
+    "lr_line_sum": 20.0,
+    "lr_column_sum": 3.0,
+    "lr_total_sum": 20.0,
+    "lr_total_identity": 3.0,
+    "validation_boost_cap": 10.0,
+    "lr_found_strong": 8.0,
+    "lr_found_weak": 1.5,
+    "lr_missing_text_layer": 0.05,
+    "lr_missing_ocr": 0.3,
+    "lr_missing_weak": 0.5,
+    "lr_cross_agree": 6.0,
+    "lr_cross_disagree": 0.25,
+    "corrected_cap": 0.85,
+    "prob_min": 0.01,
+    "prob_max": 0.99,
+    "review_threshold": 0.8,
+    "reject_threshold": 0.5,
+    "reject_low_share": 0.5
+  },
+  "no_text": {
+    "clean_documents": 250,
+    "clean_false_alarm": 0,
+    "clean_false_alarm_rate": 0.0,
+    "rule_applied": 4302,
+    "rule_caught": 4275,
+    "rule_caught_rate": 0.9937238493723849,
+    "rule_caught_error_rate": 0.9879125987912599,
+    "rule_fixed_rate": 0.47396559739655975,
+    "rule_wrong_fix": 0,
+    "outside_caught_rate": 0.0,
+    "rows": [
+      {
+        "name": "line_amount_digit",
+        "group": "rule",
+        "title": "цифра в сумме строки",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 247,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_with_vat_digit",
+        "group": "rule",
+        "title": "цифра в сумме строки с НДС",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 214,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_vat_digit",
+        "group": "rule",
+        "title": "цифра в НДС строки",
+        "applied": 222,
+        "caught": 222,
+        "caught_error": 222,
+        "fixed_back": 216,
+        "flagged": 222,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_price_digit",
+        "group": "rule",
+        "title": "цифра в цене",
+        "applied": 250,
+        "caught": 248,
+        "caught_error": 248,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_amount_drop_digit",
+        "group": "rule",
+        "title": "потеряна цифра в сумме строки",
+        "applied": 225,
+        "caught": 225,
+        "caught_error": 225,
+        "fixed_back": 224,
+        "flagged": 225,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_amount_shift",
+        "group": "rule",
+        "title": "запятая сдвинута в сумме строки",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 250,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_quantity_wrong",
+        "group": "rule",
+        "title": "неверное количество",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_without_digit",
+        "group": "rule",
+        "title": "цифра в итоге без НДС",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 222,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_vat_digit",
+        "group": "rule",
+        "title": "цифра в итоге НДС",
+        "applied": 222,
+        "caught": 222,
+        "caught_error": 222,
+        "fixed_back": 222,
+        "flagged": 222,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_with_digit",
+        "group": "rule",
+        "title": "цифра в итоге с НДС",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 222,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_with_transpose",
+        "group": "rule",
+        "title": "две цифры итога переставлены",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 222,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "vat_rate_wrong",
+        "group": "rule",
+        "title": "неверная ставка НДС в строке",
+        "applied": 206,
+        "caught": 206,
+        "caught_error": 206,
+        "fixed_back": 0,
+        "flagged": 206,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "date_across_regime",
+        "group": "rule",
+        "title": "дата за границей смены ставки",
+        "applied": 183,
+        "caught": 183,
+        "caught_error": 158,
+        "fixed_back": 0,
+        "flagged": 183,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "inn_digit",
+        "group": "rule",
+        "title": "цифра в ИНН",
+        "applied": 250,
+        "caught": 249,
+        "caught_error": 249,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "bik_digit",
+        "group": "rule",
+        "title": "цифра в БИК",
+        "applied": 96,
+        "caught": 72,
+        "caught_error": 72,
+        "fixed_back": 0,
+        "flagged": 96,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "account_digit",
+        "group": "rule",
+        "title": "цифра в расчётном счёте",
+        "applied": 96,
+        "caught": 96,
+        "caught_error": 96,
+        "fixed_back": 0,
+        "flagged": 96,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "corr_account_digit",
+        "group": "rule",
+        "title": "цифра в корр. счёте",
+        "applied": 96,
+        "caught": 96,
+        "caught_error": 96,
+        "fixed_back": 0,
+        "flagged": 96,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "kpp_dropped_char",
+        "group": "rule",
+        "title": "потерян знак КПП",
+        "applied": 243,
+        "caught": 243,
+        "caught_error": 243,
+        "fixed_back": 0,
+        "flagged": 243,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_dropped",
+        "group": "rule",
+        "title": "пропущена строка таблицы",
+        "applied": 213,
+        "caught": 213,
+        "caught_error": 213,
+        "fixed_back": 0,
+        "flagged": 213,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_duplicated",
+        "group": "rule",
+        "title": "строка таблицы прочитана дважды",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "seller_name_typo",
+        "group": "outside",
+        "title": "опечатка в наименовании продавца",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "buyer_address_typo",
+        "group": "outside",
+        "title": "опечатка в адресе покупателя",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_name_typo",
+        "group": "outside",
+        "title": "опечатка в наименовании товара",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "number_digit",
+        "group": "outside",
+        "title": "цифра в номере документа",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "kpp_digit",
+        "group": "outside",
+        "title": "цифра в КПП (форма верна)",
+        "applied": 243,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 243,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "date_same_regime",
+        "group": "outside",
+        "title": "дата сдвинута в пределах года",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "basis_number_digit",
+        "group": "outside",
+        "title": "цифра в номере договора",
+        "applied": 182,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 182,
+        "silent": 0,
+        "wrong_fix": 0
+      }
+    ]
+  },
+  "text_layer": {
+    "clean_documents": 250,
+    "clean_statuses": {
+      "upload": 243,
+      "review": 7
+    },
+    "rows": [
+      {
+        "name": "line_amount_digit",
+        "group": "rule",
+        "title": "цифра в сумме строки",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 247,
+        "flagged": 9,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_with_vat_digit",
+        "group": "rule",
+        "title": "цифра в сумме строки с НДС",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 214,
+        "flagged": 42,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_vat_digit",
+        "group": "rule",
+        "title": "цифра в НДС строки",
+        "applied": 222,
+        "caught": 222,
+        "caught_error": 222,
+        "fixed_back": 216,
+        "flagged": 12,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_price_digit",
+        "group": "rule",
+        "title": "цифра в цене",
+        "applied": 250,
+        "caught": 248,
+        "caught_error": 248,
+        "fixed_back": 0,
+        "flagged": 248,
+        "silent": 2,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_amount_drop_digit",
+        "group": "rule",
+        "title": "потеряна цифра в сумме строки",
+        "applied": 225,
+        "caught": 225,
+        "caught_error": 225,
+        "fixed_back": 224,
+        "flagged": 7,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_amount_shift",
+        "group": "rule",
+        "title": "запятая сдвинута в сумме строки",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 233,
+        "flagged": 24,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_quantity_wrong",
+        "group": "rule",
+        "title": "неверное количество",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_without_digit",
+        "group": "rule",
+        "title": "цифра в итоге без НДС",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 222,
+        "flagged": 34,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_vat_digit",
+        "group": "rule",
+        "title": "цифра в итоге НДС",
+        "applied": 222,
+        "caught": 222,
+        "caught_error": 222,
+        "fixed_back": 222,
+        "flagged": 6,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_with_digit",
+        "group": "rule",
+        "title": "цифра в итоге с НДС",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 222,
+        "flagged": 34,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "total_with_transpose",
+        "group": "rule",
+        "title": "две цифры итога переставлены",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 222,
+        "flagged": 34,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "vat_rate_wrong",
+        "group": "rule",
+        "title": "неверная ставка НДС в строке",
+        "applied": 206,
+        "caught": 206,
+        "caught_error": 206,
+        "fixed_back": 0,
+        "flagged": 206,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "date_across_regime",
+        "group": "rule",
+        "title": "дата за границей смены ставки",
+        "applied": 183,
+        "caught": 183,
+        "caught_error": 158,
+        "fixed_back": 0,
+        "flagged": 183,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "inn_digit",
+        "group": "rule",
+        "title": "цифра в ИНН",
+        "applied": 250,
+        "caught": 249,
+        "caught_error": 249,
+        "fixed_back": 0,
+        "flagged": 249,
+        "silent": 1,
+        "wrong_fix": 0
+      },
+      {
+        "name": "bik_digit",
+        "group": "rule",
+        "title": "цифра в БИК",
+        "applied": 96,
+        "caught": 72,
+        "caught_error": 72,
+        "fixed_back": 0,
+        "flagged": 73,
+        "silent": 23,
+        "wrong_fix": 0
+      },
+      {
+        "name": "account_digit",
+        "group": "rule",
+        "title": "цифра в расчётном счёте",
+        "applied": 96,
+        "caught": 96,
+        "caught_error": 96,
+        "fixed_back": 0,
+        "flagged": 96,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "corr_account_digit",
+        "group": "rule",
+        "title": "цифра в корр. счёте",
+        "applied": 96,
+        "caught": 96,
+        "caught_error": 96,
+        "fixed_back": 0,
+        "flagged": 96,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "kpp_dropped_char",
+        "group": "rule",
+        "title": "потерян знак КПП",
+        "applied": 243,
+        "caught": 243,
+        "caught_error": 243,
+        "fixed_back": 0,
+        "flagged": 243,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_dropped",
+        "group": "rule",
+        "title": "пропущена строка таблицы",
+        "applied": 213,
+        "caught": 213,
+        "caught_error": 213,
+        "fixed_back": 0,
+        "flagged": 213,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_duplicated",
+        "group": "rule",
+        "title": "строка таблицы прочитана дважды",
+        "applied": 250,
+        "caught": 250,
+        "caught_error": 250,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "seller_name_typo",
+        "group": "outside",
+        "title": "опечатка в наименовании продавца",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "buyer_address_typo",
+        "group": "outside",
+        "title": "опечатка в адресе покупателя",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "line_name_typo",
+        "group": "outside",
+        "title": "опечатка в наименовании товара",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "number_digit",
+        "group": "outside",
+        "title": "цифра в номере документа",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 156,
+        "silent": 94,
+        "wrong_fix": 0
+      },
+      {
+        "name": "kpp_digit",
+        "group": "outside",
+        "title": "цифра в КПП (форма верна)",
+        "applied": 243,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 243,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "date_same_regime",
+        "group": "outside",
+        "title": "дата сдвинута в пределах года",
+        "applied": 250,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 250,
+        "silent": 0,
+        "wrong_fix": 0
+      },
+      {
+        "name": "basis_number_digit",
+        "group": "outside",
+        "title": "цифра в номере договора",
+        "applied": 182,
+        "caught": 0,
+        "caught_error": 0,
+        "fixed_back": 0,
+        "flagged": 123,
+        "silent": 59,
+        "wrong_fix": 0
+      }
+    ]
+  },
+  "p3": {
+    "documents": 144,
+    "caught": 144,
+    "fixed": 2,
+    "still_errors": 142,
+    "upload": 2,
+    "caught_rate": 1.0,
+    "by_kind": {
+      "line_vat": {
+        "documents": 37,
+        "caught": 37,
+        "fixed": 2,
+        "still_errors": 35,
+        "upload": 2
+      },
+      "line_amount": {
+        "documents": 42,
+        "caught": 42,
+        "fixed": 0,
+        "still_errors": 42,
+        "upload": 0
+      },
+      "invalid_inn": {
+        "documents": 27,
+        "caught": 27,
+        "fixed": 0,
+        "still_errors": 27,
+        "upload": 0
+      },
+      "total": {
+        "documents": 38,
+        "caught": 38,
+        "fixed": 0,
+        "still_errors": 38,
+        "upload": 0
+      }
+    }
+  },
+  "calibration": {
+    "text/alone": {
+      "documents": 10,
+      "fields": 998,
+      "wrong_fields": 51,
+      "share_correct": 0.949,
+      "threshold": 0.8,
+      "precision_above_threshold": 0.971,
+      "wrong_flagged_share": 0.118,
+      "brier": 0.0259,
+      "bins": [
+        {
+          "range": "0.00–0.20",
+          "fields": 8,
+          "mean_confidence": 0.089,
+          "share_correct": 0.25
+        },
+        {
+          "range": "0.50–0.80",
+          "fields": 3,
+          "mean_confidence": 0.721,
+          "share_correct": 1.0
+        },
+        {
+          "range": "0.80–0.95",
+          "fields": 95,
+          "mean_confidence": 0.851,
+          "share_correct": 0.832
+        },
+        {
+          "range": "0.95–1.00",
+          "fields": 875,
+          "mean_confidence": 0.985,
+          "share_correct": 0.986
+        }
+      ],
+      "statuses": {
+        "review": 6,
+        "upload": 4
+      },
+      "uploaded_with_wrong_fields": 4,
+      "autofixes": 0,
+      "docs_with_raw_issues": 5
+    },
+    "text/with_other_paths": {
+      "documents": 10,
+      "fields": 998,
+      "wrong_fields": 51,
+      "share_correct": 0.949,
+      "threshold": 0.8,
+      "precision_above_threshold": 0.98,
+      "wrong_flagged_share": 0.294,
+      "brier": 0.0284,
+      "bins": [
+        {
+          "range": "0.00–0.20",
+          "fields": 10,
+          "mean_confidence": 0.091,
+          "share_correct": 0.5
+        },
+        {
+          "range": "0.20–0.50",
+          "fields": 2,
+          "mean_confidence": 0.39,
+          "share_correct": 0.5
+        },
+        {
+          "range": "0.50–0.80",
+          "fields": 27,
+          "mean_confidence": 0.568,
+          "share_correct": 0.667
+        },
+        {
+          "range": "0.80–0.95",
+          "fields": 84,
+          "mean_confidence": 0.86,
+          "share_correct": 0.929
+        },
+        {
+          "range": "0.95–1.00",
+          "fields": 858,
+          "mean_confidence": 0.987,
+          "share_correct": 0.985
+        }
+      ],
+      "statuses": {
+        "review": 8,
+        "upload": 2
+      },
+      "uploaded_with_wrong_fields": 2,
+      "autofixes": 0,
+      "docs_with_raw_issues": 5
+    },
+    "vision/alone": {
+      "documents": 10,
+      "fields": 998,
+      "wrong_fields": 352,
+      "share_correct": 0.647,
+      "threshold": 0.8,
+      "precision_above_threshold": 0.813,
+      "wrong_flagged_share": 0.736,
+      "brier": 0.2094,
+      "bins": [
+        {
+          "range": "0.00–0.20",
+          "fields": 92,
+          "mean_confidence": 0.033,
+          "share_correct": 0.12
+        },
+        {
+          "range": "0.20–0.50",
+          "fields": 206,
+          "mean_confidence": 0.33,
+          "share_correct": 0.563
+        },
+        {
+          "range": "0.50–0.80",
+          "fields": 263,
+          "mean_confidence": 0.625,
+          "share_correct": 0.665
+        },
+        {
+          "range": "0.80–0.95",
+          "fields": 333,
+          "mean_confidence": 0.928,
+          "share_correct": 0.763
+        },
+        {
+          "range": "0.95–1.00",
+          "fields": 90,
+          "mean_confidence": 0.975,
+          "share_correct": 1.0
+        }
+      ],
+      "statuses": {
+        "review": 8,
+        "reject": 2
+      },
+      "uploaded_with_wrong_fields": 0,
+      "autofixes": 1,
+      "docs_with_raw_issues": 7
+    },
+    "vision/with_other_paths": {
+      "documents": 10,
+      "fields": 998,
+      "wrong_fields": 352,
+      "share_correct": 0.647,
+      "threshold": 0.8,
+      "precision_above_threshold": 0.85,
+      "wrong_flagged_share": 0.736,
+      "brier": 0.1513,
+      "bins": [
+        {
+          "range": "0.00–0.20",
+          "fields": 142,
+          "mean_confidence": 0.058,
+          "share_correct": 0.092
+        },
+        {
+          "range": "0.20–0.50",
+          "fields": 120,
+          "mean_confidence": 0.329,
+          "share_correct": 0.375
+        },
+        {
+          "range": "0.50–0.80",
+          "fields": 197,
+          "mean_confidence": 0.644,
+          "share_correct": 0.721
+        },
+        {
+          "range": "0.80–0.95",
+          "fields": 200,
+          "mean_confidence": 0.92,
+          "share_correct": 0.62
+        },
+        {
+          "range": "0.95–1.00",
+          "fields": 325,
+          "mean_confidence": 0.983,
+          "share_correct": 0.991
+        }
+      ],
+      "statuses": {
+        "review": 8,
+        "reject": 2
+      },
+      "uploaded_with_wrong_fields": 0,
+      "autofixes": 1,
+      "docs_with_raw_issues": 7
+    },
+    "ocr/alone": {
+      "documents": 10,
+      "fields": 998,
+      "wrong_fields": 845,
+      "share_correct": 0.153,
+      "threshold": 0.8,
+      "precision_above_threshold": 0.8,
+      "wrong_flagged_share": 0.499,
+      "brier": 0.1826,
+      "bins": [
+        {
+          "range": "0.00–0.20",
+          "fields": 275,
+          "mean_confidence": 0.04,
+          "share_correct": 0.138
+        },
+        {
+          "range": "0.20–0.50",
+          "fields": 220,
+          "mean_confidence": 0.213,
+          "share_correct": 0.314
+        },
+        {
+          "range": "0.50–0.80",
+          "fields": 60,
+          "mean_confidence": 0.652,
+          "share_correct": 0.433
+        },
+        {
+          "range": "0.80–0.95",
+          "fields": 25,
+          "mean_confidence": 0.909,
+          "share_correct": 0.8
+        }
+      ],
+      "statuses": {
+        "reject": 10
+      },
+      "uploaded_with_wrong_fields": 0,
+      "autofixes": 0,
+      "docs_with_raw_issues": 10
+    },
+    "ocr/with_other_paths": {
+      "documents": 10,
+      "fields": 998,
+      "wrong_fields": 845,
+      "share_correct": 0.153,
+      "threshold": 0.8,
+      "precision_above_threshold": 0.9,
+      "wrong_flagged_share": 0.495,
+      "brier": 0.122,
+      "bins": [
+        {
+          "range": "0.00–0.20",
+          "fields": 313,
+          "mean_confidence": 0.036,
+          "share_correct": 0.112
+        },
+        {
+          "range": "0.20–0.50",
+          "fields": 132,
+          "mean_confidence": 0.209,
+          "share_correct": 0.174
+        },
+        {
+          "range": "0.50–0.80",
+          "fields": 45,
+          "mean_confidence": 0.674,
+          "share_correct": 0.311
+        },
+        {
+          "range": "0.80–0.95",
+          "fields": 52,
+          "mean_confidence": 0.899,
+          "share_correct": 0.827
+        },
+        {
+          "range": "0.95–1.00",
+          "fields": 38,
+          "mean_confidence": 0.985,
+          "share_correct": 1.0
+        }
+      ],
+      "statuses": {
+        "reject": 9,
+        "review": 1
+      },
+      "uploaded_with_wrong_fields": 0,
+      "autofixes": 0,
+      "docs_with_raw_issues": 10
+    }
+  }
+}

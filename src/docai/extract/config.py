@@ -5,6 +5,8 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
+from docai.postprocess import PostprocessConfig
+
 
 class OllamaOptions(BaseModel):
     """Параметры генерации, которые уходят в `options` запроса Ollama.
@@ -57,6 +59,9 @@ class ExtractConfig(BaseModel):
     # Мониторинг VRAM: период опроса nvidia-smi и порог, после которого пишется предупреждение.
     vram_poll_s: float = 0.5
     vram_limit_gib: float = 3.8
+
+    # Постобработка: исправления, уверенность, статус документа (D41–D43).
+    postprocess: PostprocessConfig = Field(default_factory=PostprocessConfig)
 
 
 def load_config(path: Path | None) -> ExtractConfig:

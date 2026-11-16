@@ -1,0 +1,66 @@
+run: uv run python reports/2026-11-16_p10_validation/run.py
+dataset: data/datasets/v1 (сплит test)
+n_docs: 250
+seed: 2026
+p9_outputs: data/experiments/p9_extract_smoke
+postprocess:
+  autofix: true
+  priors:
+    xml:
+      id: 0.995
+      money: 0.995
+      date: 0.995
+      text: 0.995
+      enum: 0.995
+      code: 0.995
+    text:
+      id: 0.93
+      money: 0.97
+      date: 0.6
+      text: 0.93
+      enum: 0.95
+      code: 0.8
+    vision:
+      id: 0.7
+      money: 0.6
+      date: 0.3
+      text: 0.63
+      enum: 0.85
+      code: 0.45
+    ocr:
+      id: 0.5
+      money: 0.2
+      date: 0.4
+      text: 0.2
+      enum: 0.5
+      code: 0.2
+  lr_error_named: 0.01
+  lr_error_involved: 0.2
+  lr_warning: 0.4
+  lr_inn10: 10.0
+  lr_inn12: 100.0
+  lr_kpp: 2.0
+  lr_bik_weak: 3.0
+  lr_key: 10.0
+  lr_date_vat: 2.0
+  lr_vat_rate: 10.0
+  lr_untaxed_rate: 2.0
+  lr_product: 20.0
+  lr_line_sum: 20.0
+  lr_column_sum: 3.0
+  lr_total_sum: 20.0
+  lr_total_identity: 3.0
+  validation_boost_cap: 10.0
+  lr_found_strong: 8.0
+  lr_found_weak: 1.5
+  lr_missing_text_layer: 0.05
+  lr_missing_ocr: 0.3
+  lr_missing_weak: 0.5
+  lr_cross_agree: 6.0
+  lr_cross_disagree: 0.25
+  corrected_cap: 0.85
+  prob_min: 0.01
+  prob_max: 0.99
+  review_threshold: 0.8
+  reject_threshold: 0.5
+  reject_low_share: 0.5
