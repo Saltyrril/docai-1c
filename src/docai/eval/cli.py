@@ -44,6 +44,9 @@ def eval_command(
         elapsed = (time.monotonic() - started) / 60
         console.print(f"[{i}/{n}] {item.item_id}: {state} (прошло {elapsed:.0f} мин)")
 
+    def notice(text: str) -> None:
+        console.print(f"[yellow]Питание:[/yellow] {text}")
+
     try:
         if predict_only:
             items = select_items(cfg)
@@ -54,10 +57,12 @@ def eval_command(
                 cfg.cache_dir,
                 cross_check=cfg.extract.cross_check,
                 progress=progress,
+                power_guard=cfg.power_guard,
+                notice=notice,
             )
             console.print(f"Ответы модели: {len(items)} в {cfg.cache_dir}")
             return
-        result, _, records = evaluate(cfg, progress=progress)
+        result, _, records = evaluate(cfg, progress=progress, notice=notice)
         out = write_report(result, records, cfg)
     except (RuntimeError, ValueError, FileNotFoundError) as exc:
         console.print(f"[red]Ошибка:[/red] {exc}")

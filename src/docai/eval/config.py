@@ -50,6 +50,7 @@ class ExtractSection(_Strict):
     model: str | None = None
     text_prompt: str | None = None
     vision_prompt: str | None = None
+    date_format: Literal["iso", "printed"] | None = None
     # Чистый уровень: подавать PDF (путь auto → текстовый слой) или картинку.
     clean_input: Literal["pdf", "image"] = "pdf"
 
@@ -61,6 +62,7 @@ class ExtractSection(_Strict):
                 ("model", self.model),
                 ("text_prompt", self.text_prompt),
                 ("vision_prompt", self.vision_prompt),
+                ("date_format", self.date_format),
             )
             if value is not None
         }
@@ -102,6 +104,8 @@ class EvalConfig(_Strict):
     predictions_dir: Path = Path("data/experiments/eval")
     # metrics.json другой конфигурации для парного сравнения на общих документах.
     compare_with: Path | None = None
+    # Считать только от сети: ждать зарядку, пересчитывать документы с батареей или сном (D47).
+    power_guard: bool = True
 
     @model_validator(mode="after")
     def _check(self) -> "EvalConfig":

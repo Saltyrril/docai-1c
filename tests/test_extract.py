@@ -1,6 +1,7 @@
 """P9: маршрутизация, черновик для LLM, конвейер извлечения (Ollama подменена), CLI."""
 
 import copy
+import datetime as dt
 import json
 from decimal import Decimal
 from pathlib import Path
@@ -300,6 +301,54 @@ def test_parse_draft_nulls_impossible_values() -> None:
     assert raw == original  # исходный ответ не меняется
 
 
+def test_printed_date_schema_has_no_date_format() -> None:
+    """D47: в схеме printed у даты нет шаблона ГГГГ-ММ-ДД, остальное — как в iso."""
+    iso, printed = draft_json_schema("iso"), draft_json_schema("printed")
+    assert '"format": "date"' in json.dumps(iso)
+    assert '"format"' not in json.dumps(printed)
+    assert draft_json_schema() == iso
+
+    def drop(node: Any) -> Any:
+        if isinstance(node, dict):
+            return {k: drop(v) for k, v in node.items() if (k, v) != ("format", "date")}
+        return [drop(v) for v in node] if isinstance(node, list) else node
+
+    assert drop(iso) == printed
+
+
+@pytest.mark.parametrize(
+    ("printed", "expected"),
+    [
+        ("05.02.2026", dt.date(2026, 2, 5)),
+        ("5 февраля 2026 г.", dt.date(2026, 2, 5)),
+        ("«05» февраля 2026 г.", dt.date(2026, 2, 5)),
+        ("2026-02-05", dt.date(2026, 2, 5)),
+        ("05.02.26", dt.date(2026, 2, 5)),
+    ],
+)
+def test_parse_draft_printed_dates(printed: str, expected: dt.date) -> None:
+    raw = draft_data(date=printed, basis={"name": "Договор", "number": "1", "date": printed})
+    original = copy.deepcopy(raw)
+    draft, warnings = parse_draft(raw, "printed")
+    assert draft.date == expected
+    assert draft.basis is not None and draft.basis.date == expected
+    assert warnings == []
+    assert raw == original
+
+
+def test_parse_draft_printed_garbage_date_is_null() -> None:
+    draft, warnings = parse_draft(draft_data(date="тридцатое число", basis=None), "printed")
+    assert draft.date is None
+    assert len(warnings) == 1 and warnings[0].startswith("date:")
+
+
+def test_iso_mode_does_not_parse_printed_dates() -> None:
+    """В режиме iso (как в P9–P11) «05.02.2026» не разбирается — поведение базы не меняется."""
+    draft, warnings = parse_draft(draft_data(date="05.02.2026"))
+    assert draft.date is None
+    assert warnings
+
+
 def test_merge_drafts_across_pages() -> None:
     first = Draft.model_validate(
         draft_data(totals={"amount_without_vat": None, "vat_amount": None, "amount_with_vat": None})
@@ -384,6 +433,18 @@ def test_prompts_are_versioned_files() -> None:
         load_prompt("text_v999")
 
 
+@pytest.mark.parametrize("kind", ["text", "vision"])
+def test_v2_prompt_differs_from_v1_only_in_date_rule(kind: str) -> None:
+    """D47: эксперимент меняет одно правило о датах, остальной промпт тот же (D40)."""
+    v1 = load_prompt(f"{kind}_v1").splitlines()
+    v2 = load_prompt(f"{kind}_v2").splitlines()
+    changed = [(a, b) for a, b in zip(v1, v2, strict=True) if a != b]
+    assert len(changed) == 1
+    old, new = changed[0]
+    assert "ГГГГ-ММ-ДД" in old and "ГГГГ-ММ-ДД" not in new
+    assert "как они напечатаны" in new
+
+
 def test_fit_long_side() -> None:
     assert fit_long_side(Image.new("RGB", (2560, 1810)), 1280).size == (1280, 905)
     assert fit_long_side(Image.new("RGB", (1000, 3000)), 1280).size == (427, 1280)
@@ -431,7 +492,7 @@ def test_extract_text_route(fake: FakeOllama) -> None:
     result = extract([TEXT_PDF])
     assert result.valid
     assert result.meta.route == "text"
-    assert result.meta.prompt_version == "text_v1"
+    assert result.meta.prompt_version == "text_v2"
     assert result.meta.tokens.prompt == 100
     assert {"route", "pdf_text", "llm", "assemble", "total"} <= set(result.meta.timings_s)
     assert len(fake.bodies) == 1
@@ -445,7 +506,7 @@ def test_extract_vision_route_per_page(fake: FakeOllama, scan_pdf: Path) -> None
     result = extract([scan_pdf])
     assert result.valid
     assert result.meta.route == "vision"
-    assert result.meta.prompt_version == "vision_v1"
+    assert result.meta.prompt_version == "vision_v2"
     assert result.meta.pages == 2
     assert len(fake.bodies) == 2
     assert [c.part for c in result.meta.llm_calls] == ["page 1/2", "page 2/2"]

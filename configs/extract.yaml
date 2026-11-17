@@ -13,8 +13,9 @@ options:                  # уходят в options запроса; сэмпли
   presence_penalty: 0     # в Modelfile qwen3.5 стоит 1.5
   num_ctx: 8192
   num_predict: 4096
-text_prompt: text_v1      # src/docai/extract/prompts/text_v1.md (текст и OCR)
-vision_prompt: vision_v1  # src/docai/extract/prompts/vision_v1.md
+text_prompt: text_v2      # src/docai/extract/prompts/text_v2.md (текст и OCR); v1 — база P11
+vision_prompt: vision_v2  # src/docai/extract/prompts/vision_v2.md
+date_format: printed      # как в документе (D47); iso — грамматика ГГГГ-ММ-ДД, как в P9–P11
 min_text_chars_per_page: 30
 max_image_side: 1280
 max_text_chars: 12000

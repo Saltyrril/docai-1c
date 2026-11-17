@@ -46,6 +46,16 @@ def fmt(est: dict | None, percent: bool = True, digits: int | None = None) -> st
     return f"{value}{unit} [{_num(est['low'], d, percent)}; {_num(est['high'], d, percent)}]"
 
 
+def fmt_p(p: float | None, *, eq: bool = False) -> str:
+    """p-значение: «< 0,001» вместо «0,000»; eq — с «=» для текста («p = 0,03»)."""
+    if p is None or (isinstance(p, float) and math.isnan(p)):
+        return "—"
+    if p < 0.001:
+        return "< 0,001"
+    text = _num(p, 3, False)
+    return f"= {text}" if eq else text
+
+
 # Метрики, которые печатаются не процентом.
 _PLAIN = {"ece": 3, "mce": 3, "brier": 3, "sec_per_page": 1}
 
@@ -239,13 +249,13 @@ def render_markdown(
         lines.append(
             f"| {titles[name]} | {_num(est['a'])}% | {_num(est['b'])}% "
             f"| {_num(est['diff'])} п.п. [{_num(est['low'])}; {_num(est['high'])}] "
-            f"| {_num(est['p_value'], 3, False)} |"
+            f"| {fmt_p(est['p_value'])} |"
         )
     mc = rvp["mcnemar_doc_ok"]
     lines += [
         "",
         f"Макнемар (без правок): только до — {mc['a_only']}, только после — {mc['b_only']}, "
-        f"p = {_num(mc['p_value'], 3, False)} ({mc['method']}).",
+        f"p {fmt_p(mc['p_value'], eq=True)} ({mc['method']}).",
     ]
 
     short = {m: _SHORT.get(m, titles[m]) for m in GROUP_METRICS}
@@ -335,13 +345,13 @@ def render_markdown(
                 lines.append(
                     f"| {titles[name]} | {_num(est['a'], d, pct)} | {_num(est['b'], d, pct)} "
                     f"| {_num(est['diff'], d, pct)}{unit} [{_num(est['low'], d, pct)}; "
-                    f"{_num(est['high'], d, pct)}] | {_num(est['p_value'], 3, False)} |"
+                    f"{_num(est['high'], d, pct)}] | {fmt_p(est['p_value'])} |"
                 )
             mc = comp["mcnemar_doc_ok"]
             lines += [
                 "",
                 f"Макнемар (без правок): только A — {mc['a_only']}, только B — {mc['b_only']}, "
-                f"p = {_num(mc['p_value'], 3, False)} ({mc['method']}).",
+                f"p {fmt_p(mc['p_value'], eq=True)} ({mc['method']}).",
             ]
         else:
             lines.append("Общих документов нет.")

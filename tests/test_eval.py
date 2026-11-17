@@ -13,13 +13,21 @@ import yaml
 from typer.testing import CliRunner
 
 from docai.cli import app
+from docai.eval import power as power_mod
 from docai.eval import predict as predict_mod
 from docai.eval.assign import linear_assignment
 from docai.eval.calibration import auroc, reliability_bins, reliability_svg
 from docai.eval.compare import compare_documents, match_rows
 from docai.eval.config import EvalConfig, load_eval_config
 from docai.eval.metrics import comparison_counts, count_matrix, main_metrics
-from docai.eval.predict import MAX_CONSECUTIVE_FAILURES, Prediction, fingerprint, run_predictions
+from docai.eval.predict import (
+    MAX_CONSECUTIVE_FAILURES,
+    Prediction,
+    fingerprint,
+    fingerprint_config,
+    load_cached,
+    run_predictions,
+)
 from docai.eval.run import compare_runs, evaluate
 from docai.eval.sample import EvalItem, proportional_quotas, select_dataset_items
 from docai.eval.stats import (
@@ -454,6 +462,8 @@ def eval_config(tmp_path: Path, **data) -> EvalConfig:
             "bootstrap": {"n_resamples": 200},
             "report": {"out_dir": tmp_path / "reports", "date": "2026-11-16", "worst": 2},
             "predictions_dir": tmp_path / "cache",
+            # Тесты не должны зависеть от того, заряжается ли ноутбук.
+            "power_guard": False,
         }
     )
 
@@ -619,3 +629,124 @@ def test_basis_date_field_type():
     data = doc_data("bill")
     data["basis"] = {**data["basis"], "date": date(2026, 1, 15)}
     assert compare(ref, parse_document(data)).ok
+
+
+# ---- новые поля конфига и питание (D47) ------------------------------------------------
+
+
+def test_fingerprint_ignores_legacy_default_date_format(tmp_path):
+    """Поле date_format со значением iso не меняет отпечаток: кэш P11 остаётся годным."""
+    cfg = eval_config(tmp_path)
+    item = select_dataset_items(cfg)[0]
+    iso = ExtractConfig(date_format="iso")
+    printed = ExtractConfig(date_format="printed")
+    # При iso содержимое отпечатка такое же, как до появления поля date_format.
+    assert "date_format" not in fingerprint_config(iso)
+    assert fingerprint_config(printed)["date_format"] == "printed"
+    assert "postprocess" not in fingerprint_config(iso)
+    assert fingerprint(item, printed, Mode.AUTO, None) != fingerprint(item, iso, Mode.AUTO, None)
+
+
+def test_model_failure_is_cached(tmp_path):
+    """Зациклившаяся генерация — ответ модели: кэшируется. Сбой Ollama — повторяется."""
+    cfg = eval_config(tmp_path)
+    items = select_dataset_items(cfg)[:1]
+    path = cfg.cache_dir / f"{items[0].item_id}.json"
+
+    def failing(message):
+        def fn(paths, mode, config, cross_check):
+            raise RuntimeError(message)
+
+        return fn
+
+    aborted = 'Ollama вернула 500: {"error":"prediction aborted, token repeat limit reached"}'
+    run_predictions(items, ExtractConfig(), Mode.AUTO, cfg.cache_dir, extract_fn=failing(aborted))
+    fp = fingerprint(items[0], ExtractConfig(), Mode.AUTO, None)
+    assert load_cached(path, fp) is not None
+    run_predictions(
+        items, ExtractConfig(), Mode.AUTO, cfg.cache_dir, extract_fn=failing("connection refused")
+    )
+    # Кэш с зацикливанием уже есть — документ не пересчитывался, запись прежняя.
+    assert "prediction aborted" in load_cached(path, fp).exception
+    path.unlink()
+    run_predictions(
+        items, ExtractConfig(), Mode.AUTO, cfg.cache_dir, extract_fn=failing("connection refused")
+    )
+    assert load_cached(path, fp) is None
+
+
+def test_eval_config_date_format_override():
+    cfg = load_eval_config(ROOT / "configs/eval/p11_date_printed.yaml")
+    built = cfg.extract.build()
+    assert (built.date_format, built.text_prompt, built.vision_prompt) == (
+        "printed",
+        "text_v2",
+        "vision_v2",
+    )
+    base = load_eval_config(ROOT / "configs/eval/p11_baseline.yaml")
+    assert base.extract.build().date_format == "iso"
+    # Эксперимент сравнивается с базой на тех же документах.
+    assert [i.item_id for i in select_dataset_items(cfg)] == [
+        i.item_id for i in select_dataset_items(base)
+    ]
+
+
+def test_power_watch_detects_battery_and_sleep(monkeypatch):
+    state = {"ac": True}
+    monkeypatch.setattr(power_mod, "on_ac_power", lambda: state["ac"])
+    with power_mod.PowerWatch(poll_s=0.01) as watch:
+        pass
+    assert watch.clean
+    with power_mod.PowerWatch(poll_s=0.01) as watch:
+        state["ac"] = False
+    assert watch.battery and not watch.clean
+    state["ac"] = True
+    # Сон: настенные часы прыгнули на час между двумя замерами.
+    clock = iter([1000.0, 1000.5, 4600.0])
+    with power_mod.PowerWatch(poll_s=10, clock=lambda: next(clock, 4601.0)) as watch:
+        pass
+    assert watch.clean  # 1000,0 → 1000,5: разрыв полсекунды
+    watch._sample()
+    assert watch.slept and not watch.clean
+    assert watch.reason == "сон"
+
+
+def test_power_guard_waits_and_recomputes(tmp_path, monkeypatch):
+    """Батарея во время документа: ответ не сохраняется, документ считается заново от сети."""
+    cfg = eval_config(tmp_path)
+    items = select_dataset_items(cfg)[:2]
+    state = {"ac": True, "unplug_once": True}
+    monkeypatch.setattr(power_mod, "on_ac_power", lambda: state["ac"])
+    monkeypatch.setattr(power_mod, "WAIT_POLL_S", 0)
+    monkeypatch.setattr(power_mod, "_sleep", lambda s: state.update(ac=True))
+    fake = FakeExtract(items)
+
+    def extract_with_unplug(paths, mode, config, cross_check):
+        if state["unplug_once"]:
+            state["unplug_once"] = False
+            state["ac"] = False  # зарядку выдернули посреди документа
+        return fake(paths, mode, config, cross_check)
+
+    notes: list[str] = []
+    preds = run_predictions(
+        items,
+        ExtractConfig(),
+        Mode.AUTO,
+        cfg.cache_dir,
+        extract_fn=extract_with_unplug,
+        power_guard=True,
+        notice=notes.append,
+    )
+    assert fake.calls == 3  # первый документ посчитан дважды
+    assert all(p.raw is not None and p.on_ac for p in preds.values())
+    assert any("пересчитаю" in n for n in notes)
+    assert any("жду" in n for n in notes)
+
+
+def test_p_value_format():
+    from docai.eval.report import fmt_p
+
+    assert fmt_p(0.000244) == "< 0,001"
+    assert fmt_p(0.0293) == "0,029"
+    assert fmt_p(0.0293, eq=True) == "= 0,029"
+    assert fmt_p(float("nan")) == "—"

@@ -72,8 +72,9 @@ def build_records(
             status = post.postprocess.status.value if post.postprocess else None
             meta = post.meta
             route = meta.route
-            seconds = meta.timings_s.get("total", 0.0) + meta.timings_s.get("postprocess", 0.0)
-            seconds += meta.cross_check_total_s or 0.0
+            # Время из кэша: извлечение и второй путь. Постобработка (доли секунды) не входит:
+            # она пересчитывается при каждой сборке отчёта, и отчёт перестал бы повторяться.
+            seconds = meta.timings_s.get("total", 0.0) + (meta.cross_check_total_s or 0.0)
             record_kw |= {
                 "pred": post_doc,
                 "seconds": round(seconds, 3),
@@ -279,7 +280,11 @@ ProgressFn = Callable[[int, int, EvalItem, Prediction, bool], None]
 
 
 def evaluate(
-    cfg: EvalConfig, *, progress: ProgressFn | None = None, extract_fn=None
+    cfg: EvalConfig,
+    *,
+    progress: ProgressFn | None = None,
+    notice: Callable[[str], None] | None = None,
+    extract_fn=None,
 ) -> tuple[dict[str, Any], list[EvalItem], list[DocRecord]]:
     items = select_items(cfg)
     if not items:
@@ -292,6 +297,8 @@ def evaluate(
         cfg.cache_dir,
         cross_check=cfg.extract.cross_check,
         progress=progress,
+        power_guard=cfg.power_guard,
+        notice=notice,
         **kwargs,
     )
     records = build_records(items, predictions, cfg)

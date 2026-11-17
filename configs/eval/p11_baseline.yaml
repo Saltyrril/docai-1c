@@ -26,6 +26,7 @@ extract:
   model: qwen3.5:2b-q8_0
   text_prompt: text_v1
   vision_prompt: vision_v1
+  date_format: iso           # явно: база P11 — даты по грамматике ГГГГ-ММ-ДД (умолчание с D47 — printed)
   clean_input: pdf           # чистый уровень подаётся PDF (auto → текстовый слой)
 metrics:
   anls_threshold: 0.5        # Biten et al., 2019 (ST-VQA)

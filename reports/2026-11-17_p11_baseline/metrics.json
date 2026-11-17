@@ -38,6 +38,7 @@
    "model": "qwen3.5:2b-q8_0",
    "text_prompt": "text_v1",
    "vision_prompt": "vision_v1",
+   "date_format": "iso",
    "clean_input": "pdf"
   },
   "metrics": {
@@ -56,7 +57,8 @@
    "image_side": 1000
   },
   "predictions_dir": "data\\experiments\\eval",
-  "compare_with": null
+  "compare_with": null,
+  "power_guard": true
  },
  "extract_config": {
   "model": "qwen3.5:2b-q8_0",
@@ -75,6 +77,7 @@
   },
   "text_prompt": "text_v1",
   "vision_prompt": "vision_v1",
+  "date_format": "iso",
   "min_text_chars_per_page": 30,
   "max_image_side": 1280,
   "max_text_chars": 12000,
@@ -279,9 +282,9 @@
    "high": 0.174079
   },
   "sec_per_page": {
-   "value": 103.150414,
-   "low": 92.13364,
-   "high": 115.612937
+   "value": 103.142612,
+   "low": 92.125897,
+   "high": 115.605001
   }
  },
  "metric_titles": {
@@ -477,9 +480,9 @@
        "high": 0.204111
       },
       "sec_per_page": {
-       "value": 135.380667,
-       "low": 95.345265,
-       "high": 182.263479
+       "value": 135.367,
+       "low": 95.340165,
+       "high": 182.242894
       }
      }
     },
@@ -527,9 +530,9 @@
        "high": 0.134699
       },
       "sec_per_page": {
-       "value": 90.181095,
-       "low": 70.730773,
-       "high": 111.089811
+       "value": 90.173381,
+       "low": 70.720985,
+       "high": 111.081239
       }
      }
     },
@@ -577,9 +580,9 @@
        "high": 0.154564
       },
       "sec_per_page": {
-       "value": 126.31976,
-       "low": 103.53404,
-       "high": 148.175117
+       "value": 126.31268,
+       "low": 103.526608,
+       "high": 148.168762
       }
      }
     },
@@ -627,9 +630,9 @@
        "high": 0.149356
       },
       "sec_per_page": {
-       "value": 96.972513,
-       "low": 76.525208,
-       "high": 121.380312
+       "value": 96.965205,
+       "low": 76.517856,
+       "high": 121.373747
       }
      }
     },
@@ -677,9 +680,9 @@
        "high": 0.190997
       },
       "sec_per_page": {
-       "value": 79.323947,
-       "low": 62.831201,
-       "high": 96.372345
+       "value": 79.317789,
+       "low": 62.825616,
+       "high": 96.368262
       }
      }
     }
@@ -732,9 +735,9 @@
        "high": 0.079896
       },
       "sec_per_page": {
-       "value": 84.855439,
-       "low": 66.892686,
-       "high": 104.58036
+       "value": 84.840146,
+       "low": 66.88108,
+       "high": 104.562485
       }
      }
     },
@@ -782,9 +785,9 @@
        "high": 0.169619
       },
       "sec_per_page": {
-       "value": 112.674128,
-       "low": 92.667096,
-       "high": 134.949946
+       "value": 112.670692,
+       "low": 92.663505,
+       "high": 134.946368
       }
      }
     },
@@ -832,9 +835,9 @@
        "high": 0.159342
       },
       "sec_per_page": {
-       "value": 113.669,
-       "low": 96.224236,
-       "high": 131.684827
+       "value": 113.665,
+       "low": 96.220191,
+       "high": 131.680473
       }
      }
     }
@@ -887,9 +890,9 @@
        "high": 0.079896
       },
       "sec_per_page": {
-       "value": 84.855439,
-       "low": 66.892686,
-       "high": 104.58036
+       "value": 84.840146,
+       "low": 66.88108,
+       "high": 104.562485
       }
      }
     },
@@ -937,9 +940,9 @@
        "high": 0.131211
       },
       "sec_per_page": {
-       "value": 113.151667,
-       "low": 99.683019,
-       "high": 127.602794
+       "value": 113.14796,
+       "low": 99.679632,
+       "high": 127.599224
       }
      }
     }
@@ -1437,12 +1440,12 @@
  "performance": {
   "documents_timed": 100,
   "pages": 116,
-  "seconds_total": 11965.4,
+  "seconds_total": 11964.5,
   "seconds_per_doc_mean": 119.65,
   "seconds_per_doc_median": 97.43,
-  "seconds_per_page_median": 94.45,
-  "seconds_per_page_p90": 172.97,
-  "seconds_per_page_max": 344.78,
+  "seconds_per_page_median": 94.44,
+  "seconds_per_page_p90": 172.91,
+  "seconds_per_page_max": 344.73,
   "peak_vram_mib_max": 2615,
   "peak_vram_mib_median": 1503,
   "prompt_tokens": 177924,
@@ -1472,7 +1475,7 @@
    "rows_pred": 21,
    "rows_matched": 21,
    "rows_exact": 0,
-   "seconds": 172.938,
+   "seconds": 172.88,
    "pages": 1,
    "peak_vram_mib": 2553,
    "has_errors": false,
@@ -1583,7 +1586,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 172.938,
+    "perf:seconds": 172.88,
     "perf:pages": 1
    }
   },
@@ -1618,7 +1621,7 @@
    "rows_pred": 13,
    "rows_matched": 5,
    "rows_exact": 0,
-   "seconds": 193.308,
+   "seconds": 193.301,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -1723,7 +1726,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 193.308,
+    "perf:seconds": 193.301,
     "perf:pages": 1
    }
   },
@@ -1750,7 +1753,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 112.981,
+   "seconds": 112.978,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": true,
@@ -1872,7 +1875,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 112.981,
+    "perf:seconds": 112.978,
     "perf:pages": 1
    }
   },
@@ -1910,7 +1913,7 @@
    "rows_pred": 21,
    "rows_matched": 21,
    "rows_exact": 0,
-   "seconds": 344.779,
+   "seconds": 344.727,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -2020,7 +2023,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 344.779,
+    "perf:seconds": 344.727,
     "perf:pages": 1
    }
   },
@@ -2054,7 +2057,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 0,
-   "seconds": 152.031,
+   "seconds": 152.027,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": true,
@@ -2173,7 +2176,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 152.031,
+    "perf:seconds": 152.027,
     "perf:pages": 1
    }
   },
@@ -2207,7 +2210,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 114.098,
+   "seconds": 114.096,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -2317,7 +2320,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 114.098,
+    "perf:seconds": 114.096,
     "perf:pages": 1
    }
   },
@@ -2342,7 +2345,7 @@
    "rows_pred": 7,
    "rows_matched": 7,
    "rows_exact": 0,
-   "seconds": 127.593,
+   "seconds": 127.578,
    "pages": 1,
    "peak_vram_mib": 1559,
    "has_errors": false,
@@ -2440,7 +2443,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 127.593,
+    "perf:seconds": 127.578,
     "perf:pages": 1
    }
   },
@@ -2466,7 +2469,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 73.465,
+   "seconds": 73.463,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -2571,7 +2574,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 73.465,
+    "perf:seconds": 73.463,
     "perf:pages": 1
    }
   },
@@ -2607,7 +2610,7 @@
    "rows_pred": 8,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 108.788,
+   "seconds": 108.781,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -2731,7 +2734,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 108.788,
+    "perf:seconds": 108.781,
     "perf:pages": 1
    }
   },
@@ -2754,7 +2757,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 29.67,
+   "seconds": 29.663,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -2845,7 +2848,7 @@
     "conf:brier": 2.2004828100000005,
     "st:review": true,
     "perf:docs": true,
-    "perf:seconds": 29.67,
+    "perf:seconds": 29.663,
     "perf:pages": 1
    }
   },
@@ -2874,7 +2877,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 52.299,
+   "seconds": 52.296,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -2985,7 +2988,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 52.299,
+    "perf:seconds": 52.296,
     "perf:pages": 1
    }
   },
@@ -3019,7 +3022,7 @@
    "rows_pred": 6,
    "rows_matched": 6,
    "rows_exact": 0,
-   "seconds": 142.618,
+   "seconds": 142.614,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3130,7 +3133,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 142.618,
+    "perf:seconds": 142.614,
     "perf:pages": 1
    }
   },
@@ -3155,7 +3158,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 59.44,
+   "seconds": 59.434,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3265,7 +3268,7 @@
     "conf:brier": 3.59672471,
     "st:review": true,
     "perf:docs": true,
-    "perf:seconds": 59.44,
+    "perf:seconds": 59.434,
     "perf:pages": 1
    }
   },
@@ -3299,7 +3302,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 104.393,
+   "seconds": 104.39,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3408,7 +3411,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 104.393,
+    "perf:seconds": 104.39,
     "perf:pages": 1
    }
   },
@@ -3450,7 +3453,7 @@
    "rows_pred": 1,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 56.129,
+   "seconds": 56.127,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3539,7 +3542,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 56.129,
+    "perf:seconds": 56.127,
     "perf:pages": 1
    }
   },
@@ -3572,7 +3575,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 21.926,
+   "seconds": 21.922,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3669,7 +3672,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 21.926,
+    "perf:seconds": 21.922,
     "perf:pages": 1
    }
   },
@@ -3703,7 +3706,7 @@
    "rows_pred": 13,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 122.968,
+   "seconds": 122.959,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3810,7 +3813,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 122.968,
+    "perf:seconds": 122.959,
     "perf:pages": 1
    }
   },
@@ -3844,7 +3847,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 59.352,
+   "seconds": 59.348,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -3959,7 +3962,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 59.352,
+    "perf:seconds": 59.348,
     "perf:pages": 1
    }
   },
@@ -3987,7 +3990,7 @@
    "rows_pred": 8,
    "rows_matched": 8,
    "rows_exact": 0,
-   "seconds": 65.16,
+   "seconds": 65.137,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4098,7 +4101,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 65.16,
+    "perf:seconds": 65.137,
     "perf:pages": 1
    }
   },
@@ -4130,7 +4133,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 70.284,
+   "seconds": 70.28,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4247,7 +4250,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 70.284,
+    "perf:seconds": 70.28,
     "perf:pages": 1
    }
   },
@@ -4280,7 +4283,7 @@
    "rows_pred": 4,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 71.567,
+   "seconds": 71.562,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4391,7 +4394,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 71.567,
+    "perf:seconds": 71.562,
     "perf:pages": 1
    }
   },
@@ -4425,7 +4428,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 32.615,
+   "seconds": 32.604,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4533,7 +4536,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 32.615,
+    "perf:seconds": 32.604,
     "perf:pages": 1
    }
   },
@@ -4570,7 +4573,7 @@
    "rows_pred": 7,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 87.598,
+   "seconds": 87.592,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4689,7 +4692,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 87.598,
+    "perf:seconds": 87.592,
     "perf:pages": 1
    }
   },
@@ -4724,7 +4727,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 65.012,
+   "seconds": 65.009,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4836,7 +4839,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 65.012,
+    "perf:seconds": 65.009,
     "perf:pages": 1
    }
   },
@@ -4863,7 +4866,7 @@
    "rows_pred": 5,
    "rows_matched": 5,
    "rows_exact": 0,
-   "seconds": 51.415,
+   "seconds": 51.403,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -4973,7 +4976,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 51.415,
+    "perf:seconds": 51.403,
     "perf:pages": 1
    }
   },
@@ -5007,7 +5010,7 @@
    "rows_pred": 6,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 68.961,
+   "seconds": 68.953,
    "pages": 1,
    "peak_vram_mib": 2609,
    "has_errors": false,
@@ -5128,7 +5131,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 68.961,
+    "perf:seconds": 68.953,
     "perf:pages": 1
    }
   },
@@ -5156,7 +5159,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 36.062,
+   "seconds": 36.06,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -5273,7 +5276,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 36.062,
+    "perf:seconds": 36.06,
     "perf:pages": 1
    }
   },
@@ -5301,7 +5304,7 @@
    "rows_pred": 5,
    "rows_matched": 5,
    "rows_exact": 0,
-   "seconds": 146.986,
+   "seconds": 146.97,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -5414,7 +5417,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 146.986,
+    "perf:seconds": 146.97,
     "perf:pages": 1
    }
   },
@@ -5446,7 +5449,7 @@
    "rows_pred": 8,
    "rows_matched": 8,
    "rows_exact": 0,
-   "seconds": 168.034,
+   "seconds": 168.03,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -5562,7 +5565,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 168.034,
+    "perf:seconds": 168.03,
     "perf:pages": 1
    }
   },
@@ -5597,7 +5600,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 0,
-   "seconds": 123.781,
+   "seconds": 123.777,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -5712,7 +5715,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 123.781,
+    "perf:seconds": 123.777,
     "perf:pages": 1
    }
   },
@@ -5748,7 +5751,7 @@
    "rows_pred": 10,
    "rows_matched": 10,
    "rows_exact": 0,
-   "seconds": 158.215,
+   "seconds": 158.189,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -5850,7 +5853,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 158.215,
+    "perf:seconds": 158.189,
     "perf:pages": 1
    }
   },
@@ -5886,7 +5889,7 @@
    "rows_pred": 5,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 136.813,
+   "seconds": 136.809,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -5991,7 +5994,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 136.813,
+    "perf:seconds": 136.809,
     "perf:pages": 1
    }
   },
@@ -6019,7 +6022,7 @@
    "rows_pred": 9,
    "rows_matched": 9,
    "rows_exact": 0,
-   "seconds": 187.092,
+   "seconds": 187.086,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -6137,7 +6140,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 187.092,
+    "perf:seconds": 187.086,
     "perf:pages": 1
    }
   },
@@ -6166,7 +6169,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 84.193,
+   "seconds": 84.181,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -6279,7 +6282,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 84.193,
+    "perf:seconds": 84.181,
     "perf:pages": 1
    }
   },
@@ -6308,7 +6311,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 102.852,
+   "seconds": 102.849,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -6422,7 +6425,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 102.852,
+    "perf:seconds": 102.849,
     "perf:pages": 1
    }
   },
@@ -6465,7 +6468,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 104.114,
+   "seconds": 104.112,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -6579,7 +6582,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 104.114,
+    "perf:seconds": 104.112,
     "perf:pages": 1
    }
   },
@@ -6610,7 +6613,7 @@
    "rows_pred": 11,
    "rows_matched": 11,
    "rows_exact": 9,
-   "seconds": 189.531,
+   "seconds": 189.496,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -6731,7 +6734,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 189.531,
+    "perf:seconds": 189.496,
     "perf:pages": 2
    }
   },
@@ -6778,7 +6781,7 @@
    "rows_pred": 26,
    "rows_matched": 16,
    "rows_exact": 13,
-   "seconds": 423.865,
+   "seconds": 423.854,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -6894,7 +6897,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 423.865,
+    "perf:seconds": 423.854,
     "perf:pages": 2
    }
   },
@@ -6926,7 +6929,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 1,
-   "seconds": 110.687,
+   "seconds": 110.683,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -7042,7 +7045,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 110.687,
+    "perf:seconds": 110.683,
     "perf:pages": 1
    }
   },
@@ -7073,7 +7076,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 0,
-   "seconds": 97.354,
+   "seconds": 97.337,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -7192,7 +7195,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 97.354,
+    "perf:seconds": 97.337,
     "perf:pages": 1
    }
   },
@@ -7227,7 +7230,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 97.316,
+   "seconds": 97.314,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": true,
@@ -7348,7 +7351,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 97.316,
+    "perf:seconds": 97.314,
     "perf:pages": 1
    }
   },
@@ -7382,7 +7385,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 118.311,
+   "seconds": 118.307,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -7500,7 +7503,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 118.311,
+    "perf:seconds": 118.307,
     "perf:pages": 1
    }
   },
@@ -7527,7 +7530,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 1,
-   "seconds": 52.272,
+   "seconds": 52.265,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -7632,7 +7635,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 52.272,
+    "perf:seconds": 52.265,
     "perf:pages": 1
    }
   },
@@ -7676,7 +7679,7 @@
    "rows_pred": 9,
    "rows_matched": 7,
    "rows_exact": 7,
-   "seconds": 264.914,
+   "seconds": 264.908,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -7780,7 +7783,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 264.914,
+    "perf:seconds": 264.908,
     "perf:pages": 2
    }
   },
@@ -7823,7 +7826,7 @@
    "rows_pred": 20,
    "rows_matched": 20,
    "rows_exact": 16,
-   "seconds": 395.277,
+   "seconds": 395.267,
    "pages": 2,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -7938,7 +7941,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 395.277,
+    "perf:seconds": 395.267,
     "perf:pages": 2
    }
   },
@@ -7979,7 +7982,7 @@
    "rows_pred": 8,
    "rows_matched": 8,
    "rows_exact": 4,
-   "seconds": 145.191,
+   "seconds": 145.171,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8092,7 +8095,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 145.191,
+    "perf:seconds": 145.171,
     "perf:pages": 1
    }
   },
@@ -8124,7 +8127,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 4,
-   "seconds": 134.946,
+   "seconds": 134.944,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8233,7 +8236,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 134.946,
+    "perf:seconds": 134.944,
     "perf:pages": 1
    }
   },
@@ -8272,7 +8275,7 @@
    "rows_pred": 6,
    "rows_matched": 4,
    "rows_exact": 2,
-   "seconds": 173.581,
+   "seconds": 173.577,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8373,7 +8376,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 173.581,
+    "perf:seconds": 173.577,
     "perf:pages": 1
    }
   },
@@ -8403,7 +8406,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 78.395,
+   "seconds": 78.385,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8514,7 +8517,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 78.395,
+    "perf:seconds": 78.385,
     "perf:pages": 1
    }
   },
@@ -8554,7 +8557,7 @@
    "rows_pred": 6,
    "rows_matched": 6,
    "rows_exact": 5,
-   "seconds": 181.004,
+   "seconds": 181.0,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8661,7 +8664,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 181.004,
+    "perf:seconds": 181.0,
     "perf:pages": 1
    }
   },
@@ -8707,7 +8710,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 148.919,
+   "seconds": 148.916,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8821,7 +8824,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 148.919,
+    "perf:seconds": 148.916,
     "perf:pages": 1
    }
   },
@@ -8852,7 +8855,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 3,
-   "seconds": 94.143,
+   "seconds": 94.13,
    "pages": 1,
    "peak_vram_mib": 1510,
    "has_errors": false,
@@ -8962,7 +8965,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 94.143,
+    "perf:seconds": 94.13,
     "perf:pages": 1
    }
   },
@@ -8994,7 +8997,7 @@
    "rows_pred": 8,
    "rows_matched": 8,
    "rows_exact": 7,
-   "seconds": 97.612,
+   "seconds": 97.607,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": true,
@@ -9109,7 +9112,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 97.612,
+    "perf:seconds": 97.607,
     "perf:pages": 1
    }
   },
@@ -9144,7 +9147,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 0,
-   "seconds": 63.517,
+   "seconds": 63.514,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -9260,7 +9263,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 63.517,
+    "perf:seconds": 63.514,
     "perf:pages": 1
    }
   },
@@ -9290,7 +9293,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 45.535,
+   "seconds": 45.525,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -9391,7 +9394,7 @@
     "st:upload_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 45.535,
+    "perf:seconds": 45.525,
     "perf:pages": 1
    }
   },
@@ -9427,7 +9430,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 34.609,
+   "seconds": 34.607,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -9539,7 +9542,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 34.609,
+    "perf:seconds": 34.607,
     "perf:pages": 1
    }
   },
@@ -9581,7 +9584,7 @@
    "rows_pred": 7,
    "rows_matched": 7,
    "rows_exact": 0,
-   "seconds": 75.803,
+   "seconds": 75.798,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -9700,7 +9703,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 75.803,
+    "perf:seconds": 75.798,
     "perf:pages": 1
    }
   },
@@ -9730,7 +9733,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 44.999,
+   "seconds": 44.989,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": true,
@@ -9840,7 +9843,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 44.999,
+    "perf:seconds": 44.989,
     "perf:pages": 1
    }
   },
@@ -9866,7 +9869,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 40.773,
+   "seconds": 40.771,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -9976,7 +9979,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 40.773,
+    "perf:seconds": 40.771,
     "perf:pages": 1
    }
   },
@@ -10013,7 +10016,7 @@
    "rows_pred": 7,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 76.533,
+   "seconds": 76.529,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -10112,7 +10115,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 76.533,
+    "perf:seconds": 76.529,
     "perf:pages": 1
    }
   },
@@ -10142,7 +10145,7 @@
    "rows_pred": 6,
    "rows_matched": 6,
    "rows_exact": 6,
-   "seconds": 56.183,
+   "seconds": 56.168,
    "pages": 2,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -10243,7 +10246,7 @@
     "st:upload_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 56.183,
+    "perf:seconds": 56.168,
     "perf:pages": 2
    }
   },
@@ -10271,7 +10274,7 @@
    "rows_pred": 8,
    "rows_matched": 8,
    "rows_exact": 8,
-   "seconds": 75.914,
+   "seconds": 75.909,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -10384,7 +10387,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 75.914,
+    "perf:seconds": 75.909,
     "perf:pages": 1
    }
   },
@@ -10426,7 +10429,7 @@
    "rows_pred": 1,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 28.939,
+   "seconds": 28.937,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -10521,7 +10524,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 28.939,
+    "perf:seconds": 28.937,
     "perf:pages": 1
    }
   },
@@ -10550,7 +10553,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 1,
-   "seconds": 25.349,
+   "seconds": 25.344,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -10646,7 +10649,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 25.349,
+    "perf:seconds": 25.344,
     "perf:pages": 1
    }
   },
@@ -10683,7 +10686,7 @@
    "rows_pred": 17,
    "rows_matched": 13,
    "rows_exact": 11,
-   "seconds": 249.41,
+   "seconds": 249.402,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -10800,7 +10803,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 249.41,
+    "perf:seconds": 249.402,
     "perf:pages": 2
    }
   },
@@ -10839,7 +10842,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 97.515,
+   "seconds": 97.513,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -10947,7 +10950,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 97.515,
+    "perf:seconds": 97.513,
     "perf:pages": 1
    }
   },
@@ -10981,7 +10984,7 @@
    "rows_pred": 14,
    "rows_matched": 14,
    "rows_exact": 13,
-   "seconds": 315.391,
+   "seconds": 315.355,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11093,7 +11096,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 315.391,
+    "perf:seconds": 315.355,
     "perf:pages": 2
    }
   },
@@ -11123,7 +11126,7 @@
    "rows_pred": 5,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 185.11,
+   "seconds": 185.106,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11240,7 +11243,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 185.11,
+    "perf:seconds": 185.106,
     "perf:pages": 1
    }
   },
@@ -11279,7 +11282,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 0,
-   "seconds": 108.792,
+   "seconds": 108.79,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11387,7 +11390,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 108.792,
+    "perf:seconds": 108.79,
     "perf:pages": 1
    }
   },
@@ -11417,7 +11420,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 1,
-   "seconds": 69.757,
+   "seconds": 69.752,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11518,7 +11521,7 @@
     "st:upload_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 69.757,
+    "perf:seconds": 69.752,
     "perf:pages": 1
    }
   },
@@ -11546,7 +11549,7 @@
    "rows_pred": 9,
    "rows_matched": 9,
    "rows_exact": 6,
-   "seconds": 173.235,
+   "seconds": 173.23,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11662,7 +11665,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 173.235,
+    "perf:seconds": 173.23,
     "perf:pages": 1
    }
   },
@@ -11698,7 +11701,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 1,
-   "seconds": 77.48,
+   "seconds": 77.477,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11813,7 +11816,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 77.48,
+    "perf:seconds": 77.477,
     "perf:pages": 1
    }
   },
@@ -11845,7 +11848,7 @@
    "rows_pred": 6,
    "rows_matched": 6,
    "rows_exact": 6,
-   "seconds": 78.455,
+   "seconds": 78.437,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -11950,7 +11953,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 78.455,
+    "perf:seconds": 78.437,
     "perf:pages": 1
    }
   },
@@ -11994,7 +11997,7 @@
    "rows_pred": 5,
    "rows_matched": 4,
    "rows_exact": 0,
-   "seconds": 97.892,
+   "seconds": 97.887,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12107,7 +12110,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 97.892,
+    "perf:seconds": 97.887,
     "perf:pages": 1
    }
   },
@@ -12140,7 +12143,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 0,
-   "seconds": 89.553,
+   "seconds": 89.55,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12257,7 +12260,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 89.553,
+    "perf:seconds": 89.55,
     "perf:pages": 1
    }
   },
@@ -12289,7 +12292,7 @@
    "rows_pred": 19,
    "rows_matched": 19,
    "rows_exact": 19,
-   "seconds": 203.589,
+   "seconds": 203.541,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12391,7 +12394,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 203.589,
+    "perf:seconds": 203.541,
     "perf:pages": 2
    }
   },
@@ -12423,7 +12426,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 1,
-   "seconds": 71.07,
+   "seconds": 71.068,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12537,7 +12540,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 71.07,
+    "perf:seconds": 71.068,
     "perf:pages": 1
    }
   },
@@ -12567,7 +12570,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 1,
-   "seconds": 89.847,
+   "seconds": 89.844,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12687,7 +12690,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 89.847,
+    "perf:seconds": 89.844,
     "perf:pages": 1
    }
   },
@@ -12716,7 +12719,7 @@
    "rows_pred": 5,
    "rows_matched": 5,
    "rows_exact": 5,
-   "seconds": 82.295,
+   "seconds": 82.279,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12816,7 +12819,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 82.295,
+    "perf:seconds": 82.279,
     "perf:pages": 2
    }
   },
@@ -12849,7 +12852,7 @@
    "rows_pred": 2,
    "rows_matched": 0,
    "rows_exact": 0,
-   "seconds": 90.862,
+   "seconds": 90.859,
    "pages": 1,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -12950,7 +12953,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 90.862,
+    "perf:seconds": 90.859,
     "perf:pages": 1
    }
   },
@@ -13004,7 +13007,7 @@
    "rows_pred": 12,
    "rows_matched": 6,
    "rows_exact": 0,
-   "seconds": 264.924,
+   "seconds": 264.917,
    "pages": 2,
    "peak_vram_mib": 1503,
    "has_errors": false,
@@ -13116,7 +13119,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 264.924,
+    "perf:seconds": 264.917,
     "perf:pages": 2
    }
   },
@@ -13151,7 +13154,7 @@
    "rows_pred": 4,
    "rows_matched": 4,
    "rows_exact": 3,
-   "seconds": 68.784,
+   "seconds": 68.768,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -13257,7 +13260,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 68.784,
+    "perf:seconds": 68.768,
     "perf:pages": 1
    }
   },
@@ -13289,7 +13292,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 96.94,
+   "seconds": 96.937,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -13408,7 +13411,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 96.94,
+    "perf:seconds": 96.937,
     "perf:pages": 1
    }
   },
@@ -13444,7 +13447,7 @@
    "rows_pred": 10,
    "rows_matched": 10,
    "rows_exact": 0,
-   "seconds": 525.641,
+   "seconds": 525.635,
    "pages": 2,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -13550,7 +13553,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 525.641,
+    "perf:seconds": 525.635,
     "perf:pages": 2
    }
   },
@@ -13580,7 +13583,7 @@
    "rows_pred": 7,
    "rows_matched": 7,
    "rows_exact": 7,
-   "seconds": 102.25,
+   "seconds": 102.227,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -13680,7 +13683,7 @@
     "st:upload_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 102.25,
+    "perf:seconds": 102.227,
     "perf:pages": 1
    }
   },
@@ -13716,7 +13719,7 @@
    "rows_pred": 8,
    "rows_matched": 5,
    "rows_exact": 0,
-   "seconds": 138.499,
+   "seconds": 138.492,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -13831,7 +13834,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 138.499,
+    "perf:seconds": 138.492,
     "perf:pages": 1
    }
   },
@@ -13866,7 +13869,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 2,
-   "seconds": 75.224,
+   "seconds": 75.222,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -13975,7 +13978,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 75.224,
+    "perf:seconds": 75.222,
     "perf:pages": 1
    }
   },
@@ -14009,7 +14012,7 @@
    "rows_pred": 7,
    "rows_matched": 6,
    "rows_exact": 0,
-   "seconds": 106.156,
+   "seconds": 106.14,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -14106,7 +14109,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 106.156,
+    "perf:seconds": 106.14,
     "perf:pages": 1
    }
   },
@@ -14133,7 +14136,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 74.714,
+   "seconds": 74.712,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -14245,7 +14248,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 74.714,
+    "perf:seconds": 74.712,
     "perf:pages": 1
    }
   },
@@ -14302,7 +14305,7 @@
    "rows_pred": 12,
    "rows_matched": 7,
    "rows_exact": 0,
-   "seconds": 246.283,
+   "seconds": 246.277,
    "pages": 2,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -14399,7 +14402,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 246.283,
+    "perf:seconds": 246.277,
     "perf:pages": 2
    }
   },
@@ -14428,7 +14431,7 @@
    "rows_pred": 11,
    "rows_matched": 11,
    "rows_exact": 11,
-   "seconds": 135.633,
+   "seconds": 135.612,
    "pages": 2,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -14522,7 +14525,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 135.633,
+    "perf:seconds": 135.612,
     "perf:pages": 2
    }
   },
@@ -14557,7 +14560,7 @@
    "rows_pred": 1,
    "rows_matched": 1,
    "rows_exact": 1,
-   "seconds": 66.278,
+   "seconds": 66.276,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -14660,7 +14663,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 66.278,
+    "perf:seconds": 66.276,
     "perf:pages": 1
    }
   },
@@ -14696,7 +14699,7 @@
    "rows_pred": 13,
    "rows_matched": 10,
    "rows_exact": 0,
-   "seconds": 131.0,
+   "seconds": 130.992,
    "pages": 2,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -14798,7 +14801,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 131.0,
+    "perf:seconds": 130.992,
     "perf:pages": 2
    }
   },
@@ -14823,7 +14826,7 @@
    "rows_pred": 3,
    "rows_matched": 3,
    "rows_exact": 3,
-   "seconds": 33.37,
+   "seconds": 33.359,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -14922,7 +14925,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 33.37,
+    "perf:seconds": 33.359,
     "perf:pages": 1
    }
   },
@@ -14954,7 +14957,7 @@
    "rows_pred": 5,
    "rows_matched": 5,
    "rows_exact": 3,
-   "seconds": 52.282,
+   "seconds": 52.279,
    "pages": 1,
    "peak_vram_mib": 2615,
    "has_errors": false,
@@ -15059,7 +15062,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 52.282,
+    "perf:seconds": 52.279,
     "perf:pages": 1
    }
   },
@@ -15097,7 +15100,7 @@
    "rows_pred": 15,
    "rows_matched": 8,
    "rows_exact": 0,
-   "seconds": 254.592,
+   "seconds": 254.585,
    "pages": 2,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -15206,7 +15209,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 254.592,
+    "perf:seconds": 254.585,
     "perf:pages": 2
    }
   },
@@ -15231,7 +15234,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 2,
-   "seconds": 58.352,
+   "seconds": 58.345,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -15325,7 +15328,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 58.352,
+    "perf:seconds": 58.345,
     "perf:pages": 1
    }
   },
@@ -15367,7 +15370,7 @@
    "rows_pred": 8,
    "rows_matched": 8,
    "rows_exact": 0,
-   "seconds": 111.833,
+   "seconds": 111.829,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -15475,7 +15478,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 111.833,
+    "perf:seconds": 111.829,
     "perf:pages": 1
    }
   },
@@ -15515,7 +15518,7 @@
    "rows_pred": 2,
    "rows_matched": 2,
    "rows_exact": 0,
-   "seconds": 60.279,
+   "seconds": 60.277,
    "pages": 1,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -15618,7 +15621,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 60.279,
+    "perf:seconds": 60.277,
     "perf:pages": 1
    }
   },
@@ -15643,7 +15646,7 @@
    "rows_pred": 10,
    "rows_matched": 10,
    "rows_exact": 10,
-   "seconds": 101.159,
+   "seconds": 101.133,
    "pages": 2,
    "peak_vram_mib": 1505,
    "has_errors": false,
@@ -15742,7 +15745,7 @@
     "st:flag_bad": true,
     "st:bad": true,
     "perf:docs": true,
-    "perf:seconds": 101.159,
+    "perf:seconds": 101.133,
     "perf:pages": 2
    }
   }

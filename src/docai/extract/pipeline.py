@@ -56,7 +56,7 @@ class _Run:
         self.meta = meta
         self.warnings: list[str] = []
         self.errors: list[str] = []
-        self.schema = draft_json_schema()
+        self.schema = draft_json_schema(config.date_format)
         # Сообщение об обрезанном ответе последнего запроса (None, если ответ полный).
         self.truncated: str | None = None
         # Тексты-источники (текстовый слой, OCR) для проверки «значение дословно есть».
@@ -125,7 +125,7 @@ class _Run:
             self.errors.append(f"{part}: ответ модели — не JSON ({exc})")
             return None
         try:
-            draft, notes = parse_draft(raw)
+            draft, notes = parse_draft(raw, self.config.date_format)
         except (ValidationError, ValueError) as exc:
             self.errors.append(f"{part}: ответ не по схеме ({exc})")
             return None

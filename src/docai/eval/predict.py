@@ -8,7 +8,9 @@
 
 Исключение при извлечении (Ollama упала, таймаут) записывается как неудача с текстом
 ошибки и при следующем запуске повторяется. Три исключения подряд останавливают прогон:
-это почти всегда окружение (Ollama не запущена), а не документ.
+это почти всегда окружение (Ollama не запущена), а не документ. Исключение, которое
+описывает ответ модели (Ollama прервала зациклившуюся генерацию), — не сбой окружения:
+оно кэшируется как несобранный документ и не повторяется.
 """
 
 import contextlib
@@ -22,6 +24,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from docai.eval import power
 from docai.eval.sample import EvalItem
 from docai.extract import ExtractConfig, Mode, RawExtraction, extract_raw
 
@@ -37,6 +40,9 @@ _NOT_AFFECTING = {
     "tesseract_cmd",
     "postprocess",
 }
+# Поля, добавленные после первых прогонов: при значении, равном прежнему поведению,
+# в отпечаток не входят — иначе старый кэш (P11) стал бы «устаревшим» без причины.
+_LEGACY_DEFAULTS = {"date_format": "iso"}
 MAX_CONSECUTIVE_FAILURES = 3
 
 ExtractFn = Callable[[Sequence[Path], Mode, ExtractConfig, Mode | None], RawExtraction]
@@ -49,6 +55,8 @@ class Prediction(BaseModel):
     # Текст исключения, если извлечение упало (такая запись повторяется при следующем запуске).
     exception: str | None = None
     wall_s: float = 0.0
+    # Питание в конце документа: True — сеть, False — батарея, None — неизвестно.
+    on_ac: bool | None = None
 
 
 def _rel(path: Path) -> str:
@@ -58,9 +66,18 @@ def _rel(path: Path) -> str:
     return path.as_posix()
 
 
+def fingerprint_config(config: ExtractConfig) -> dict:
+    """Часть конфига, от которой зависит ответ модели (входит в отпечаток)."""
+    dumped = config.model_dump(mode="json", exclude=_NOT_AFFECTING)
+    for key, legacy in _LEGACY_DEFAULTS.items():
+        if dumped.get(key) == legacy:
+            dumped.pop(key)
+    return dumped
+
+
 def fingerprint(item: EvalItem, config: ExtractConfig, mode: Mode, cross_check: Mode | None) -> str:
     payload = {
-        "config": config.model_dump(mode="json", exclude=_NOT_AFFECTING),
+        "config": fingerprint_config(config),
         "mode": str(mode),
         "cross_check": str(cross_check) if cross_check else None,
         "inputs": [_rel(p) for p in item.inputs],
@@ -83,9 +100,21 @@ def load_cached(path: Path, expected: str) -> Prediction | None:
     except ValueError:
         log.warning("кэш %s не читается — пересчитываю", path.name)
         return None
-    if cached.fingerprint != expected or cached.exception is not None:
+    if cached.fingerprint != expected:
+        return None
+    if cached.exception is not None and not is_model_failure(cached.exception):
         return None
     return cached
+
+
+# Ollama сама прервала генерацию: модель зациклилась. Это ответ модели на документ, а не сбой
+# окружения: такой результат кэшируется и считается несобранным документом, иначе пересборка
+# отчёта прогоняла бы документ снова и могла бы молча поменять метрики.
+_MODEL_FAILURES = ("prediction aborted",)
+
+
+def is_model_failure(exception: str) -> bool:
+    return any(marker in exception for marker in _MODEL_FAILURES)
 
 
 def _default_extract(
@@ -103,8 +132,14 @@ def run_predictions(
     cross_check: Mode | None = None,
     extract_fn: ExtractFn | None = None,
     progress: Callable[[int, int, EvalItem, Prediction, bool], None] | None = None,
+    power_guard: bool = False,
+    notice: Callable[[str], None] | None = None,
 ) -> dict[str, Prediction]:
-    """Ответы модели по всем элементам выборки: из кэша или новым прогоном."""
+    """Ответы модели по всем элементам выборки: из кэша или новым прогоном.
+
+    power_guard: считать только от сети; документ, во время которого был переход на батарею
+    или сон, пересчитывается (модуль `power`, D47).
+    """
     extract_fn = extract_fn or _default_extract
     cache_dir.mkdir(parents=True, exist_ok=True)
     out: dict[str, Prediction] = {}
@@ -118,17 +153,31 @@ def run_predictions(
             if progress:
                 progress(index, len(items), item, cached, True)
             continue
-        started = time.perf_counter()
-        try:
-            raw = extract_fn(item.inputs, mode, config, cross_check)
-            pred = Prediction(item_id=item.item_id, fingerprint=fp, raw=raw)
+        while True:
+            if power_guard:
+                power.wait_for_ac(notice)
+            started = time.perf_counter()
+            with power.PowerWatch() as watch:
+                try:
+                    raw = extract_fn(item.inputs, mode, config, cross_check)
+                    pred = Prediction(item_id=item.item_id, fingerprint=fp, raw=raw)
+                except Exception as exc:  # любая ошибка документа пишется и не роняет прогон
+                    pred = Prediction(
+                        item_id=item.item_id,
+                        fingerprint=fp,
+                        exception=f"{type(exc).__name__}: {exc}",
+                    )
+            if power_guard and not watch.clean:
+                if notice:
+                    notice(f"{item.item_id}: во время документа — {watch.reason}; пересчитаю")
+                continue
+            break
+        if pred.exception is None or is_model_failure(pred.exception):
             failures = 0
-        except Exception as exc:  # любая ошибка документа пишется и не роняет прогон
+        else:
             failures += 1
-            pred = Prediction(
-                item_id=item.item_id, fingerprint=fp, exception=f"{type(exc).__name__}: {exc}"
-            )
             log.error("%s: %s", item.item_id, pred.exception)
+        pred.on_ac = power.on_ac_power()
         pred.wall_s = round(time.perf_counter() - started, 3)
         _write_atomic(path, pred.model_dump_json() + "\n")
         out[item.item_id] = pred

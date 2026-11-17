@@ -19,10 +19,19 @@ from pydantic import BaseModel, ConfigDict, ValidationError, WithJsonSchema
 
 from docai.schemas.common import DocType, VatRate
 from docai.schemas.documents import AnyDocument, parse_document
+from docai.validation.normalize import parse_date
 
 # Число в схеме для модели — JSON number; в Python — Decimal (ответ читается с parse_float=Decimal).
 Num = Annotated[Decimal, WithJsonSchema({"type": "number"})]
 Date = Annotated[dt.date, WithJsonSchema({"type": "string", "format": "date"})]
+
+# Как модель записывает даты (D47):
+# iso — грамматика Ollama требует ГГГГ-ММ-ДД (`format: date`); так было в P9–P11;
+# printed — дата свободной строкой, как напечатана («05.02.2026», «5 февраля 2026 г.»),
+#   в дату её переводит `parse_date`. Модель 2B под грамматикой ГГГГ-ММ-ДД переписывает
+#   цифры ДД.ММ.ГГГГ подряд («05.02.2026» → «0502-02-20»), см. reports/2026-11-17_p11_baseline.
+DateFormat = Literal["iso", "printed"]
+DATE_PATHS: tuple[tuple[str, ...], ...] = (("date",), ("basis", "date"))
 
 
 class _Draft(BaseModel):
@@ -91,9 +100,41 @@ def _strip_notes(node: Any) -> Any:
     return node
 
 
-def draft_json_schema() -> dict[str, Any]:
+def _drop_date_format(node: Any) -> Any:
+    """Убрать `format: date`: дата остаётся строкой без шаблона."""
+    if isinstance(node, dict):
+        return {
+            k: _drop_date_format(v) for k, v in node.items() if not (k == "format" and v == "date")
+        }
+    if isinstance(node, list):
+        return [_drop_date_format(v) for v in node]
+    return node
+
+
+def draft_json_schema(date_format: DateFormat = "iso") -> dict[str, Any]:
     """JSON Schema черновика для параметра `format` Ollama."""
-    return _strip_notes(Draft.model_json_schema())
+    schema = _strip_notes(Draft.model_json_schema())
+    return _drop_date_format(schema) if date_format == "printed" else schema
+
+
+def _printed_dates(raw: dict[str, Any], warnings: list[str]) -> dict[str, Any]:
+    """Даты, записанные как в документе, → ГГГГ-ММ-ДД; неразборчивые → null с предупреждением."""
+    data = copy.deepcopy(raw)
+    for path in DATE_PATHS:
+        node = data
+        for key in path[:-1]:
+            node = node.get(key) if isinstance(node, dict) else None
+        if not isinstance(node, dict):
+            continue
+        value = node.get(path[-1])
+        if not isinstance(value, str) or not value.strip():
+            continue
+        try:
+            node[path[-1]] = parse_date(value).isoformat()
+        except ValueError as exc:
+            node[path[-1]] = None
+            warnings.append(f"{'.'.join(path)}: {exc} → null")
+    return data
 
 
 def _set_none(data: Any, loc: tuple[int | str, ...]) -> bool:
@@ -113,13 +154,16 @@ def _set_none(data: Any, loc: tuple[int | str, ...]) -> bool:
     return True
 
 
-def parse_draft(raw: dict[str, Any]) -> tuple[Draft, list[str]]:
+def parse_draft(raw: dict[str, Any], date_format: DateFormat = "iso") -> tuple[Draft, list[str]]:
     """Черновик из ответа модели. Невалидные значения (например, 30 февраля) → null.
 
     Грамматика Ollama гарантирует форму JSON, но не смысл: дата «2025-02-30» ей
     подходит. Такие значения обнуляются с предупреждением, остальное сохраняется.
+    При `date_format="printed"` даты сначала разбираются из вида, как в документе.
     """
     warnings: list[str] = []
+    if date_format == "printed":
+        raw = _printed_dates(raw, warnings)
     data = raw
     for _ in range(50):
         try:

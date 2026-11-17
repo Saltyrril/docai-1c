@@ -1,6 +1,7 @@
 """Настройки конвейера извлечения. Значения по умолчанию совпадают с `configs/extract.yaml`."""
 
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
@@ -40,8 +41,13 @@ class ExtractConfig(BaseModel):
     options: OllamaOptions = Field(default_factory=OllamaOptions)
 
     # Версии промптов: имя файла без расширения в src/docai/extract/prompts/.
-    text_prompt: str = "text_v1"
-    vision_prompt: str = "vision_v1"
+    text_prompt: str = "text_v2"
+    vision_prompt: str = "vision_v2"
+    # Даты в ответе модели: iso — грамматика ГГГГ-ММ-ДД (P9–P11), printed — как в документе.
+    # printed идёт вместе с промптами *_v2 (в v1 написано «в формате ГГГГ-ММ-ДД»). Умолчание
+    # printed — по эксперименту p11_date_printed: без правок 2% → 15% на тех же 100 документах
+    # (D47).
+    date_format: Literal["iso", "printed"] = "printed"
 
     # Маршрутизация: страница PDF считается текстовой, если в ней столько непробельных символов.
     min_text_chars_per_page: int = 30
