@@ -1,0 +1,52 @@
+name: p11_baseline
+description: 'Базовая линия: Qwen3.5-2B Q8_0, путь auto (чистый PDF → текстовый слой,
+  скан и фото → vision), промпты text_v1 и vision_v1, постобработка P10 с константами
+  D42. 100 документов сплита test, стратифицированы по типу, каждый документ — на
+  одном уровне качества (по кругу).'
+seed: 2026
+data:
+  source: dataset
+  dataset: data\datasets\v1
+  split: test
+  n_docs: 100
+  levels:
+  - clean
+  - scan
+  - photo
+  level_assignment: rotate
+  doc_types: null
+  exclude_doc_ids:
+  - 00016_upd
+  - 00024_vat_invoice
+  - 00043_bill
+  - 00051_vat_invoice
+  - 00069_act
+  - 00088_act
+  - 00144_bill
+  - 00158_torg12
+  - 00224_upd
+  - 00449_torg12
+  dpi: 200
+  real_root: data\real
+extract:
+  config: configs\extract.yaml
+  mode: auto
+  cross_check: null
+  model: qwen3.5:2b-q8_0
+  text_prompt: text_v1
+  vision_prompt: vision_v1
+  clean_input: pdf
+metrics:
+  anls_threshold: 0.5
+  row_match_threshold: 0.5
+  calibration_bins: 10
+bootstrap:
+  n_resamples: 2000
+  ci: 0.95
+report:
+  out_dir: reports
+  date: null
+  worst: 5
+  image_side: 1000
+predictions_dir: data\experiments\eval
+compare_with: null

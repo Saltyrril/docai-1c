@@ -1,0 +1,43 @@
+# P11: первый базовый прогон методики оценки.
+# Запуск: uv run docai eval --config configs/eval/p11_baseline.yaml
+# Ответы модели кэшируются в data/experiments/eval/p11_baseline/ (прерванный прогон продолжается).
+name: p11_baseline
+description: >-
+  Базовая линия: Qwen3.5-2B Q8_0, путь auto (чистый PDF → текстовый слой, скан и фото → vision),
+  промпты text_v1 и vision_v1, постобработка P10 с константами D42. 100 документов сплита test,
+  стратифицированы по типу, каждый документ — на одном уровне качества (по кругу).
+seed: 2026
+data:
+  source: dataset
+  dataset: data/datasets/v1
+  split: test
+  n_docs: 100
+  levels: [clean, scan, photo]
+  level_assignment: rotate   # all — каждый документ на всех уровнях (втрое дольше)
+  doc_types: null            # null — все пять типов
+  # 10 документов прогона P9: по их ответам подбирались p₀ уверенности (D42) — в оценку не берём.
+  exclude_doc_ids: [00016_upd, 00024_vat_invoice, 00043_bill, 00051_vat_invoice, 00069_act,
+                    00088_act, 00144_bill, 00158_torg12, 00224_upd, 00449_torg12]
+  dpi: 200
+extract:
+  config: configs/extract.yaml
+  mode: auto                 # auto | text | vision | ocr
+  cross_check: null
+  model: qwen3.5:2b-q8_0
+  text_prompt: text_v1
+  vision_prompt: vision_v1
+  clean_input: pdf           # чистый уровень подаётся PDF (auto → текстовый слой)
+metrics:
+  anls_threshold: 0.5        # Biten et al., 2019 (ST-VQA)
+  row_match_threshold: 0.5   # D44
+  calibration_bins: 10
+bootstrap:
+  n_resamples: 2000
+  ci: 0.95
+report:
+  out_dir: reports
+  date: null                 # null — дата запуска отчёта
+  worst: 5
+  image_side: 1000
+predictions_dir: data/experiments/eval
+compare_with: null

@@ -12,9 +12,10 @@ from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from PIL import Image
-from pydantic import ValidationError
+from pydantic import BaseModel, Field, ValidationError
 
 from docai import __version__
 from docai.edo.errors import EdoError
@@ -41,8 +42,8 @@ from docai.extract.prompts import render_prompt
 from docai.extract.result import ExtractionResult, LlmCall, Meta
 from docai.extract.router import InputKind, Mode, Route, route_inputs
 from docai.extract.vram import VramMonitor
-from docai.postprocess import SourceKind, postprocess
-from docai.schemas.documents import AnyDocument
+from docai.postprocess import PostprocessConfig, SourceKind, postprocess
+from docai.schemas.documents import AnyDocument, parse_document
 
 log = logging.getLogger("docai.extract")
 
@@ -305,6 +306,68 @@ def _extract_raw(
     return result, document, run
 
 
+class RawExtraction(BaseModel):
+    """Извлечение без постобработки: «сырой» ответ модели и всё, что нужно постобработке.
+
+    Нужен оценке (P11): ответы модели кэшируются, а постобработка с любыми константами
+    (D42) пересчитывается по кэшу без повторного запуска LLM.
+    """
+
+    # Результат основного пути; `document` в нём — документ до постобработки.
+    result: ExtractionResult
+    # Тексты-источники (текстовый слой, OCR) основного и второго путей.
+    texts: list[tuple[SourceKind, str]] = Field(default_factory=list)
+    # Документы второго пути (--cross-check) в JSON.
+    alternates: list[dict[str, Any]] = Field(default_factory=list)
+
+
+def extract_raw(
+    paths: Sequence[Path],
+    mode: Mode = Mode.AUTO,
+    config: ExtractConfig | None = None,
+    cross_check: Mode | None = None,
+) -> RawExtraction:
+    """Основной путь извлечения и (если задан) второй путь для сверки, без постобработки."""
+    config = config or ExtractConfig()
+    result, _, run = _extract_raw(paths, mode, config)
+    route = result.meta.route or "vision"
+    texts = list(run.texts)
+    alternates: list[dict[str, Any]] = []
+    if cross_check is not None and route != str(Route.XML):
+        second, second_doc, second_run = _extract_raw(paths, cross_check, config)
+        result.meta.cross_check = str(second.meta.route)
+        result.meta.cross_check_total_s = second.meta.timings_s.get("total")
+        result.warnings.extend(f"cross-check: {w}" for w in second.warnings)
+        result.errors.extend(f"cross-check: {e}" for e in second.errors)
+        texts += second_run.texts
+        if second_doc is not None:
+            alternates.append(second_doc.model_dump(mode="json"))
+    return RawExtraction(result=result, texts=texts, alternates=alternates)
+
+
+def finish(raw: RawExtraction, config: PostprocessConfig | None = None) -> ExtractionResult:
+    """Постобработка «сырого» извлечения: нормализация, исправления, уверенность, статус.
+
+    Исходный `raw` не меняется.
+    """
+    result = raw.result.model_copy(deep=True)
+    document = parse_document(result.document) if result.document is not None else None
+    alternates = [parse_document(alt) for alt in raw.alternates]
+    started = time.perf_counter()
+    done = postprocess(
+        document,
+        route=result.meta.route or "vision",
+        texts=raw.texts,
+        alternates=alternates,
+        config=config,
+    )
+    result.meta.timings_s["postprocess"] = round(time.perf_counter() - started, 3)
+    result.postprocess = done.report
+    if done.document is not None:
+        result.document = done.document.model_dump(mode="json")
+    return result
+
+
 def extract(
     paths: Sequence[Path],
     mode: Mode = Mode.AUTO,
@@ -319,25 +382,4 @@ def extract(
     совпавшие на двух путях, получают больше уверенности, расхождения — меньше.
     """
     config = config or ExtractConfig()
-    result, document, run = _extract_raw(paths, mode, config)
-    route = result.meta.route or "vision"
-    texts = list(run.texts)
-    alternates = []
-    if cross_check is not None and route != str(Route.XML):
-        second, second_doc, second_run = _extract_raw(paths, cross_check, config)
-        result.meta.cross_check = str(second.meta.route)
-        result.meta.cross_check_total_s = second.meta.timings_s.get("total")
-        result.warnings.extend(f"cross-check: {w}" for w in second.warnings)
-        result.errors.extend(f"cross-check: {e}" for e in second.errors)
-        texts += second_run.texts
-        if second_doc is not None:
-            alternates.append(second_doc)
-    with run.stage("postprocess"):
-        done = postprocess(
-            document, route=route, texts=texts, alternates=alternates, config=config.postprocess
-        )
-    result.meta.timings_s["postprocess"] = run.meta.timings_s["postprocess"]
-    result.postprocess = done.report
-    if done.document is not None:
-        result.document = done.document.model_dump(mode="json")
-    return result
+    return finish(extract_raw(paths, mode, config, cross_check), config.postprocess)
