@@ -7,7 +7,8 @@ import shutil
 import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import Annotated
+from pathlib import Path
+from typing import Annotated, BinaryIO
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse
@@ -17,6 +18,7 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 from docai import __version__
 from docai.extract import ExtractionResult, Mode
 from docai.extract.router import InputKind, RoutingError, sniff_kind
+from docai.service.exchange import ExchangeError, FileExchange
 from docai.service.health import HealthProbe, default_probe
 from docai.service.models import (
     FeedbackIn,
@@ -122,12 +124,102 @@ def create_app(
     worker = Worker(store, extractor or make_extractor(settings.extract), settings)
     probe = health_probe or default_probe(settings.extract)
 
+    def load_result(row: JobRow) -> ExtractionResult | None:
+        if row.result_json is None:
+            return None
+        return ExtractionResult.model_validate_json(row.result_json)
+
+    def enqueue(stream: BinaryIO, filename: str | None, mode: Mode) -> JobCreated:
+        """Сохранить файл и поставить в очередь. Общая часть HTTP и обмена файлами."""
+        if store.count("queued") >= settings.max_queued:
+            raise HTTPException(429, "очередь заполнена, повторите позже")
+        head = stream.read(64)
+        if not head:
+            raise HTTPException(400, "файл пустой")
+        kind, ext = detect_upload(head)
+
+        job_id = uuid.uuid4().hex
+        job_dir = settings.job_dir(job_id)
+        job_dir.mkdir(parents=True)
+        stored_name = f"source{ext}"
+        size = len(head)
+        try:
+            with (job_dir / stored_name).open("wb") as out:
+                out.write(head)
+                while chunk := stream.read(_CHUNK):
+                    size += len(chunk)
+                    if size > settings.max_upload_bytes:
+                        raise HTTPException(413, TOO_LARGE)
+                    out.write(chunk)
+            store.create_job(
+                job_id,
+                filename=_clean_filename(filename),
+                stored_name=stored_name,
+                source_kind=kind.value,
+                mode=mode.value,
+                size_bytes=size,
+            )
+        except BaseException:
+            shutil.rmtree(job_dir, ignore_errors=True)
+            raise
+        worker.notify()
+        status: JobStatus = "queued"
+        return JobCreated(id=job_id, status=status, queue_ahead=store.queue_ahead(job_id) or 0)
+
+    def job_view(job_id: str) -> JobView | None:
+        row = store.get_job(job_id)
+        if row is None:
+            return None
+        return build_job_view(
+            row,
+            load_result(row),
+            queue_ahead=store.queue_ahead(job_id),
+            feedback_count=store.feedback_count(job_id),
+        )
+
+    def health_view() -> HealthView:
+        ollama, gpu = probe()
+        ok = worker.alive and ollama.reachable and ollama.model_available
+        return HealthView(
+            status="ok" if ok else "degraded",
+            version=__version__,
+            worker_alive=worker.alive,
+            queued=store.count("queued"),
+            running=store.count("running"),
+            ollama=ollama,
+            gpu=gpu,
+        )
+
+    def enqueue_file(path: Path, filename: str) -> str:
+        """Для обмена файлами: ошибки приёма превращаются в текст ответа."""
+        try:
+            with path.open("rb") as stream:
+                return enqueue(stream, filename, Mode.AUTO).id
+        except HTTPException as exc:
+            raise ExchangeError(str(exc.detail)) from exc
+
+    exchange = (
+        FileExchange(
+            settings.exchange_dir,
+            health=health_view,
+            enqueue=enqueue_file,
+            job_view=job_view,
+            poll_interval_s=settings.exchange_poll_s,
+        )
+        if settings.exchange_enabled
+        else None
+    )
+
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         worker.start()
+        if exchange is not None:
+            exchange.start()
         try:
             yield
         finally:
+            if exchange is not None:
+                exchange.stop()
             worker.stop()
             store.close()
 
@@ -143,6 +235,7 @@ def create_app(
     app.state.store = store
     app.state.worker = worker
     app.state.settings = settings
+    app.state.exchange = exchange
     app.add_middleware(BodyLimitMiddleware, max_bytes=settings.max_upload_bytes + _BODY_OVERHEAD)
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts)
 
@@ -151,11 +244,6 @@ def create_app(
         if row is None:
             raise HTTPException(404, "задание не найдено")
         return row
-
-    def load_result(row: JobRow) -> ExtractionResult | None:
-        if row.result_json is None:
-            return None
-        return ExtractionResult.model_validate_json(row.result_json)
 
     @app.get("/", include_in_schema=False)
     def index() -> RedirectResponse:
@@ -167,51 +255,15 @@ def create_app(
         mode: Annotated[Mode, Form(description="Путь извлечения; auto выбирает сам")] = Mode.AUTO,
     ) -> JobCreated:
         """Принять файл и поставить его в очередь. Результат — `GET /v1/jobs/{id}`."""
-        if store.count("queued") >= settings.max_queued:
-            raise HTTPException(429, "очередь заполнена, повторите позже")
-        head = file.file.read(64)
-        if not head:
-            raise HTTPException(400, "файл пустой")
-        kind, ext = detect_upload(head)
-
-        job_id = uuid.uuid4().hex
-        job_dir = settings.job_dir(job_id)
-        job_dir.mkdir(parents=True)
-        stored_name = f"source{ext}"
-        size = len(head)
-        try:
-            with (job_dir / stored_name).open("wb") as out:
-                out.write(head)
-                while chunk := file.file.read(_CHUNK):
-                    size += len(chunk)
-                    if size > settings.max_upload_bytes:
-                        raise HTTPException(413, TOO_LARGE)
-                    out.write(chunk)
-            store.create_job(
-                job_id,
-                filename=_clean_filename(file.filename),
-                stored_name=stored_name,
-                source_kind=kind.value,
-                mode=mode.value,
-                size_bytes=size,
-            )
-        except BaseException:
-            shutil.rmtree(job_dir, ignore_errors=True)
-            raise
-        worker.notify()
-        status: JobStatus = "queued"
-        return JobCreated(id=job_id, status=status, queue_ahead=store.queue_ahead(job_id) or 0)
+        return enqueue(file.file, file.filename, mode)
 
     @app.get("/v1/jobs/{job_id}", response_model=JobView, tags=["Задания"])
     def get_job(job_id: str) -> JobView:
         """Состояние задания; при `status = done` — поля, строки, уверенность и ошибки проверок."""
-        row = get_row(job_id)
-        return build_job_view(
-            row,
-            load_result(row),
-            queue_ahead=store.queue_ahead(job_id),
-            feedback_count=store.feedback_count(job_id),
-        )
+        view = job_view(job_id)
+        if view is None:
+            raise HTTPException(404, "задание не найдено")
+        return view
 
     @app.get(
         "/v1/jobs/{job_id}/preview/{page}",
@@ -259,16 +311,6 @@ def create_app(
     @app.get("/v1/health", response_model=HealthView, tags=["Служебное"])
     def health() -> HealthView:
         """Жива ли очередь, доступна ли Ollama и загружена ли модель, сколько VRAM свободно."""
-        ollama, gpu = probe()
-        ok = worker.alive and ollama.reachable and ollama.model_available
-        return HealthView(
-            status="ok" if ok else "degraded",
-            version=__version__,
-            worker_alive=worker.alive,
-            queued=store.count("queued"),
-            running=store.count("running"),
-            ollama=ollama,
-            gpu=gpu,
-        )
+        return health_view()
 
     return app

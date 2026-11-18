@@ -25,6 +25,14 @@ class ServiceSettings(BaseModel):
     allowed_hosts: list[str] = Field(default_factory=lambda: ["127.0.0.1", "localhost"])
     # Настройки конвейера извлечения (как в configs/extract.yaml).
     extract: ExtractConfig = Field(default_factory=ExtractConfig)
+    # Способ Б: обмен с 1С через папки inbox/outbox (D54). None — <data_dir>/exchange.
+    exchange_enabled: bool = True
+    exchange_root: Path | None = None
+    exchange_poll_s: float = 0.5
+
+    @property
+    def exchange_dir(self) -> Path:
+        return self.exchange_root or self.data_dir / "exchange"
 
     @property
     def db_path(self) -> Path:

@@ -1,7 +1,7 @@
 # Проверки перед каждым коммитом. Установка: uv run pre-commit install
 # ruff запускается через uv, поэтому его версия одна — та, что в uv.lock.
-# Официальная XSD ФНС (windows-1251, CRLF) хуки не трогают.
-exclude: ^src/docai/edo/xsd/
+# Официальная XSD ФНС (windows-1251, CRLF) и выгрузку обработки 1С (BOM, CRLF) хуки не трогают.
+exclude: ^(src/docai/edo/xsd/|onec/src/)
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
