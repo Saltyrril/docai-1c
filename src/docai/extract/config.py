@@ -32,7 +32,7 @@ class ExtractConfig(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    model: str = "qwen3.5:2b-q8_0"
+    model: str = "qwen3.5:2b-q4_K_M"
     ollama_url: str = "http://127.0.0.1:11434"
     # Режим рассуждений Qwen3.5 в Ollama включён по умолчанию; выключается `think: false` (D38).
     think: bool = False

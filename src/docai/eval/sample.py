@@ -57,6 +57,23 @@ def proportional_quotas(counts: dict[str, int], total: int) -> dict[str, int]:
     return quotas
 
 
+def item_from_row(row: dict, root: Path, level: str, clean_pdf: bool) -> EvalItem:
+    """Элемент выборки из строки манифеста датасета (общий для P11 и матрицы P12)."""
+    images = [root / p for p in row["images"]]
+    use_pdf = level == "clean" and clean_pdf
+    return EvalItem(
+        item_id=row["id"],
+        doc_id=row["doc_id"],
+        doc_type=row["doc_type"],
+        level=level,
+        inputs=[root / row["pdf"]] if use_pdf else images,
+        truth=root / row["json"],
+        preview=images[0] if images else None,
+        pages=row.get("pages"),
+        has_errors=bool(row.get("has_errors")),
+    )
+
+
 def _read_manifest(path: Path) -> list[dict]:
     with path.open(encoding="utf-8") as fh:
         return [json.loads(line) for line in fh if line.strip()]
@@ -97,21 +114,8 @@ def select_dataset_items(cfg: EvalConfig) -> list[EvalItem]:
 
     items = []
     for doc_id, level in pairs:
-        row = by_key[(doc_id, level)]
-        images = [root / p for p in row["images"]]
-        use_pdf = level == "clean" and cfg.extract.clean_input == "pdf"
         items.append(
-            EvalItem(
-                item_id=row["id"],
-                doc_id=doc_id,
-                doc_type=row["doc_type"],
-                level=level,
-                inputs=[root / row["pdf"]] if use_pdf else images,
-                truth=root / row["json"],
-                preview=images[0] if images else None,
-                pages=row.get("pages"),
-                has_errors=bool(row.get("has_errors")),
-            )
+            item_from_row(by_key[(doc_id, level)], root, level, cfg.extract.clean_input == "pdf")
         )
     return items
 

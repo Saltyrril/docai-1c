@@ -550,7 +550,7 @@ def test_predictions_are_cached(tmp_path):
     assert fingerprint(items[0], changed_pp, Mode.AUTO, None) == fingerprint(
         items[0], config, Mode.AUTO, None
     )
-    other_model = config.model_copy(update={"model": "qwen3.5:2b-q4_K_M"})
+    other_model = config.model_copy(update={"model": "qwen3.5:2b-q8_0"})
     run_predictions(items, other_model, Mode.AUTO, cfg.cache_dir, extract_fn=fake)
     assert fake.calls == 12
 

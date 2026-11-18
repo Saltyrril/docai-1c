@@ -1,0 +1,39 @@
+# P12: матрица экспериментов «модель × путь × качество входа».
+# Запуск:  uv run docai eval-matrix run --config configs/eval/p12_matrix.yaml
+# Ход:     uv run docai eval-matrix plan --config configs/eval/p12_matrix.yaml
+# Отчёт:   uv run docai eval-matrix report --config configs/eval/p12_matrix.yaml
+# Ячейка = модель + путь. Уровни clean/scan/photo раздаются по документам по кругу (по 100 на уровень
+# при 300 документах); путь text читает текстовый слой PDF, поэтому только clean и все документы.
+# Промпты и формат даты — из configs/extract.yaml (text_v2, vision_v2, printed).
+name: p12_matrix
+description: >-
+  300 синтетических документов сплита test (из 304) и все
+  размеченные реальные. Модели Qwen3.5 0.8B, 2B Q4_K_M, 2B Q8_0 и 4B Q4_K_M (только путь text,
+  с проверкой, что она помещается в VRAM при контексте 8k); пути text, vision, ocr + LLM.
+seed: 2026
+batch_docs: 30            # партия = 30 документов во всех ячейках подряд; кратно 3
+data:
+  dataset: data/datasets/v1
+  split: test
+  n_docs: 300
+  dpi: 200
+  # 10 документов P9 (по ним подбирались p₀, D42) не исключаются: после их исключения остаётся 294 < 300.
+  # Это касается только калибровки (ECE), качество извлечения от p₀ не зависит; пересчёт p₀ — P13.
+  exclude_doc_ids: []
+  include_real: true
+  real_root: data/real
+extract_config: configs/extract.yaml
+paths:
+  text:   {mode: text,   levels: [clean],               clean_input: pdf}
+  vision: {mode: vision, levels: [clean, scan, photo],  clean_input: image}
+  ocr:    {mode: ocr,    levels: [clean, scan, photo],  clean_input: image}
+models:
+  - {id: q08,    tag: "qwen3.5:0.8b",        paths: [text, vision, ocr], guess_s_per_item: 25}
+  - {id: q2q4,   tag: "qwen3.5:2b-q4_K_M",   paths: [text, vision, ocr], guess_s_per_item: 40}
+  - {id: q2q8,   tag: "qwen3.5:2b-q8_0",      paths: [text, vision, ocr], guess_s_per_item: 60}
+  - {id: q4q4,   tag: "qwen3.5:4b-q4_K_M",    paths: [text], require_full_vram: true, guess_s_per_item: 120}
+metrics: {anls_threshold: 0.5, row_match_threshold: 0.5, calibration_bins: 10}
+bootstrap: {n_resamples: 2000, ci: 0.95}
+report: {out_dir: reports, date: null}
+predictions_dir: data/experiments/eval
+power_guard: true

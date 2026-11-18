@@ -1,6 +1,6 @@
 # Настройки конвейера извлечения (шаг P9). Значения совпадают с умолчаниями ExtractConfig.
 # Запуск: uv run docai extract <файл> --mode auto|text|vision|ocr --config configs/extract.yaml
-model: qwen3.5:2b-q8_0
+model: qwen3.5:2b-q4_K_M      # умолчание по матрице P12 (D48)
 ollama_url: http://127.0.0.1:11434
 think: false              # у Qwen3.5 в Ollama рассуждения включены по умолчанию (D38)
 keep_alive: 5m

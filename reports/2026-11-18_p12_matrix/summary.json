@@ -1,0 +1,1959 @@
+{
+  "name": "p12_matrix",
+  "documents": 150,
+  "documents_planned": 300,
+  "ready_in_all_cells": 150,
+  "cells": [
+    {
+      "cell": "q08__text",
+      "model": "q08",
+      "tag": "qwen3.5:0.8b",
+      "path": "text",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.146667,
+          "low": 0.093333,
+          "high": 0.206667
+        },
+        "cells_f1": {
+          "value": 0.894482,
+          "low": 0.867314,
+          "high": 0.917155
+        },
+        "header_accuracy": {
+          "value": 0.711524,
+          "low": 0.684208,
+          "high": 0.738617
+        },
+        "rows_f1": {
+          "value": 0.976061,
+          "low": 0.958825,
+          "high": 0.988852
+        },
+        "text_anls": {
+          "value": 0.860465,
+          "low": 0.830943,
+          "high": 0.884996
+        },
+        "doc_type_accuracy": {
+          "value": 0.466667,
+          "low": 0.386667,
+          "high": 0.54
+        },
+        "extracted": {
+          "value": 1.0,
+          "low": 1.0,
+          "high": 1.0
+        },
+        "silent_error": {
+          "value": 0.18,
+          "low": 0.12,
+          "high": 0.246667
+        },
+        "ece": {
+          "value": 0.089011,
+          "low": 0.074863,
+          "high": 0.106541
+        },
+        "sec_per_page": {
+          "value": 11.543012,
+          "low": 10.811053,
+          "high": 12.301083
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 150,
+          "doc_ok": {
+            "value": 0.146667,
+            "low": 0.093333,
+            "high": 0.206667
+          },
+          "cells_f1": {
+            "value": 0.894482,
+            "low": 0.867314,
+            "high": 0.917155
+          },
+          "header_accuracy": {
+            "value": 0.711524,
+            "low": 0.684208,
+            "high": 0.738617
+          },
+          "rows_f1": {
+            "value": 0.976061,
+            "low": 0.958825,
+            "high": 0.988852
+          },
+          "text_anls": {
+            "value": 0.860465,
+            "low": 0.830943,
+            "high": 0.884996
+          },
+          "doc_type_accuracy": {
+            "value": 0.466667,
+            "low": 0.386667,
+            "high": 0.54
+          },
+          "silent_error": {
+            "value": 0.18,
+            "low": 0.12,
+            "high": 0.246667
+          },
+          "ece": {
+            "value": 0.089011,
+            "low": 0.074863,
+            "high": 0.106541
+          },
+          "sec_per_page": {
+            "value": 11.543012,
+            "low": 10.811053,
+            "high": 12.301083
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 150,
+        "pages": 170,
+        "seconds_total": 1962.3,
+        "seconds_per_doc_mean": 13.08,
+        "seconds_per_doc_median": 11.2,
+        "seconds_per_page_median": 9.94,
+        "seconds_per_page_p90": 17.47,
+        "seconds_per_page_max": 34.87,
+        "peak_vram_mib_max": 2615,
+        "peak_vram_mib_median": 1811,
+        "prompt_tokens": 248033,
+        "completion_tokens": 179624
+      },
+      "placement": {
+        "vram_share_median": 1.0,
+        "vram_share_min": 1.0,
+        "size_gib": 0.58
+      },
+      "vs_best": {
+        "common_documents": 150,
+        "doc_ok": {
+          "a": 0.393333,
+          "b": 0.146667,
+          "diff": -0.246667,
+          "low": -0.346667,
+          "high": -0.146667,
+          "p_value": 0.0
+        },
+        "cells_f1": {
+          "a": 0.939349,
+          "b": 0.894482,
+          "diff": -0.044867,
+          "low": -0.077767,
+          "high": -0.019011,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 53,
+          "b_only": 16,
+          "statistic": 18.7826,
+          "p_value": 1.5e-05,
+          "method": "χ² с поправкой Йейтса"
+        }
+      }
+    },
+    {
+      "cell": "q08__vision",
+      "model": "q08",
+      "tag": "qwen3.5:0.8b",
+      "path": "vision",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "cells_f1": {
+          "value": 0.298704,
+          "low": 0.2478,
+          "high": 0.354771
+        },
+        "header_accuracy": {
+          "value": 0.392722,
+          "low": 0.354358,
+          "high": 0.429741
+        },
+        "rows_f1": {
+          "value": 0.427497,
+          "low": 0.358945,
+          "high": 0.498216
+        },
+        "text_anls": {
+          "value": 0.374563,
+          "low": 0.325504,
+          "high": 0.425823
+        },
+        "doc_type_accuracy": {
+          "value": 0.64,
+          "low": 0.56,
+          "high": 0.713333
+        },
+        "extracted": {
+          "value": 0.84,
+          "low": 0.78,
+          "high": 0.893333
+        },
+        "silent_error": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "ece": {
+          "value": 0.25047,
+          "low": 0.229467,
+          "high": 0.271556
+        },
+        "sec_per_page": {
+          "value": 18.809914,
+          "low": 17.227283,
+          "high": 20.320379
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.360235,
+            "low": 0.276851,
+            "high": 0.447291
+          },
+          "header_accuracy": {
+            "value": 0.460571,
+            "low": 0.397663,
+            "high": 0.513147
+          },
+          "rows_f1": {
+            "value": 0.509434,
+            "low": 0.397319,
+            "high": 0.623657
+          },
+          "text_anls": {
+            "value": 0.471169,
+            "low": 0.385702,
+            "high": 0.554506
+          },
+          "doc_type_accuracy": {
+            "value": 0.68,
+            "low": 0.54,
+            "high": 0.8
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.232375,
+            "low": 0.200949,
+            "high": 0.264081
+          },
+          "sec_per_page": {
+            "value": 17.606702,
+            "low": 15.233474,
+            "high": 20.24891
+          }
+        },
+        "photo": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.213957,
+            "low": 0.143567,
+            "high": 0.299652
+          },
+          "header_accuracy": {
+            "value": 0.321879,
+            "low": 0.2643,
+            "high": 0.377445
+          },
+          "rows_f1": {
+            "value": 0.319298,
+            "low": 0.222965,
+            "high": 0.428579
+          },
+          "text_anls": {
+            "value": 0.267835,
+            "low": 0.19895,
+            "high": 0.34089
+          },
+          "doc_type_accuracy": {
+            "value": 0.6,
+            "low": 0.46,
+            "high": 0.72
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.274313,
+            "low": 0.243403,
+            "high": 0.320741
+          },
+          "sec_per_page": {
+            "value": 20.31218,
+            "low": 17.243072,
+            "high": 23.539164
+          }
+        },
+        "scan": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.312348,
+            "low": 0.203844,
+            "high": 0.422489
+          },
+          "header_accuracy": {
+            "value": 0.395506,
+            "low": 0.317014,
+            "high": 0.471053
+          },
+          "rows_f1": {
+            "value": 0.442073,
+            "low": 0.299575,
+            "high": 0.576971
+          },
+          "text_anls": {
+            "value": 0.380964,
+            "low": 0.281991,
+            "high": 0.477554
+          },
+          "doc_type_accuracy": {
+            "value": 0.64,
+            "low": 0.5,
+            "high": 0.78
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.248482,
+            "low": 0.210941,
+            "high": 0.292535
+          },
+          "sec_per_page": {
+            "value": 18.691182,
+            "low": 16.065758,
+            "high": 21.556602
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 146,
+        "pages": 162,
+        "seconds_total": 3047.2,
+        "seconds_per_doc_mean": 20.87,
+        "seconds_per_doc_median": 15.99,
+        "seconds_per_page_median": 15.84,
+        "seconds_per_page_p90": 41.11,
+        "seconds_per_page_max": 45.01,
+        "peak_vram_mib_max": 1863,
+        "peak_vram_mib_median": 1863,
+        "prompt_tokens": 266586,
+        "completion_tokens": 263790
+      },
+      "placement": {
+        "vram_share_median": 1.0,
+        "vram_share_min": 1.0,
+        "size_gib": 0.58
+      },
+      "vs_best": {
+        "common_documents": 50,
+        "doc_ok": {
+          "a": 0.4,
+          "b": 0.0,
+          "diff": -0.4,
+          "low": -0.54,
+          "high": -0.26,
+          "p_value": 0.0
+        },
+        "cells_f1": {
+          "a": 0.940869,
+          "b": 0.360235,
+          "diff": -0.580634,
+          "low": -0.668854,
+          "high": -0.494007,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 20,
+          "b_only": 0,
+          "statistic": null,
+          "p_value": 2e-06,
+          "method": "точный биномиальный"
+        }
+      }
+    },
+    {
+      "cell": "q08__ocr",
+      "model": "q08",
+      "tag": "qwen3.5:0.8b",
+      "path": "ocr",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "cells_f1": {
+          "value": 0.011232,
+          "low": 0.000952,
+          "high": 0.024899
+        },
+        "header_accuracy": {
+          "value": 0.366945,
+          "low": 0.330254,
+          "high": 0.40242
+        },
+        "rows_f1": {
+          "value": 0.019391,
+          "low": 0.001393,
+          "high": 0.043214
+        },
+        "text_anls": {
+          "value": 0.178629,
+          "low": 0.154845,
+          "high": 0.204752
+        },
+        "doc_type_accuracy": {
+          "value": 0.406667,
+          "low": 0.326667,
+          "high": 0.48
+        },
+        "extracted": {
+          "value": 0.9,
+          "low": 0.853333,
+          "high": 0.946667
+        },
+        "silent_error": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "ece": {
+          "value": 0.302918,
+          "low": 0.277316,
+          "high": 0.330374
+        },
+        "sec_per_page": {
+          "value": 13.52587,
+          "low": 11.543761,
+          "high": 15.553142
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.01265,
+            "low": 0.0,
+            "high": 0.037046
+          },
+          "header_accuracy": {
+            "value": 0.491429,
+            "low": 0.429997,
+            "high": 0.551966
+          },
+          "rows_f1": {
+            "value": 0.021164,
+            "low": 0.0,
+            "high": 0.0627
+          },
+          "text_anls": {
+            "value": 0.231591,
+            "low": 0.187975,
+            "high": 0.28636
+          },
+          "doc_type_accuracy": {
+            "value": 0.46,
+            "low": 0.32,
+            "high": 0.6
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.3167,
+            "low": 0.27336,
+            "high": 0.357612
+          },
+          "sec_per_page": {
+            "value": 17.894509,
+            "low": 14.198148,
+            "high": 21.470409
+          }
+        },
+        "photo": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.005745,
+            "low": 0.0,
+            "high": 0.02023
+          },
+          "header_accuracy": {
+            "value": 0.182131,
+            "low": 0.129777,
+            "high": 0.238379
+          },
+          "rows_f1": {
+            "value": 0.010152,
+            "low": 0.0,
+            "high": 0.035611
+          },
+          "text_anls": {
+            "value": 0.10029,
+            "low": 0.069922,
+            "high": 0.135967
+          },
+          "doc_type_accuracy": {
+            "value": 0.34,
+            "low": 0.22,
+            "high": 0.48
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.313324,
+            "low": 0.270375,
+            "high": 0.354634
+          },
+          "sec_per_page": {
+            "value": 10.977509,
+            "low": 8.3504,
+            "high": 14.195318
+          }
+        },
+        "scan": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.014085,
+            "low": 0.0,
+            "high": 0.047803
+          },
+          "header_accuracy": {
+            "value": 0.425843,
+            "low": 0.373493,
+            "high": 0.472869
+          },
+          "rows_f1": {
+            "value": 0.024845,
+            "low": 0.0,
+            "high": 0.084225
+          },
+          "text_anls": {
+            "value": 0.200357,
+            "low": 0.158722,
+            "high": 0.249991
+          },
+          "doc_type_accuracy": {
+            "value": 0.42,
+            "low": 0.28,
+            "high": 0.56
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.286984,
+            "low": 0.249173,
+            "high": 0.336552
+          },
+          "sec_per_page": {
+            "value": 11.616175,
+            "low": 8.903573,
+            "high": 15.085451
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 149,
+        "pages": 169,
+        "seconds_total": 2285.9,
+        "seconds_per_doc_mean": 15.34,
+        "seconds_per_doc_median": 9.91,
+        "seconds_per_page_median": 9.7,
+        "seconds_per_page_p90": 31.99,
+        "seconds_per_page_max": 46.52,
+        "peak_vram_mib_max": 1863,
+        "peak_vram_mib_median": 1863,
+        "prompt_tokens": 168711,
+        "completion_tokens": 194659
+      },
+      "placement": {
+        "vram_share_median": 1.0,
+        "vram_share_min": 1.0,
+        "size_gib": 0.58
+      },
+      "vs_best": {
+        "common_documents": 50,
+        "doc_ok": {
+          "a": 0.4,
+          "b": 0.0,
+          "diff": -0.4,
+          "low": -0.54,
+          "high": -0.26,
+          "p_value": 0.0
+        },
+        "cells_f1": {
+          "a": 0.940869,
+          "b": 0.01265,
+          "diff": -0.928219,
+          "low": -0.956195,
+          "high": -0.897938,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 20,
+          "b_only": 0,
+          "statistic": null,
+          "p_value": 2e-06,
+          "method": "точный биномиальный"
+        }
+      }
+    },
+    {
+      "cell": "q2q4__text",
+      "model": "q2q4",
+      "tag": "qwen3.5:2b-q4_K_M",
+      "path": "text",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.393333,
+          "low": 0.313333,
+          "high": 0.473333
+        },
+        "cells_f1": {
+          "value": 0.939349,
+          "low": 0.926313,
+          "high": 0.952712
+        },
+        "header_accuracy": {
+          "value": 0.824867,
+          "low": 0.805123,
+          "high": 0.843035
+        },
+        "rows_f1": {
+          "value": 0.990766,
+          "low": 0.982301,
+          "high": 0.997029
+        },
+        "text_anls": {
+          "value": 0.935486,
+          "low": 0.916447,
+          "high": 0.951997
+        },
+        "doc_type_accuracy": {
+          "value": 0.766667,
+          "low": 0.7,
+          "high": 0.833333
+        },
+        "extracted": {
+          "value": 1.0,
+          "low": 1.0,
+          "high": 1.0
+        },
+        "silent_error": {
+          "value": 0.166667,
+          "low": 0.106667,
+          "high": 0.226667
+        },
+        "ece": {
+          "value": 0.035428,
+          "low": 0.026826,
+          "high": 0.046285
+        },
+        "sec_per_page": {
+          "value": 21.718047,
+          "low": 20.177573,
+          "high": 23.334881
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 150,
+          "doc_ok": {
+            "value": 0.393333,
+            "low": 0.313333,
+            "high": 0.473333
+          },
+          "cells_f1": {
+            "value": 0.939349,
+            "low": 0.926313,
+            "high": 0.952712
+          },
+          "header_accuracy": {
+            "value": 0.824867,
+            "low": 0.805123,
+            "high": 0.843035
+          },
+          "rows_f1": {
+            "value": 0.990766,
+            "low": 0.982301,
+            "high": 0.997029
+          },
+          "text_anls": {
+            "value": 0.935486,
+            "low": 0.916447,
+            "high": 0.951997
+          },
+          "doc_type_accuracy": {
+            "value": 0.766667,
+            "low": 0.7,
+            "high": 0.833333
+          },
+          "silent_error": {
+            "value": 0.166667,
+            "low": 0.106667,
+            "high": 0.226667
+          },
+          "ece": {
+            "value": 0.035428,
+            "low": 0.026826,
+            "high": 0.046285
+          },
+          "sec_per_page": {
+            "value": 21.718047,
+            "low": 20.177573,
+            "high": 23.334881
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 150,
+        "pages": 170,
+        "seconds_total": 3692.1,
+        "seconds_per_doc_mean": 24.61,
+        "seconds_per_doc_median": 20.14,
+        "seconds_per_page_median": 18.42,
+        "seconds_per_page_p90": 33.43,
+        "seconds_per_page_max": 67.8,
+        "peak_vram_mib_max": 2403,
+        "peak_vram_mib_median": 2403,
+        "prompt_tokens": 248033,
+        "completion_tokens": 172753
+      },
+      "placement": {
+        "vram_share_median": 1.0,
+        "vram_share_min": 1.0,
+        "size_gib": 1.62
+      },
+      "vs_best": null
+    },
+    {
+      "cell": "q2q4__vision",
+      "model": "q2q4",
+      "tag": "qwen3.5:2b-q4_K_M",
+      "path": "vision",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.133333,
+          "low": 0.08,
+          "high": 0.193333
+        },
+        "cells_f1": {
+          "value": 0.64383,
+          "low": 0.57602,
+          "high": 0.704918
+        },
+        "header_accuracy": {
+          "value": 0.651251,
+          "low": 0.608871,
+          "high": 0.690653
+        },
+        "rows_f1": {
+          "value": 0.76073,
+          "low": 0.68986,
+          "high": 0.825219
+        },
+        "text_anls": {
+          "value": 0.702214,
+          "low": 0.64364,
+          "high": 0.759111
+        },
+        "doc_type_accuracy": {
+          "value": 0.806667,
+          "low": 0.74,
+          "high": 0.866667
+        },
+        "extracted": {
+          "value": 0.933333,
+          "low": 0.893333,
+          "high": 0.966667
+        },
+        "silent_error": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "ece": {
+          "value": 0.121148,
+          "low": 0.101629,
+          "high": 0.144934
+        },
+        "sec_per_page": {
+          "value": 27.792694,
+          "low": 25.526068,
+          "high": 30.163807
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.18,
+            "low": 0.08,
+            "high": 0.2805
+          },
+          "cells_f1": {
+            "value": 0.718891,
+            "low": 0.605213,
+            "high": 0.808617
+          },
+          "header_accuracy": {
+            "value": 0.758857,
+            "low": 0.706083,
+            "high": 0.804203
+          },
+          "rows_f1": {
+            "value": 0.831746,
+            "low": 0.713391,
+            "high": 0.926037
+          },
+          "text_anls": {
+            "value": 0.813139,
+            "low": 0.734488,
+            "high": 0.876668
+          },
+          "doc_type_accuracy": {
+            "value": 0.84,
+            "low": 0.72,
+            "high": 0.94
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.14772,
+            "low": 0.102655,
+            "high": 0.19526
+          },
+          "sec_per_page": {
+            "value": 28.50907,
+            "low": 23.764627,
+            "high": 33.293868
+          }
+        },
+        "photo": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.04,
+            "low": 0.0,
+            "high": 0.1
+          },
+          "cells_f1": {
+            "value": 0.466205,
+            "low": 0.361302,
+            "high": 0.569431
+          },
+          "header_accuracy": {
+            "value": 0.523482,
+            "low": 0.437428,
+            "high": 0.607102
+          },
+          "rows_f1": {
+            "value": 0.596745,
+            "low": 0.476145,
+            "high": 0.714286
+          },
+          "text_anls": {
+            "value": 0.553382,
+            "low": 0.436936,
+            "high": 0.664786
+          },
+          "doc_type_accuracy": {
+            "value": 0.7,
+            "low": 0.56,
+            "high": 0.82
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.158397,
+            "low": 0.118288,
+            "high": 0.196243
+          },
+          "sec_per_page": {
+            "value": 27.581804,
+            "low": 24.243959,
+            "high": 31.010394
+          }
+        },
+        "scan": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.18,
+            "low": 0.08,
+            "high": 0.3
+          },
+          "cells_f1": {
+            "value": 0.719049,
+            "low": 0.605579,
+            "high": 0.8014
+          },
+          "header_accuracy": {
+            "value": 0.670787,
+            "low": 0.604781,
+            "high": 0.733845
+          },
+          "rows_f1": {
+            "value": 0.828194,
+            "low": 0.698849,
+            "high": 0.91574
+          },
+          "text_anls": {
+            "value": 0.733716,
+            "low": 0.643985,
+            "high": 0.818038
+          },
+          "doc_type_accuracy": {
+            "value": 0.88,
+            "low": 0.78,
+            "high": 0.96
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.118972,
+            "low": 0.095405,
+            "high": 0.166914
+          },
+          "sec_per_page": {
+            "value": 27.283509,
+            "low": 23.679081,
+            "high": 30.954181
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 150,
+        "pages": 170,
+        "seconds_total": 4724.8,
+        "seconds_per_doc_mean": 31.5,
+        "seconds_per_doc_median": 23.65,
+        "seconds_per_page_median": 23.38,
+        "seconds_per_page_p90": 42.68,
+        "seconds_per_page_max": 71.56,
+        "peak_vram_mib_max": 2463,
+        "peak_vram_mib_median": 2461,
+        "prompt_tokens": 279770,
+        "completion_tokens": 210743
+      },
+      "placement": {
+        "vram_share_median": 1.0,
+        "vram_share_min": 1.0,
+        "size_gib": 1.62
+      },
+      "vs_best": {
+        "common_documents": 50,
+        "doc_ok": {
+          "a": 0.4,
+          "b": 0.18,
+          "diff": -0.22,
+          "low": -0.38,
+          "high": -0.06,
+          "p_value": 0.013
+        },
+        "cells_f1": {
+          "a": 0.940869,
+          "b": 0.718891,
+          "diff": -0.221979,
+          "low": -0.344066,
+          "high": -0.12389,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 15,
+          "b_only": 4,
+          "statistic": null,
+          "p_value": 0.019211,
+          "method": "точный биномиальный"
+        }
+      }
+    },
+    {
+      "cell": "q2q4__ocr",
+      "model": "q2q4",
+      "tag": "qwen3.5:2b-q4_K_M",
+      "path": "ocr",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "cells_f1": {
+          "value": 0.012635,
+          "low": 0.005521,
+          "high": 0.021881
+        },
+        "header_accuracy": {
+          "value": 0.454132,
+          "low": 0.412478,
+          "high": 0.498837
+        },
+        "rows_f1": {
+          "value": 0.019943,
+          "low": 0.00881,
+          "high": 0.034262
+        },
+        "text_anls": {
+          "value": 0.218695,
+          "low": 0.192055,
+          "high": 0.251238
+        },
+        "doc_type_accuracy": {
+          "value": 0.64,
+          "low": 0.566667,
+          "high": 0.7135
+        },
+        "extracted": {
+          "value": 0.933333,
+          "low": 0.893333,
+          "high": 0.973333
+        },
+        "silent_error": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "ece": {
+          "value": 0.163656,
+          "low": 0.143332,
+          "high": 0.18303
+        },
+        "sec_per_page": {
+          "value": 17.142254,
+          "low": 15.042877,
+          "high": 19.662415
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.018173,
+            "low": 0.005004,
+            "high": 0.037095
+          },
+          "header_accuracy": {
+            "value": 0.629714,
+            "low": 0.553767,
+            "high": 0.694705
+          },
+          "rows_f1": {
+            "value": 0.028056,
+            "low": 0.007872,
+            "high": 0.056188
+          },
+          "text_anls": {
+            "value": 0.292477,
+            "low": 0.243155,
+            "high": 0.352897
+          },
+          "doc_type_accuracy": {
+            "value": 0.64,
+            "low": 0.52,
+            "high": 0.76
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.145129,
+            "low": 0.105402,
+            "high": 0.181903
+          },
+          "sec_per_page": {
+            "value": 19.246268,
+            "low": 15.616714,
+            "high": 23.566023
+          }
+        },
+        "photo": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.012177,
+            "low": 0.0,
+            "high": 0.031214
+          },
+          "header_accuracy": {
+            "value": 0.219931,
+            "low": 0.167978,
+            "high": 0.277904
+          },
+          "rows_f1": {
+            "value": 0.018182,
+            "low": 0.0,
+            "high": 0.045561
+          },
+          "text_anls": {
+            "value": 0.114841,
+            "low": 0.083715,
+            "high": 0.148947
+          },
+          "doc_type_accuracy": {
+            "value": 0.5,
+            "low": 0.36,
+            "high": 0.64
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.213554,
+            "low": 0.183725,
+            "high": 0.243438
+          },
+          "sec_per_page": {
+            "value": 15.281107,
+            "low": 12.149021,
+            "high": 19.345675
+          }
+        },
+        "scan": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.007224,
+            "low": 0.0,
+            "high": 0.017174
+          },
+          "header_accuracy": {
+            "value": 0.511236,
+            "low": 0.453824,
+            "high": 0.565761
+          },
+          "rows_f1": {
+            "value": 0.012903,
+            "low": 0.0,
+            "high": 0.030121
+          },
+          "text_anls": {
+            "value": 0.244111,
+            "low": 0.192056,
+            "high": 0.307524
+          },
+          "doc_type_accuracy": {
+            "value": 0.78,
+            "low": 0.66,
+            "high": 0.88
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.154158,
+            "low": 0.120353,
+            "high": 0.184457
+          },
+          "sec_per_page": {
+            "value": 16.903649,
+            "low": 13.492426,
+            "high": 21.379681
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 149,
+        "pages": 169,
+        "seconds_total": 2897.0,
+        "seconds_per_doc_mean": 19.44,
+        "seconds_per_doc_median": 15.16,
+        "seconds_per_page_median": 14.58,
+        "seconds_per_page_p90": 24.53,
+        "seconds_per_page_max": 86.34,
+        "peak_vram_mib_max": 2463,
+        "peak_vram_mib_median": 2463,
+        "prompt_tokens": 157434,
+        "completion_tokens": 130285
+      },
+      "placement": {
+        "vram_share_median": 1.0,
+        "vram_share_min": 1.0,
+        "size_gib": 1.62
+      },
+      "vs_best": {
+        "common_documents": 50,
+        "doc_ok": {
+          "a": 0.4,
+          "b": 0.0,
+          "diff": -0.4,
+          "low": -0.54,
+          "high": -0.26,
+          "p_value": 0.0
+        },
+        "cells_f1": {
+          "a": 0.940869,
+          "b": 0.018173,
+          "diff": -0.922696,
+          "low": -0.951459,
+          "high": -0.891838,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 20,
+          "b_only": 0,
+          "statistic": null,
+          "p_value": 2e-06,
+          "method": "точный биномиальный"
+        }
+      }
+    },
+    {
+      "cell": "q2q8__text",
+      "model": "q2q8",
+      "tag": "qwen3.5:2b-q8_0",
+      "path": "text",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.393333,
+          "low": 0.313333,
+          "high": 0.473333
+        },
+        "cells_f1": {
+          "value": 0.924843,
+          "low": 0.906936,
+          "high": 0.941549
+        },
+        "header_accuracy": {
+          "value": 0.81956,
+          "low": 0.79685,
+          "high": 0.840705
+        },
+        "rows_f1": {
+          "value": 0.987991,
+          "low": 0.978432,
+          "high": 0.996615
+        },
+        "text_anls": {
+          "value": 0.927165,
+          "low": 0.91104,
+          "high": 0.941303
+        },
+        "doc_type_accuracy": {
+          "value": 0.713333,
+          "low": 0.646667,
+          "high": 0.786667
+        },
+        "extracted": {
+          "value": 1.0,
+          "low": 1.0,
+          "high": 1.0
+        },
+        "silent_error": {
+          "value": 0.22,
+          "low": 0.16,
+          "high": 0.286667
+        },
+        "ece": {
+          "value": 0.039412,
+          "low": 0.02895,
+          "high": 0.051389
+        },
+        "sec_per_page": {
+          "value": 42.639512,
+          "low": 39.542042,
+          "high": 45.86015
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 150,
+          "doc_ok": {
+            "value": 0.393333,
+            "low": 0.313333,
+            "high": 0.473333
+          },
+          "cells_f1": {
+            "value": 0.924843,
+            "low": 0.906936,
+            "high": 0.941549
+          },
+          "header_accuracy": {
+            "value": 0.81956,
+            "low": 0.79685,
+            "high": 0.840705
+          },
+          "rows_f1": {
+            "value": 0.987991,
+            "low": 0.978432,
+            "high": 0.996615
+          },
+          "text_anls": {
+            "value": 0.927165,
+            "low": 0.91104,
+            "high": 0.941303
+          },
+          "doc_type_accuracy": {
+            "value": 0.713333,
+            "low": 0.646667,
+            "high": 0.786667
+          },
+          "silent_error": {
+            "value": 0.22,
+            "low": 0.16,
+            "high": 0.286667
+          },
+          "ece": {
+            "value": 0.039412,
+            "low": 0.02895,
+            "high": 0.051389
+          },
+          "sec_per_page": {
+            "value": 42.639512,
+            "low": 39.542042,
+            "high": 45.86015
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 150,
+        "pages": 170,
+        "seconds_total": 7248.7,
+        "seconds_per_doc_mean": 48.32,
+        "seconds_per_doc_median": 41.91,
+        "seconds_per_page_median": 37.35,
+        "seconds_per_page_p90": 67.59,
+        "seconds_per_page_max": 138.4,
+        "peak_vram_mib_max": 2557,
+        "peak_vram_mib_median": 2553,
+        "prompt_tokens": 248033,
+        "completion_tokens": 171767
+      },
+      "placement": {
+        "vram_share_median": 0.629,
+        "vram_share_min": 0.629,
+        "size_gib": 2.82
+      },
+      "vs_best": {
+        "common_documents": 150,
+        "doc_ok": {
+          "a": 0.393333,
+          "b": 0.393333,
+          "diff": 0.0,
+          "low": -0.08,
+          "high": 0.073333,
+          "p_value": 1.0
+        },
+        "cells_f1": {
+          "a": 0.939349,
+          "b": 0.924843,
+          "diff": -0.014506,
+          "low": -0.028125,
+          "high": -0.000628,
+          "p_value": 0.04
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 18,
+          "b_only": 18,
+          "statistic": 0.0278,
+          "p_value": 0.867632,
+          "method": "χ² с поправкой Йейтса"
+        }
+      }
+    },
+    {
+      "cell": "q2q8__vision",
+      "model": "q2q8",
+      "tag": "qwen3.5:2b-q8_0",
+      "path": "vision",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.12,
+          "low": 0.073333,
+          "high": 0.173333
+        },
+        "cells_f1": {
+          "value": 0.690777,
+          "low": 0.631838,
+          "high": 0.747967
+        },
+        "header_accuracy": {
+          "value": 0.666414,
+          "low": 0.625709,
+          "high": 0.704725
+        },
+        "rows_f1": {
+          "value": 0.793308,
+          "low": 0.734268,
+          "high": 0.847121
+        },
+        "text_anls": {
+          "value": 0.721924,
+          "low": 0.665333,
+          "high": 0.771622
+        },
+        "doc_type_accuracy": {
+          "value": 0.813333,
+          "low": 0.746667,
+          "high": 0.873333
+        },
+        "extracted": {
+          "value": 0.933333,
+          "low": 0.893333,
+          "high": 0.966667
+        },
+        "silent_error": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "ece": {
+          "value": 0.097263,
+          "low": 0.084062,
+          "high": 0.127555
+        },
+        "sec_per_page": {
+          "value": 50.39278,
+          "low": 46.496616,
+          "high": 54.515992
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.16,
+            "low": 0.06,
+            "high": 0.28
+          },
+          "cells_f1": {
+            "value": 0.800218,
+            "low": 0.71114,
+            "high": 0.873018
+          },
+          "header_accuracy": {
+            "value": 0.738286,
+            "low": 0.688165,
+            "high": 0.785795
+          },
+          "rows_f1": {
+            "value": 0.874404,
+            "low": 0.784655,
+            "high": 0.949626
+          },
+          "text_anls": {
+            "value": 0.837558,
+            "low": 0.773781,
+            "high": 0.890652
+          },
+          "doc_type_accuracy": {
+            "value": 0.82,
+            "low": 0.7,
+            "high": 0.92
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.119497,
+            "low": 0.081791,
+            "high": 0.16228
+          },
+          "sec_per_page": {
+            "value": 47.281386,
+            "low": 42.528082,
+            "high": 51.932499
+          }
+        },
+        "photo": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.04,
+            "low": 0.0,
+            "high": 0.1
+          },
+          "cells_f1": {
+            "value": 0.488981,
+            "low": 0.389226,
+            "high": 0.584839
+          },
+          "header_accuracy": {
+            "value": 0.576174,
+            "low": 0.496094,
+            "high": 0.65359
+          },
+          "rows_f1": {
+            "value": 0.604396,
+            "low": 0.489261,
+            "high": 0.717076
+          },
+          "text_anls": {
+            "value": 0.553365,
+            "low": 0.446371,
+            "high": 0.662396
+          },
+          "doc_type_accuracy": {
+            "value": 0.74,
+            "low": 0.62,
+            "high": 0.86
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.152316,
+            "low": 0.107965,
+            "high": 0.200554
+          },
+          "sec_per_page": {
+            "value": 48.991204,
+            "low": 43.571815,
+            "high": 54.524994
+          }
+        },
+        "scan": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.16,
+            "low": 0.06,
+            "high": 0.26
+          },
+          "cells_f1": {
+            "value": 0.752508,
+            "low": 0.684126,
+            "high": 0.811241
+          },
+          "header_accuracy": {
+            "value": 0.68427,
+            "low": 0.621304,
+            "high": 0.739915
+          },
+          "rows_f1": {
+            "value": 0.870206,
+            "low": 0.812384,
+            "high": 0.91975
+          },
+          "text_anls": {
+            "value": 0.767085,
+            "low": 0.697126,
+            "high": 0.83016
+          },
+          "doc_type_accuracy": {
+            "value": 0.88,
+            "low": 0.78,
+            "high": 0.96
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.121383,
+            "low": 0.101369,
+            "high": 0.164496
+          },
+          "sec_per_page": {
+            "value": 54.831982,
+            "low": 45.786106,
+            "high": 64.928193
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 149,
+        "pages": 168,
+        "seconds_total": 8466.0,
+        "seconds_per_doc_mean": 56.82,
+        "seconds_per_doc_median": 43.02,
+        "seconds_per_page_median": 42.79,
+        "seconds_per_page_p90": 73.19,
+        "seconds_per_page_max": 146.51,
+        "peak_vram_mib_max": 2615,
+        "peak_vram_mib_median": 2615,
+        "prompt_tokens": 276474,
+        "completion_tokens": 194946
+      },
+      "placement": {
+        "vram_share_median": 0.629,
+        "vram_share_min": 0.629,
+        "size_gib": 2.82
+      },
+      "vs_best": {
+        "common_documents": 50,
+        "doc_ok": {
+          "a": 0.4,
+          "b": 0.16,
+          "diff": -0.24,
+          "low": -0.4,
+          "high": -0.06,
+          "p_value": 0.009
+        },
+        "cells_f1": {
+          "a": 0.940869,
+          "b": 0.800218,
+          "diff": -0.140651,
+          "low": -0.23261,
+          "high": -0.067565,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 17,
+          "b_only": 5,
+          "statistic": null,
+          "p_value": 0.016901,
+          "method": "точный биномиальный"
+        }
+      }
+    },
+    {
+      "cell": "q2q8__ocr",
+      "model": "q2q8",
+      "tag": "qwen3.5:2b-q8_0",
+      "path": "ocr",
+      "items": 150,
+      "overall": {
+        "doc_ok": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "cells_f1": {
+          "value": 0.011378,
+          "low": 0.003988,
+          "high": 0.020358
+        },
+        "header_accuracy": {
+          "value": 0.481425,
+          "low": 0.434843,
+          "high": 0.525976
+        },
+        "rows_f1": {
+          "value": 0.018868,
+          "low": 0.006806,
+          "high": 0.033701
+        },
+        "text_anls": {
+          "value": 0.223044,
+          "low": 0.19516,
+          "high": 0.254668
+        },
+        "doc_type_accuracy": {
+          "value": 0.673333,
+          "low": 0.6,
+          "high": 0.746667
+        },
+        "extracted": {
+          "value": 0.926667,
+          "low": 0.886667,
+          "high": 0.966667
+        },
+        "silent_error": {
+          "value": 0.0,
+          "low": 0.0,
+          "high": 0.0
+        },
+        "ece": {
+          "value": 0.149752,
+          "low": 0.132262,
+          "high": 0.165954
+        },
+        "sec_per_page": {
+          "value": 34.621618,
+          "low": 29.421913,
+          "high": 40.9551
+        }
+      },
+      "levels": {
+        "clean": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.013523,
+            "low": 0.0,
+            "high": 0.035769
+          },
+          "header_accuracy": {
+            "value": 0.643429,
+            "low": 0.569766,
+            "high": 0.706216
+          },
+          "rows_f1": {
+            "value": 0.023669,
+            "low": 0.0,
+            "high": 0.060876
+          },
+          "text_anls": {
+            "value": 0.28905,
+            "low": 0.241024,
+            "high": 0.347635
+          },
+          "doc_type_accuracy": {
+            "value": 0.68,
+            "low": 0.56,
+            "high": 0.8
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.135825,
+            "low": 0.10413,
+            "high": 0.165278
+          },
+          "sec_per_page": {
+            "value": 42.134579,
+            "low": 33.712216,
+            "high": 52.273193
+          }
+        },
+        "photo": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.005348,
+            "low": 0.0,
+            "high": 0.014152
+          },
+          "header_accuracy": {
+            "value": 0.225659,
+            "low": 0.170067,
+            "high": 0.287401
+          },
+          "rows_f1": {
+            "value": 0.009639,
+            "low": 0.0,
+            "high": 0.025773
+          },
+          "text_anls": {
+            "value": 0.113543,
+            "low": 0.081264,
+            "high": 0.149996
+          },
+          "doc_type_accuracy": {
+            "value": 0.5,
+            "low": 0.36,
+            "high": 0.64
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.197296,
+            "low": 0.170738,
+            "high": 0.231709
+          },
+          "sec_per_page": {
+            "value": 33.108482,
+            "low": 22.778926,
+            "high": 47.8476
+          }
+        },
+        "scan": {
+          "documents": 50,
+          "doc_ok": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "cells_f1": {
+            "value": 0.014427,
+            "low": 0.002732,
+            "high": 0.030463
+          },
+          "header_accuracy": {
+            "value": 0.573034,
+            "low": 0.517581,
+            "high": 0.623477
+          },
+          "rows_f1": {
+            "value": 0.02193,
+            "low": 0.003976,
+            "high": 0.048901
+          },
+          "text_anls": {
+            "value": 0.261029,
+            "low": 0.210998,
+            "high": 0.321995
+          },
+          "doc_type_accuracy": {
+            "value": 0.84,
+            "low": 0.74,
+            "high": 0.94
+          },
+          "silent_error": {
+            "value": 0.0,
+            "low": 0.0,
+            "high": 0.0
+          },
+          "ece": {
+            "value": 0.127407,
+            "low": 0.107602,
+            "high": 0.150114
+          },
+          "sec_per_page": {
+            "value": 28.595246,
+            "low": 23.641855,
+            "high": 35.21137
+          }
+        }
+      },
+      "performance": {
+        "documents_timed": 150,
+        "pages": 170,
+        "seconds_total": 5885.7,
+        "seconds_per_doc_mean": 39.24,
+        "seconds_per_doc_median": 28.12,
+        "seconds_per_page_median": 26.35,
+        "seconds_per_page_p90": 55.94,
+        "seconds_per_page_max": 190.5,
+        "peak_vram_mib_max": 2615,
+        "peak_vram_mib_median": 2615,
+        "prompt_tokens": 160564,
+        "completion_tokens": 136953
+      },
+      "placement": {
+        "vram_share_median": 0.629,
+        "vram_share_min": 0.629,
+        "size_gib": 2.82
+      },
+      "vs_best": {
+        "common_documents": 50,
+        "doc_ok": {
+          "a": 0.4,
+          "b": 0.0,
+          "diff": -0.4,
+          "low": -0.54,
+          "high": -0.26,
+          "p_value": 0.0
+        },
+        "cells_f1": {
+          "a": 0.940869,
+          "b": 0.013523,
+          "diff": -0.927346,
+          "low": -0.958369,
+          "high": -0.893312,
+          "p_value": 0.0
+        },
+        "mcnemar_doc_ok": {
+          "a_only": 20,
+          "b_only": 0,
+          "statistic": null,
+          "p_value": 2e-06,
+          "method": "точный биномиальный"
+        }
+      }
+    }
+  ],
+  "best_quality": "q2q4__text",
+  "fastest_not_worse_than_best": "q2q4__text",
+  "skipped": [
+    {
+      "model": "q4q4",
+      "tag": "qwen3.5:4b-q4_K_M",
+      "paths": [
+        "text"
+      ],
+      "reason": "не помещается в VRAM: в памяти 3.62 ГиБ при контексте 8192, в VRAM 48% (нужно ≥ 98%), остальное ушло бы в CPU"
+    }
+  ],
+  "real": [],
+  "real_items_available": 0
+}

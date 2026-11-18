@@ -82,3 +82,5 @@ source = ["docai"]
 [tool.ruff.lint.per-file-ignores]
 # Шаблон карточки датасета — это markdown, длинные строки абзацев в нём нормальны.
 "src/docai/dataset/card.py" = ["E501"]
+# Шаблоны SVG-разметки: длинные строки с атрибутами не режутся осмысленно.
+"src/docai/eval/matrix_charts.py" = ["E501"]
