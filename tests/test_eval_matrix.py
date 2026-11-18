@@ -252,6 +252,6 @@ def test_repo_matrix_config_and_cli_plan():
     ]
     four = cfg.models[3]
     assert four.paths == ["text"] and four.require_full_vram
-    assert cfg.data.n_docs == 300 and cfg.extract_config == Path("configs/extract.yaml")
+    assert cfg.data.n_docs == 300 and cfg.extract_config == Path("configs/extract_d48.yaml")
     res = CliRunner().invoke(app, ["eval-matrix", "plan", "-c", str(path)])
     assert res.exit_code == 0, res.output

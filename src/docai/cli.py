@@ -7,11 +7,12 @@ from docai import __version__
 from docai.augment.cli import augment
 from docai.dataset.cli import app as dataset_app
 from docai.edo.cli import app as edo_app
-from docai.eval.cli import eval_command, eval_compare_command
+from docai.eval.cli import eval_command, eval_compare_command, eval_errors_command
 from docai.eval.matrix_cli import app as matrix_app
 from docai.extract.cli import extract
 from docai.labeling.cli import app as label_app
 from docai.render.cli import render
+from docai.service.cli import serve
 from docai.synth.cli import app as synth_app
 
 app = typer.Typer(help="docai-1c: извлечение реквизитов, проверка, 1С и RAG.", no_args_is_help=True)
@@ -24,8 +25,10 @@ app.add_typer(matrix_app, name="eval-matrix")
 app.command(name="render")(render)
 app.command(name="augment")(augment)
 app.command(name="extract")(extract)
+app.command(name="serve")(serve)
 app.command(name="eval")(eval_command)
 app.command(name="eval-compare")(eval_compare_command)
+app.command(name="eval-errors")(eval_errors_command)
 
 
 @app.callback()

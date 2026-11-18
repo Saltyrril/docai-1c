@@ -1,0 +1,45 @@
+# P13, финальный замер: база (конфигурация по умолчанию до P13) на test.
+# Запуск: uv run docai eval --config configs/eval/p13_test_base.yaml
+# Документы test, которых не было в анализе ошибок: из 304 исключены 150 документов отчёта
+# p12_matrix / q2q4__text (configs/eval/p13_test_seen_ids.txt), остаются 154. На test ничего
+# не подбиралось: конфигурация та же, что p13_val_base.
+name: p13_test_base
+description: >-
+  Финальный замер P13, база: Qwen3.5-2B Q4_K_M, путь text, text_v2, постобработка P10
+  (как p13_val_base). 154 документа test, не участвовавшие в анализе ошибок.
+seed: 2026
+data:
+  source: dataset
+  dataset: data/datasets/v1
+  split: test
+  n_docs: null               # все оставшиеся после исключения (154)
+  levels: [clean]
+  level_assignment: rotate
+  doc_types: null
+  exclude_doc_ids: []
+  exclude_ids_file: configs/eval/p13_test_seen_ids.txt
+  dpi: 200
+extract:
+  config: configs/extract_d48.yaml   # умолчание до P13 (D48)
+  mode: text
+  cross_check: null
+  model: qwen3.5:2b-q4_K_M
+  text_prompt: text_v2
+  vision_prompt: vision_v2
+  date_format: printed
+  clean_input: pdf
+metrics:
+  anls_threshold: 0.5
+  row_match_threshold: 0.5
+  calibration_bins: 10
+bootstrap:
+  n_resamples: 2000
+  ci: 0.95
+report:
+  out_dir: reports
+  date: "2026-11-18"
+  worst: 5
+  image_side: 1000
+predictions_dir: data/experiments/eval
+compare_with: null
+power_guard: true

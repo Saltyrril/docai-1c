@@ -42,7 +42,7 @@ _NOT_AFFECTING = {
 }
 # Поля, добавленные после первых прогонов: при значении, равном прежнему поведению,
 # в отпечаток не входят — иначе старый кэш (P11) стал бы «устаревшим» без причины.
-_LEGACY_DEFAULTS = {"date_format": "iso"}
+_LEGACY_DEFAULTS = {"date_format": "iso", "text_tables": "grid"}
 MAX_CONSECUTIVE_FAILURES = 3
 
 ExtractFn = Callable[[Sequence[Path], Mode, ExtractConfig, Mode | None], RawExtraction]

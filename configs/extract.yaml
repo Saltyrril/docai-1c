@@ -13,12 +13,13 @@ options:                  # уходят в options запроса; сэмпли
   presence_penalty: 0     # в Modelfile qwen3.5 стоит 1.5
   num_ctx: 8192
   num_predict: 4096
-text_prompt: text_v2      # src/docai/extract/prompts/text_v2.md (текст и OCR); v1 — база P11
+text_prompt: text_v3      # src/docai/extract/prompts/text_v3.md (текст и OCR), P13 (D51); v2 — до P13
 vision_prompt: vision_v2  # src/docai/extract/prompts/vision_v2.md
 date_format: printed      # как в документе (D47); iso — грамматика ГГГГ-ММ-ДД, как в P9–P11
 min_text_chars_per_page: 30
 max_image_side: 1280
 max_text_chars: 12000
+text_tables: grid         # таблица в тексте для модели: grid | labeled | labeled_v2 (D52)
 tesseract_cmd: null       # null — искать в PATH и в C:\Program Files\Tesseract-OCR
 ocr_lang: rus
 ocr_psm: 3
@@ -27,6 +28,7 @@ vram_poll_s: 0.5
 vram_limit_gib: 3.8
 postprocess:              # шаг P10: исправления, уверенность, статус (D41–D43); остальные константы — в PostprocessConfig
   autofix: true           # исправлять суммы там, где ответ однозначен
+  doc_type_by_title: true # тип и статус УПД по заголовку текста, P13 (D50)
   review_threshold: 0.8   # уверенность поля ниже — «нужна проверка»
   reject_threshold: 0.5   # поле ниже считается не прочитанным
   reject_low_share: 0.5   # доля непрочитанных полей, с которой документ отклоняется

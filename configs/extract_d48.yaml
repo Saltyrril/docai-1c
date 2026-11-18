@@ -1,0 +1,43 @@
+# Замороженная копия configs/extract.yaml на конец P12 (умолчание D48, до изменений P13).
+# На неё ссылаются конфиги P11, P12 и базы P13, чтобы их отчёты пересобирались с теми же
+# промптами и постобработкой после смены умолчаний (D50, D51). Не править.
+# Настройки конвейера извлечения (шаг P9). Значения совпадают с умолчаниями ExtractConfig.
+# Запуск: uv run docai extract <файл> --mode auto|text|vision|ocr --config configs/extract.yaml
+model: qwen3.5:2b-q4_K_M      # умолчание по матрице P12 (D48)
+ollama_url: http://127.0.0.1:11434
+think: false              # у Qwen3.5 в Ollama рассуждения включены по умолчанию (D38)
+keep_alive: 5m
+timeout_s: 600
+options:                  # уходят в options запроса; сэмплинг задан явно, Modelfile не влияет
+  temperature: 0
+  seed: 42
+  top_k: 20
+  top_p: 0.95
+  presence_penalty: 0     # в Modelfile qwen3.5 стоит 1.5
+  num_ctx: 8192
+  num_predict: 4096
+text_prompt: text_v2      # src/docai/extract/prompts/text_v2.md (текст и OCR); v1 — база P11
+vision_prompt: vision_v2  # src/docai/extract/prompts/vision_v2.md
+date_format: printed      # как в документе (D47); iso — грамматика ГГГГ-ММ-ДД, как в P9–P11
+min_text_chars_per_page: 30
+max_image_side: 1280
+max_text_chars: 12000
+text_tables: grid
+tesseract_cmd: null       # null — искать в PATH и в C:\Program Files\Tesseract-OCR
+ocr_lang: rus
+ocr_psm: 3
+ocr_dpi: 300
+vram_poll_s: 0.5
+vram_limit_gib: 3.8
+postprocess:              # шаг P10: исправления, уверенность, статус (D41–D43); остальные константы — в PostprocessConfig
+  autofix: true           # исправлять суммы там, где ответ однозначен
+  doc_type_by_title: false # правило P13 (D50) появилось позже; в D48 его не было
+  review_threshold: 0.8   # уверенность поля ниже — «нужна проверка»
+  reject_threshold: 0.5   # поле ниже считается не прочитанным
+  reject_low_share: 0.5   # доля непрочитанных полей, с которой документ отклоняется
+  corrected_cap: 0.85     # потолок уверенности у автоисправленного поля
+  priors:                 # P(поле верно) до проверок: путь × группа поля
+    xml:    {id: 0.995, money: 0.995, date: 0.995, text: 0.995, enum: 0.995, code: 0.995}
+    text:   {id: 0.93, money: 0.97, date: 0.6, text: 0.93, enum: 0.95, code: 0.8}
+    vision: {id: 0.7, money: 0.6, date: 0.3, text: 0.63, enum: 0.85, code: 0.45}
+    ocr:    {id: 0.5, money: 0.2, date: 0.4, text: 0.2, enum: 0.5, code: 0.2}

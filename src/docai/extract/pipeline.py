@@ -194,7 +194,7 @@ def _load_images(run: _Run, paths: Sequence[Path], kind: InputKind, dpi: int | N
 def _run_text(run: _Run, path: Path) -> list[Draft]:
     run.meta.prompt_version = run.config.text_prompt
     with run.stage("pdf_text"):
-        pages = pdf_pages_text(path)
+        pages = pdf_pages_text(path, run.config.text_tables)
     run.meta.pages = len(pages)
     run.texts.append(("text_layer", "\n".join(pages)))
     return _drafts_from_texts(run, pages, "текстовый слой PDF", "Текст документа")

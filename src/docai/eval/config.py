@@ -5,7 +5,7 @@
 """
 
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -36,6 +36,9 @@ class DataConfig(_Strict):
     doc_types: list[str] | None = None
     # Документы, которые нельзя брать в оценку (например, по ним подбирались константы).
     exclude_doc_ids: list[str] = Field(default_factory=list)
+    # То же списком в файле: по id документа в строке, «#» — комментарий (P13: документы
+    # test, на которых делался анализ ошибок, в финальный замер не входят).
+    exclude_ids_file: Path | None = None
     dpi: int = 200
     # Для real: папка с разметкой и исходниками (data/real).
     real_root: Path = Path("data/real")
@@ -51,6 +54,10 @@ class ExtractSection(_Strict):
     text_prompt: str | None = None
     vision_prompt: str | None = None
     date_format: Literal["iso", "printed"] | None = None
+    text_tables: Literal["grid", "labeled", "labeled_v2"] | None = None
+    # Перекрытие отдельных констант постобработки (D41–D43, D50), например
+    # {doc_type_by_title: true}. Ответ модели от них не зависит: кэш остаётся годным.
+    postprocess: dict[str, Any] | None = None
     # Чистый уровень: подавать PDF (путь auto → текстовый слой) или картинку.
     clean_input: Literal["pdf", "image"] = "pdf"
 
@@ -63,10 +70,17 @@ class ExtractSection(_Strict):
                 ("text_prompt", self.text_prompt),
                 ("vision_prompt", self.vision_prompt),
                 ("date_format", self.date_format),
+                ("text_tables", self.text_tables),
             )
             if value is not None
         }
-        return base.model_copy(update=overrides)
+        config = base.model_copy(update=overrides)
+        if self.postprocess:
+            merged = config.postprocess.model_dump() | self.postprocess
+            config = config.model_copy(
+                update={"postprocess": type(config.postprocess).model_validate(merged)}
+            )
+        return config
 
 
 class MetricsConfig(_Strict):
@@ -102,6 +116,10 @@ class EvalConfig(_Strict):
     report: ReportConfig = Field(default_factory=ReportConfig)
     # Кэш ответов модели: <predictions_dir>/<name>/<item_id>.json (в git не попадает).
     predictions_dir: Path = Path("data/experiments/eval")
+    # Папка кэша внутри predictions_dir (None — по имени конфига). Эксперимент, который
+    # меняет только постобработку, берёт ответы модели базы: отпечаток в записи кэша
+    # гарантирует, что ответы получены с тем же конфигом извлечения (P13).
+    cache_name: str | None = None
     # metrics.json другой конфигурации для парного сравнения на общих документах.
     compare_with: Path | None = None
     # Считать только от сети: ждать зарядку, пересчитывать документы с батареей или сном (D47).
@@ -119,7 +137,7 @@ class EvalConfig(_Strict):
 
     @property
     def cache_dir(self) -> Path:
-        return self.predictions_dir / self.name
+        return self.predictions_dir / (self.cache_name or self.name)
 
 
 def load_eval_config(path: Path) -> EvalConfig:

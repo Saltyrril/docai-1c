@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from docai.postprocess.autofix import autofix_document
 from docai.postprocess.confidence import score_fields
 from docai.postprocess.config import PostprocessConfig
+from docai.postprocess.doctype import retype_document
 from docai.postprocess.evidence import SourceKind, SourceText
 from docai.postprocess.models import (
     DocStatus,
@@ -76,6 +77,9 @@ def postprocess(
 
     sources = [SourceText.build(kind, text) for kind, text in texts]
     current, corrections = normalize_document(doc)
+    if cfg.doc_type_by_title and route != "xml":
+        current, retyped = retype_document(current, [text for _, text in texts])
+        corrections += retyped
     issues_before = validate_document(current)
     if cfg.autofix and route != "xml" and any(i.severity is Severity.ERROR for i in issues_before):
         current, fixes = autofix_document(current, sources)

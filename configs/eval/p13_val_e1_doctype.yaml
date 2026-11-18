@@ -1,0 +1,46 @@
+# P13, эксперимент E1: тип документа и статус УПД по заголовку текста (правило постобработки, D50).
+# Запуск: uv run docai eval --config configs/eval/p13_val_e1_doctype.yaml
+# Отличие от p13_val_base — одна строка: postprocess.doc_type_by_title: true. Модель не
+# перезапускается (cache_name: p13_val_base), сравнение парное на тех же 150 документах val.
+name: p13_val_e1_doctype
+description: >-
+  E1: тип документа и статус УПД берутся из заголовка текста, а не из ответа модели.
+  Гипотеза: УПД перестанут читаться как счёт-фактура (в P12 66% УПД), доля без правок
+  вырастет на ≥ 8 п.п. (потолок по анализу ошибок P12 — +13 п.п.). Остальное как у p13_val_base.
+seed: 2026
+data:
+  source: dataset
+  dataset: data/datasets/v1
+  split: val
+  n_docs: 150
+  levels: [clean]
+  level_assignment: rotate
+  doc_types: null
+  exclude_doc_ids: []
+  dpi: 200
+extract:
+  config: configs/extract.yaml
+  mode: text
+  cross_check: null
+  model: qwen3.5:2b-q4_K_M
+  text_prompt: text_v2
+  vision_prompt: vision_v2
+  date_format: printed
+  clean_input: pdf
+  postprocess: {doc_type_by_title: true}   # E1: тип и статус УПД по заголовку текста (D50)
+metrics:
+  anls_threshold: 0.5
+  row_match_threshold: 0.5
+  calibration_bins: 10
+bootstrap:
+  n_resamples: 2000
+  ci: 0.95
+report:
+  out_dir: reports
+  date: "2026-11-18"
+  worst: 5
+  image_side: 1000
+predictions_dir: data/experiments/eval
+cache_name: p13_val_base        # ответы модели те же, что у базы: меняется только постобработка
+compare_with: reports/2026-11-18_p13_val_base/metrics.json
+power_guard: true

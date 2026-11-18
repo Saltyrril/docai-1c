@@ -1,0 +1,48 @@
+# P13, финальный замер: принятая конфигурация (E1 + E2) на тех же 154 документах test, что
+# p13_test_base. На test ничего не подбиралось: изменения выбраны на val (EXPERIMENTS.md, P13).
+# Запуск: uv run docai eval --config configs/eval/p13_test_final.yaml
+# От p13_test_base отличаются только text_prompt и правило типа по заголовку; таблицы — grid
+# (E3 и E3b отклонены, D52). Основа — замороженный extract_d48.yaml, чтобы замер не менялся
+# вместе с умолчаниями.
+name: p13_test_final
+description: >-
+  Финальный замер P13: Qwen3.5-2B Q4_K_M, путь text, промпт text_v3 (E2, D51), тип и статус
+  УПД по заголовку (E1, D50), таблицы grid. 154 документа test, не участвовавшие в анализе.
+seed: 2026
+data:
+  source: dataset
+  dataset: data/datasets/v1
+  split: test
+  n_docs: null               # все оставшиеся после исключения (154)
+  levels: [clean]
+  level_assignment: rotate
+  doc_types: null
+  exclude_doc_ids: []
+  exclude_ids_file: configs/eval/p13_test_seen_ids.txt
+  dpi: 200
+extract:
+  config: configs/extract_d48.yaml
+  mode: text
+  cross_check: null
+  model: qwen3.5:2b-q4_K_M
+  text_prompt: text_v3       # E2 (D51)
+  vision_prompt: vision_v2
+  date_format: printed
+  clean_input: pdf
+  text_tables: grid          # E3/E3b отклонены (D52)
+  postprocess: {doc_type_by_title: true}   # E1 (D50)
+metrics:
+  anls_threshold: 0.5
+  row_match_threshold: 0.5
+  calibration_bins: 10
+bootstrap:
+  n_resamples: 2000
+  ci: 0.95
+report:
+  out_dir: reports
+  date: "2026-11-18"
+  worst: 5
+  image_side: 1000
+predictions_dir: data/experiments/eval
+compare_with: reports/2026-11-18_p13_test_base/metrics.json
+power_guard: true

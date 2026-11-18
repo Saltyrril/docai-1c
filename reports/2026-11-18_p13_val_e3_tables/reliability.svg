@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400" role="img" aria-label="Надёжность уверенности: p13_val_e3_tables">
+<style>.bg{fill:#fcfcfb}.bar{fill:#2a78d6}.grid{stroke:#e4e3df;stroke-width:1}.axis{stroke:#8a8984;stroke-width:1}.diag{stroke:#52514e;stroke-width:1.5;stroke-dasharray:5 4;fill:none}.t{fill:#0b0b0b;font:13px sans-serif}.s{fill:#52514e;font:11px sans-serif}@media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.bar{fill:#3987e5}.grid{stroke:#383835}.axis{stroke:#8a8984}.diag{stroke:#c3c2b7}.t{fill:#f0efec}.s{fill:#c3c2b7}}</style>
+<rect class="bg" width="560" height="400"/>
+<text class="t" x="56" y="24">Надёжность уверенности: p13_val_e3_tables</text>
+<line class="grid" x1="56" x2="540" y1="328.0" y2="328.0"/>
+<text class="s" x="48" y="332.0" text-anchor="end">0,00</text>
+<line class="grid" x1="56" x2="540" y1="257.0" y2="257.0"/>
+<text class="s" x="48" y="261.0" text-anchor="end">0,25</text>
+<line class="grid" x1="56" x2="540" y1="186.0" y2="186.0"/>
+<text class="s" x="48" y="190.0" text-anchor="end">0,50</text>
+<line class="grid" x1="56" x2="540" y1="115.0" y2="115.0"/>
+<text class="s" x="48" y="119.0" text-anchor="end">0,75</text>
+<line class="grid" x1="56" x2="540" y1="44.0" y2="44.0"/>
+<text class="s" x="48" y="48.0" text-anchor="end">1,00</text>
+<path class="bar" d="M57.0,328.0 V312.7 Q57.0,308.7 61.0,308.7 H99.4 Q103.4,308.7 103.4,312.7 V328.0 Z"><title>уверенность 0.0–0.1: полей 206, верных 7%, средняя уверенность 0.00</title></path>
+<text class="s" x="80.2" y="358.0" text-anchor="middle">206</text>
+<path class="bar" d="M105.4,328.0 V142.7 Q105.4,138.7 109.4,138.7 H147.8 Q151.8,138.7 151.8,142.7 V328.0 Z"><title>уверенность 0.1–0.2: полей 3, верных 67%, средняя уверенность 0.16</title></path>
+<text class="s" x="128.6" y="358.0" text-anchor="middle">3</text>
+<text class="s" x="177.0" y="358.0" text-anchor="middle">0</text>
+<path class="bar" d="M202.2,328.0 V301.6 Q202.2,297.6 206.2,297.6 H244.6 Q248.6,297.6 248.6,301.6 V328.0 Z"><title>уверенность 0.3–0.4: полей 28, верных 11%, средняя уверенность 0.39</title></path>
+<text class="s" x="225.4" y="358.0" text-anchor="middle">28</text>
+<text class="s" x="273.8" y="358.0" text-anchor="middle">0</text>
+<text class="s" x="322.2" y="358.0" text-anchor="middle">26</text>
+<path class="bar" d="M347.4,328.0 V142.7 Q347.4,138.7 351.4,138.7 H389.8 Q393.8,138.7 393.8,142.7 V328.0 Z"><title>уверенность 0.6–0.7: полей 3, верных 67%, средняя уверенность 0.67</title></path>
+<text class="s" x="370.6" y="358.0" text-anchor="middle">3</text>
+<path class="bar" d="M395.8,328.0 V84.7 Q395.8,80.7 399.8,80.7 H438.2 Q442.2,80.7 442.2,84.7 V328.0 Z"><title>уверенность 0.7–0.8: полей 147, верных 87%, средняя уверенность 0.73</title></path>
+<text class="s" x="419.0" y="358.0" text-anchor="middle">147</text>
+<path class="bar" d="M444.2,328.0 V121.6 Q444.2,117.6 448.2,117.6 H486.6 Q490.6,117.6 490.6,121.6 V328.0 Z"><title>уверенность 0.8–0.9: полей 818, верных 74%, средняя уверенность 0.84</title></path>
+<text class="s" x="467.4" y="358.0" text-anchor="middle">818</text>
+<path class="bar" d="M492.6,328.0 V65.2 Q492.6,61.2 496.6,61.2 H535.0 Q539.0,61.2 539.0,65.2 V328.0 Z"><title>уверенность 0.9–1.0: полей 9264, верных 94%, средняя уверенность 0.98</title></path>
+<text class="s" x="515.8" y="358.0" text-anchor="middle">9264</text>
+<path class="diag" d="M56,328 L540,44"/>
+<line class="axis" x1="56" x2="540" y1="328" y2="328"/>
+<text class="s" x="56.0" y="344.0" text-anchor="middle">0,0</text>
+<text class="s" x="298.0" y="344.0" text-anchor="middle">0,5</text>
+<text class="s" x="540.0" y="344.0" text-anchor="middle">1,0</text>
+<text class="s" x="298.0" y="378" text-anchor="middle">уверенность поля (корзины по 0,1); цифры под осью — число полей</text>
+<text class="s" x="298.0" y="394" text-anchor="middle">столбец — доля верных полей; пунктир — идеальная калибровка</text>
+</svg>

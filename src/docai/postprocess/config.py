@@ -28,6 +28,9 @@ class PostprocessConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     autofix: bool = True
+    # Тип документа и статус УПД — по заголовку текста-источника, а не по ответу модели
+    # (docai.postprocess.doctype, D50). Только для путей text и ocr: у vision текста нет.
+    doc_type_by_title: bool = True
     priors: dict[str, dict[str, float]] = Field(default_factory=_priors)
 
     # --- Отношения правдоподобия (LR) сигналов; уверенность = σ(logit(prior) + Σ ln LR) ---

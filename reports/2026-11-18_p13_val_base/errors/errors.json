@@ -1,0 +1,799 @@
+{
+ "documents": 150,
+ "ok": 49,
+ "failed": 101,
+ "errors": 1055,
+ "blocking_errors": 301,
+ "causes": [
+  {
+   "cause": "doc_type",
+   "title": "неверный тип документа (и поля, которые от него зависят)",
+   "errors": 173,
+   "share_all": 0.16398104265402844,
+   "blocking": 90,
+   "share_blocking": 0.29900332225913623,
+   "docs": 36,
+   "docs_share_failed": 0.3564356435643564,
+   "ceiling_docs": 27,
+   "examples": [
+    {
+     "item_id": "00025_upd_clean_200dpi",
+     "field": "doc_type",
+     "ref": "upd",
+     "pred": "vat_invoice",
+     "required": true,
+     "cause": "doc_type",
+     "row": null
+    },
+    {
+     "item_id": "00031_upd_clean_200dpi",
+     "field": "doc_type",
+     "ref": "upd",
+     "pred": "vat_invoice",
+     "required": true,
+     "cause": "doc_type",
+     "row": null
+    },
+    {
+     "item_id": "00130_upd_clean_200dpi",
+     "field": "doc_type",
+     "ref": "upd",
+     "pred": "vat_invoice",
+     "required": true,
+     "cause": "doc_type",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "neighbour_field",
+   "title": "значение из соседнего поля (индекс вместо ИНН, корр. счёт вместо р/с)",
+   "errors": 156,
+   "share_all": 0.14786729857819905,
+   "blocking": 62,
+   "share_blocking": 0.2059800664451827,
+   "docs": 46,
+   "docs_share_failed": 0.45544554455445546,
+   "ceiling_docs": 13,
+   "examples": [
+    {
+     "item_id": "00022_bill_clean_200dpi",
+     "field": "seller_bank.account",
+     "ref": "40802810965889547080",
+     "pred": "30101810200000000392",
+     "required": true,
+     "cause": "neighbour_field",
+     "row": null
+    },
+    {
+     "item_id": "00031_upd_clean_200dpi",
+     "field": "seller.inn",
+     "ref": "6405650495",
+     "pred": "760325",
+     "required": true,
+     "cause": "neighbour_field",
+     "row": null
+    },
+    {
+     "item_id": "00064_upd_clean_200dpi",
+     "field": "seller.inn",
+     "ref": "243086304212",
+     "pred": "978369",
+     "required": true,
+     "cause": "neighbour_field",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "column_shift",
+   "title": "значение из соседней графы той же строки",
+   "errors": 191,
+   "share_all": 0.18104265402843603,
+   "blocking": 47,
+   "share_blocking": 0.15614617940199335,
+   "docs": 16,
+   "docs_share_failed": 0.15841584158415842,
+   "ceiling_docs": 8,
+   "examples": [
+    {
+     "item_id": "00159_torg12_clean_200dpi",
+     "field": "lines[].amount_without_vat",
+     "ref": "1096.20",
+     "pred": "219.24",
+     "required": true,
+     "cause": "column_shift",
+     "row": 2
+    },
+    {
+     "item_id": "00428_torg12_clean_200dpi",
+     "field": "lines[].amount_without_vat",
+     "ref": "24800.69",
+     "pred": "5456.15",
+     "required": true,
+     "cause": "column_shift",
+     "row": 0
+    },
+    {
+     "item_id": "00960_vat_invoice_clean_200dpi",
+     "field": "lines[].amount_without_vat",
+     "ref": "46298.08",
+     "pred": "82.22",
+     "required": true,
+     "cause": "column_shift",
+     "row": 1
+    }
+   ]
+  },
+  {
+   "cause": "missing",
+   "title": "поле не найдено (null при значении в документе)",
+   "errors": 169,
+   "share_all": 0.16018957345971563,
+   "blocking": 43,
+   "share_blocking": 0.14285714285714285,
+   "docs": 22,
+   "docs_share_failed": 0.21782178217821782,
+   "ceiling_docs": 7,
+   "examples": [
+    {
+     "item_id": "00022_bill_clean_200dpi",
+     "field": "seller_bank.corr_account",
+     "ref": "30101810200000000392",
+     "pred": null,
+     "required": true,
+     "cause": "missing",
+     "row": null
+    },
+    {
+     "item_id": "00202_bill_clean_200dpi",
+     "field": "seller_bank.corr_account",
+     "ref": "30101810800000000978",
+     "pred": null,
+     "required": true,
+     "cause": "missing",
+     "row": null
+    },
+    {
+     "item_id": "00260_bill_clean_200dpi",
+     "field": "seller_bank.corr_account",
+     "ref": "30101810800000000250",
+     "pred": null,
+     "required": true,
+     "cause": "missing",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "text_postcode",
+   "title": "адрес без почтового индекса",
+   "errors": 89,
+   "share_all": 0.08436018957345971,
+   "blocking": 17,
+   "share_blocking": 0.05647840531561462,
+   "docs": 10,
+   "docs_share_failed": 0.09900990099009901,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00031_upd_clean_200dpi",
+     "field": "seller.address",
+     "ref": "760325, г. галич, алл. новостройка, д. 56",
+     "pred": "г. галич, алл. новостройка, д. 56",
+     "required": true,
+     "cause": "text_postcode",
+     "row": null
+    },
+    {
+     "item_id": "00064_upd_clean_200dpi",
+     "field": "buyer.address",
+     "ref": "959283, г. томпа, ш. станиславского, д. 72",
+     "pred": "г. томпа, ш. станиславского, д. 72",
+     "required": true,
+     "cause": "text_postcode",
+     "row": null
+    },
+    {
+     "item_id": "00972_upd_clean_200dpi",
+     "field": "seller.address",
+     "ref": "813810, г. камень-на-оби, наб. осипенко, д. 86",
+     "pred": "г. камень-на-оби, наб. осипенко, д. 86",
+     "required": true,
+     "cause": "text_postcode",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "hallucinated",
+   "title": "выдуманное значение (нет ни в документе, ни в эталоне поля)",
+   "errors": 185,
+   "share_all": 0.17535545023696683,
+   "blocking": 13,
+   "share_blocking": 0.04318936877076412,
+   "docs": 2,
+   "docs_share_failed": 0.019801980198019802,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00960_vat_invoice_clean_200dpi",
+     "field": "lines[].amount_with_vat",
+     "ref": "56483.66",
+     "pred": "100.50",
+     "required": true,
+     "cause": "hallucinated",
+     "row": 1
+    },
+    {
+     "item_id": "01885_upd_clean_200dpi",
+     "field": "lines[].amount_with_vat",
+     "ref": "234.61",
+     "pred": "78.20",
+     "required": true,
+     "cause": "hallucinated",
+     "row": 0
+    },
+    {
+     "item_id": "00031_upd_clean_200dpi",
+     "field": "seller.kpp",
+     "ref": "640501127",
+     "pred": "6405650495/640501127",
+     "required": false,
+     "cause": "hallucinated",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "rows_extra",
+   "title": "лишние строки таблицы (разбита или повторена строка)",
+   "errors": 9,
+   "share_all": 0.008530805687203791,
+   "blocking": 9,
+   "share_blocking": 0.029900332225913623,
+   "docs": 9,
+   "docs_share_failed": 0.0891089108910891,
+   "ceiling_docs": 2,
+   "examples": [
+    {
+     "item_id": "00361_vat_invoice_clean_200dpi",
+     "field": "lines",
+     "ref": "8",
+     "pred": "9",
+     "required": true,
+     "cause": "rows_extra",
+     "row": null
+    },
+    {
+     "item_id": "01463_vat_invoice_clean_200dpi",
+     "field": "lines",
+     "ref": "23",
+     "pred": "24",
+     "required": true,
+     "cause": "rows_extra",
+     "row": null
+    },
+    {
+     "item_id": "01543_bill_clean_200dpi",
+     "field": "lines",
+     "ref": "25",
+     "pred": "26",
+     "required": true,
+     "cause": "rows_extra",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "party_swap",
+   "title": "перепутаны продавец и покупатель",
+   "errors": 11,
+   "share_all": 0.01042654028436019,
+   "blocking": 7,
+   "share_blocking": 0.023255813953488372,
+   "docs": 3,
+   "docs_share_failed": 0.0297029702970297,
+   "ceiling_docs": 2,
+   "examples": [
+    {
+     "item_id": "00821_bill_clean_200dpi",
+     "field": "seller.name",
+     "ref": "ип горбачева валерия аскольдовна",
+     "pred": "ооо урал-групп",
+     "required": true,
+     "cause": "party_swap",
+     "row": null
+    },
+    {
+     "item_id": "02212_act_clean_200dpi",
+     "field": "seller.name",
+     "ref": "ип ширяев антип дмитриевич",
+     "pred": "ооо кедр-снаб",
+     "required": true,
+     "cause": "party_swap",
+     "row": null
+    },
+    {
+     "item_id": "02952_act_clean_200dpi",
+     "field": "seller.name",
+     "ref": "ип степанова зинаида игоревна",
+     "pred": "ооо бриз-торг",
+     "required": true,
+     "cause": "party_swap",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "text_marks",
+   "title": "в значение попали пометки формы («(2а)», «ИНН», «КПП»)",
+   "errors": 4,
+   "share_all": 0.0037914691943127963,
+   "blocking": 4,
+   "share_blocking": 0.013289036544850499,
+   "docs": 2,
+   "docs_share_failed": 0.019801980198019802,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "01093_vat_invoice_clean_200dpi",
+     "field": "seller.address",
+     "ref": "813810, г. камень-на-оби, наб. осипенко, д. 86",
+     "pred": "813810, г. камень-на-оби, наб. осипенко, д. 86 (2а)",
+     "required": true,
+     "cause": "text_marks",
+     "row": null
+    },
+    {
+     "item_id": "01634_upd_clean_200dpi",
+     "field": "seller.address",
+     "ref": "705437, г. октябрьское (челяб.), наб. смирнова, д. 52",
+     "pred": "705437, г. октябрьское (челяб.), наб. смирнова, д. 52 (2а)",
+     "required": true,
+     "cause": "text_marks",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "text_other",
+   "title": "неточная запись текста",
+   "errors": 21,
+   "share_all": 0.01990521327014218,
+   "blocking": 2,
+   "share_blocking": 0.006644518272425249,
+   "docs": 2,
+   "docs_share_failed": 0.019801980198019802,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00064_upd_clean_200dpi",
+     "field": "seller.address",
+     "ref": "978369, г. гремячинск (перм.), пр. социалистический, д. 87/1, офис 187",
+     "pred": "г. гремячинск (перм.), пр. социалистический, д. 87/1, офис 243086304212",
+     "required": true,
+     "cause": "text_other",
+     "row": null
+    },
+    {
+     "item_id": "02613_vat_invoice_clean_200dpi",
+     "field": "seller.address",
+     "ref": "978722, г. красноселькуп, бул. коминтерна, д. 112, офис 227",
+     "pred": "г. красноселькуп, бул. коминтерна, д. 112, офис 4240",
+     "required": true,
+     "cause": "text_other",
+     "row": null
+    },
+    {
+     "item_id": "00366_bill_clean_200dpi",
+     "field": "basis.name",
+     "ref": "договор",
+     "pred": "договор № 319",
+     "required": false,
+     "cause": "text_other",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "date",
+   "title": "ошибка даты",
+   "errors": 2,
+   "share_all": 0.0018957345971563982,
+   "blocking": 2,
+   "share_blocking": 0.006644518272425249,
+   "docs": 2,
+   "docs_share_failed": 0.019801980198019802,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "01355_bill_clean_200dpi",
+     "field": "date",
+     "ref": "2026-06-05",
+     "pred": "2024-02-04",
+     "required": true,
+     "cause": "date",
+     "row": null
+    },
+    {
+     "item_id": "01454_bill_clean_200dpi",
+     "field": "date",
+     "ref": "2025-09-04",
+     "pred": "2025-05-09",
+     "required": true,
+     "cause": "date",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "other",
+   "title": "прочее",
+   "errors": 6,
+   "share_all": 0.005687203791469194,
+   "blocking": 1,
+   "share_blocking": 0.0033222591362126247,
+   "docs": 1,
+   "docs_share_failed": 0.009900990099009901,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "01053_bill_clean_200dpi",
+     "field": "buyer.name",
+     "ref": "ооо старт-групп",
+     "pred": "860514, г. рубцовск, пр. марта 8, д. 51/1",
+     "required": true,
+     "cause": "other",
+     "row": null
+    },
+    {
+     "item_id": "00169_act_clean_200dpi",
+     "field": "lines[].unit_name",
+     "ref": "ч",
+     "pred": "5,7",
+     "required": false,
+     "cause": "other",
+     "row": 5
+    },
+    {
+     "item_id": "01176_torg12_clean_200dpi",
+     "field": "basis.name",
+     "ref": null,
+     "pred": "транспортная накладная",
+     "required": false,
+     "cause": "other",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "rows_lost",
+   "title": "потеряны строки таблицы",
+   "errors": 1,
+   "share_all": 0.0009478672985781991,
+   "blocking": 1,
+   "share_blocking": 0.0033222591362126247,
+   "docs": 1,
+   "docs_share_failed": 0.009900990099009901,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "02210_vat_invoice_clean_200dpi",
+     "field": "lines",
+     "ref": "22",
+     "pred": "16",
+     "required": true,
+     "cause": "rows_lost",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "decimal_lost",
+   "title": "потеряна дробная часть числа (десятичная запятая)",
+   "errors": 1,
+   "share_all": 0.0009478672985781991,
+   "blocking": 1,
+   "share_blocking": 0.0033222591362126247,
+   "docs": 1,
+   "docs_share_failed": 0.009900990099009901,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "01448_torg12_clean_200dpi",
+     "field": "lines[].quantity",
+     "ref": "50.6",
+     "pred": "50",
+     "required": true,
+     "cause": "decimal_lost",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "rows_unmatched",
+   "title": "строка таблицы не сопоставлена (искажена почти целиком)",
+   "errors": 1,
+   "share_all": 0.0009478672985781991,
+   "blocking": 1,
+   "share_blocking": 0.0033222591362126247,
+   "docs": 1,
+   "docs_share_failed": 0.009900990099009901,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00130_upd_clean_200dpi",
+     "field": "lines",
+     "ref": "12",
+     "pred": null,
+     "required": true,
+     "cause": "rows_unmatched",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "not_extracted",
+   "title": "документ не собран",
+   "errors": 1,
+   "share_all": 0.0009478672985781991,
+   "blocking": 1,
+   "share_blocking": 0.0033222591362126247,
+   "docs": 1,
+   "docs_share_failed": 0.009900990099009901,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "01492_upd_clean_200dpi",
+     "field": "document",
+     "ref": null,
+     "pred": null,
+     "required": true,
+     "cause": "not_extracted",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "digits",
+   "title": "ошибка в цифрах (число есть в документе, но не то)",
+   "errors": 34,
+   "share_all": 0.03222748815165877,
+   "blocking": 0,
+   "share_blocking": 0.0,
+   "docs": 0,
+   "docs_share_failed": 0.0,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00041_act_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "113",
+     "pred": "519",
+     "required": false,
+     "cause": "digits",
+     "row": 0
+    },
+    {
+     "item_id": "00169_act_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "113",
+     "pred": "003",
+     "required": false,
+     "cause": "digits",
+     "row": 1
+    },
+    {
+     "item_id": "00337_bill_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "356",
+     "pred": "001",
+     "required": false,
+     "cause": "digits",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "autofix",
+   "title": "постобработка испортила верный ответ модели",
+   "errors": 1,
+   "share_all": 0.0009478672985781991,
+   "blocking": 0,
+   "share_blocking": 0.0,
+   "docs": 0,
+   "docs_share_failed": 0.0,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00025_upd_clean_200dpi",
+     "field": "lines[].vat_amount",
+     "ref": "198.00",
+     "pred": "115.00",
+     "required": false,
+     "cause": "autofix",
+     "row": 4
+    }
+   ]
+  }
+ ],
+ "cause_sets": [
+  {
+   "causes": "doc_type",
+   "docs": 27
+  },
+  {
+   "causes": "neighbour_field",
+   "docs": 13
+  },
+  {
+   "causes": "missing + neighbour_field",
+   "docs": 10
+  },
+  {
+   "causes": "column_shift",
+   "docs": 8
+  },
+  {
+   "causes": "missing",
+   "docs": 7
+  },
+  {
+   "causes": "missing + neighbour_field + rows_extra",
+   "docs": 4
+  },
+  {
+   "causes": "column_shift + neighbour_field",
+   "docs": 4
+  },
+  {
+   "causes": "neighbour_field + text_postcode",
+   "docs": 4
+  },
+  {
+   "causes": "party_swap",
+   "docs": 2
+  },
+  {
+   "causes": "date + doc_type + neighbour_field",
+   "docs": 2
+  },
+  {
+   "causes": "neighbour_field + text_other + text_postcode",
+   "docs": 2
+  },
+  {
+   "causes": "rows_extra",
+   "docs": 2
+  },
+  {
+   "causes": "neighbour_field + rows_extra + text_postcode",
+   "docs": 2
+  },
+  {
+   "causes": "missing + neighbour_field + party_swap",
+   "docs": 1
+  },
+  {
+   "causes": "neighbour_field + other",
+   "docs": 1
+  },
+  {
+   "causes": "decimal_lost + neighbour_field",
+   "docs": 1
+  },
+  {
+   "causes": "doc_type + neighbour_field + text_postcode",
+   "docs": 1
+  },
+  {
+   "causes": "doc_type + rows_unmatched",
+   "docs": 1
+  },
+  {
+   "causes": "not_extracted",
+   "docs": 1
+  },
+  {
+   "causes": "doc_type + text_marks",
+   "docs": 1
+  },
+  {
+   "causes": "column_shift + doc_type + hallucinated + text_postcode",
+   "docs": 1
+  },
+  {
+   "causes": "column_shift + doc_type",
+   "docs": 1
+  },
+  {
+   "causes": "column_shift + doc_type + rows_extra",
+   "docs": 1
+  },
+  {
+   "causes": "doc_type + neighbour_field",
+   "docs": 1
+  },
+  {
+   "causes": "column_shift + hallucinated",
+   "docs": 1
+  },
+  {
+   "causes": "text_marks",
+   "docs": 1
+  },
+  {
+   "causes": "rows_lost",
+   "docs": 1
+  }
+ ],
+ "by_doc_type": {
+  "act": {
+   "documents": 20,
+   "ok": 15,
+   "blocking": {
+    "column_shift": 8,
+    "neighbour_field": 4,
+    "party_swap": 4
+   }
+  },
+  "bill": {
+   "documents": 37,
+   "ok": 7,
+   "blocking": {
+    "missing": 43,
+    "doc_type": 30,
+    "neighbour_field": 22,
+    "rows_extra": 4,
+    "party_swap": 3,
+    "date": 2,
+    "other": 1
+   }
+  },
+  "torg12": {
+   "documents": 29,
+   "ok": 10,
+   "blocking": {
+    "column_shift": 13,
+    "neighbour_field": 13,
+    "decimal_lost": 1
+   }
+  },
+  "upd": {
+   "documents": 45,
+   "ok": 8,
+   "blocking": {
+    "doc_type": 60,
+    "neighbour_field": 14,
+    "column_shift": 12,
+    "text_postcode": 11,
+    "text_marks": 2,
+    "rows_extra": 2,
+    "text_other": 1,
+    "rows_unmatched": 1,
+    "not_extracted": 1,
+    "hallucinated": 1
+   }
+  },
+  "vat_invoice": {
+   "documents": 19,
+   "ok": 9,
+   "blocking": {
+    "column_shift": 14,
+    "hallucinated": 12,
+    "neighbour_field": 9,
+    "text_postcode": 6,
+    "rows_extra": 3,
+    "text_marks": 2,
+    "rows_lost": 1,
+    "text_other": 1
+   }
+  }
+ },
+ "source": {
+  "config": "configs\\eval\\p13_val_base.yaml",
+  "cell": null,
+  "docs": 150
+ }
+}

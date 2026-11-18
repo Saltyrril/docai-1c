@@ -1,0 +1,44 @@
+name: p13_test_base
+description: 'Финальный замер P13, база: Qwen3.5-2B Q4_K_M, путь text, text_v2, постобработка
+  P10 (как p13_val_base). 154 документа test, не участвовавшие в анализе ошибок.'
+seed: 2026
+data:
+  source: dataset
+  dataset: data\datasets\v1
+  split: test
+  n_docs: null
+  levels:
+  - clean
+  level_assignment: rotate
+  doc_types: null
+  exclude_doc_ids: []
+  exclude_ids_file: configs\eval\p13_test_seen_ids.txt
+  dpi: 200
+  real_root: data\real
+extract:
+  config: configs\extract_d48.yaml
+  mode: text
+  cross_check: null
+  model: qwen3.5:2b-q4_K_M
+  text_prompt: text_v2
+  vision_prompt: vision_v2
+  date_format: printed
+  text_tables: null
+  postprocess: null
+  clean_input: pdf
+metrics:
+  anls_threshold: 0.5
+  row_match_threshold: 0.5
+  calibration_bins: 10
+bootstrap:
+  n_resamples: 2000
+  ci: 0.95
+report:
+  out_dir: reports
+  date: '2026-11-18'
+  worst: 5
+  image_side: 1000
+predictions_dir: data\experiments\eval
+cache_name: null
+compare_with: null
+power_guard: true

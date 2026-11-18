@@ -111,3 +111,79 @@ def eval_compare_command(
         f"Макнемар (без правок): только A {mc['a_only']}, только B {mc['b_only']}, "
         f"p = {mc['p_value']:.4f} ({mc['method']})"
     )
+
+
+def eval_errors_command(
+    config: Annotated[
+        Path | None, typer.Option("--config", "-c", help="configs/eval/<имя>.yaml")
+    ] = None,
+    matrix: Annotated[
+        Path | None, typer.Option("--matrix", help="configs/eval/<матрица>.yaml (вместо --config)")
+    ] = None,
+    cell: Annotated[
+        str | None, typer.Option("--cell", help="ячейка матрицы, например q2q4__text")
+    ] = None,
+    docs: Annotated[int | None, typer.Option("--docs", help="первые N документов ячейки")] = None,
+    out: Annotated[Path | None, typer.Option("--out", help="папка отчёта")] = None,
+) -> None:
+    """Анализ ошибок по причинам (P13): errors.json и errors.md по кэшу ответов модели."""
+    import datetime as dt
+
+    from docai.eval.errors import analyze_records, render_errors_md
+    from docai.eval.run import build_records
+
+    if (config is None) == (matrix is None):
+        console.print("[red]Нужен ровно один из --config и --matrix.[/red]")
+        raise typer.Exit(2)
+    try:
+        if matrix is not None:
+            from docai.eval.matrix import (
+                active_cells,
+                cached_predictions,
+                cell_items,
+                load_matrix_config,
+                plan_docs,
+            )
+
+            mcfg = load_matrix_config(matrix)
+            found = [c for c in active_cells(mcfg) if c.id == cell]
+            if not found:
+                raise ValueError(f"нет активной ячейки {cell!r}")
+            the_cell = found[0]
+            pairs = cell_items(the_cell, plan_docs(mcfg), [])
+            if docs is not None:
+                pairs = [(o, it) for o, it in pairs if o < docs]
+            preds = cached_predictions(the_cell, pairs)
+            items = [it for _, it in pairs if it.item_id in preds]
+            ecfg = the_cell.eval_config()
+            name = f"{mcfg.name}_{cell}"
+        else:
+            from docai.eval.predict import fingerprint, load_cached
+            from docai.eval.sample import select_items
+
+            ecfg = load_eval_config(config)
+            extract_cfg = ecfg.extract.build()
+            preds = {}
+            for item in select_items(ecfg):
+                fp = fingerprint(item, extract_cfg, ecfg.extract.mode, ecfg.extract.cross_check)
+                cached = load_cached(ecfg.cache_dir / f"{item.item_id}.json", fp)
+                if cached is not None:
+                    preds[item.item_id] = cached
+            items = [it for it in select_items(ecfg) if it.item_id in preds]
+            name = ecfg.name
+        if not items:
+            raise ValueError("в кэше нет ответов модели: сначала docai eval")
+        records = build_records(items, preds, ecfg)
+        summary = analyze_records(records, preds)
+    except (RuntimeError, ValueError, FileNotFoundError) as exc:
+        console.print(f"[red]Ошибка:[/red] {exc}")
+        raise typer.Exit(2) from exc
+    out = out or Path("reports") / f"{dt.date.today().isoformat()}_{name}_errors"
+    out.mkdir(parents=True, exist_ok=True)
+    summary["source"] = {"config": str(config or matrix), "cell": cell, "docs": len(items)}
+    (out / "errors.json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    md = render_errors_md(summary, f"Анализ ошибок: {name}")
+    (out / "errors.md").write_text(md, encoding="utf-8")
+    console.print(f"Документов {summary['documents']}, без правок {summary['ok']}; отчёт: {out}")

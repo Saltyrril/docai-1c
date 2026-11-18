@@ -1,0 +1,773 @@
+{
+ "documents": 150,
+ "ok": 65,
+ "failed": 85,
+ "errors": 1138,
+ "blocking_errors": 388,
+ "causes": [
+  {
+   "cause": "text_other",
+   "title": "неточная запись текста",
+   "errors": 203,
+   "share_all": 0.17838312829525482,
+   "blocking": 181,
+   "share_blocking": 0.46649484536082475,
+   "docs": 29,
+   "docs_share_failed": 0.3411764705882353,
+   "ceiling_docs": 20,
+   "examples": [
+    {
+     "item_id": "00022_bill_clean_200dpi",
+     "field": "lines[].name",
+     "ref": "скрепки канцелярские, красная",
+     "pred": "товары: скрепки канцелярские, красная",
+     "required": true,
+     "cause": "text_other",
+     "row": 0
+    },
+    {
+     "item_id": "00064_upd_clean_200dpi",
+     "field": "seller.address",
+     "ref": "978369, г. гремячинск (перм.), пр. социалистический, д. 87/1, офис 187",
+     "pred": "978369, г. гремячинск (перм.), пр. социалистический, д. 87/1, офис 243086304212",
+     "required": true,
+     "cause": "text_other",
+     "row": null
+    },
+    {
+     "item_id": "00260_bill_clean_200dpi",
+     "field": "lines[].name",
+     "ref": "аренда грузового автомобиля, до 1,5 т",
+     "pred": "товары: аренда грузового автомобиля, до 1,5 т",
+     "required": true,
+     "cause": "text_other",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "other",
+   "title": "прочее",
+   "errors": 133,
+   "share_all": 0.11687170474516696,
+   "blocking": 106,
+   "share_blocking": 0.27319587628865977,
+   "docs": 27,
+   "docs_share_failed": 0.3176470588235294,
+   "ceiling_docs": 15,
+   "examples": [
+    {
+     "item_id": "00107_torg12_clean_200dpi",
+     "field": "lines[].name",
+     "ref": "кирпич керамический, морозостойкий",
+     "pred": "товар / наименование, характеристика, сорт, артикул товара",
+     "required": true,
+     "cause": "other",
+     "row": 0
+    },
+    {
+     "item_id": "00202_bill_clean_200dpi",
+     "field": "lines[].name",
+     "ref": "резервное копирование данных, с выездом",
+     "pred": "товары",
+     "required": true,
+     "cause": "other",
+     "row": 0
+    },
+    {
+     "item_id": "00358_torg12_clean_200dpi",
+     "field": "lines[].name",
+     "ref": "утеплитель минераловатный, морозостойкий",
+     "pred": "товар / наименование, характеристика, сорт, артикул товара",
+     "required": true,
+     "cause": "other",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "neighbour_field",
+   "title": "значение из соседнего поля (индекс вместо ИНН, корр. счёт вместо р/с)",
+   "errors": 136,
+   "share_all": 0.1195079086115993,
+   "blocking": 36,
+   "share_blocking": 0.09278350515463918,
+   "docs": 22,
+   "docs_share_failed": 0.25882352941176473,
+   "ceiling_docs": 10,
+   "examples": [
+    {
+     "item_id": "00064_upd_clean_200dpi",
+     "field": "seller.inn",
+     "ref": "243086304212",
+     "pred": "978369",
+     "required": true,
+     "cause": "neighbour_field",
+     "row": null
+    },
+    {
+     "item_id": "00159_torg12_clean_200dpi",
+     "field": "seller.name",
+     "ref": "ооо ракурс-комплект",
+     "pred": "ооо ракурс-комплект, 827087, г. териберка, пер. ермака, д. 101, офис 226",
+     "required": true,
+     "cause": "neighbour_field",
+     "row": null
+    },
+    {
+     "item_id": "00428_torg12_clean_200dpi",
+     "field": "seller.inn",
+     "ref": "4218787150",
+     "pred": "192383",
+     "required": true,
+     "cause": "neighbour_field",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "rows_extra",
+   "title": "лишние строки таблицы (разбита или повторена строка)",
+   "errors": 15,
+   "share_all": 0.013181019332161687,
+   "blocking": 15,
+   "share_blocking": 0.03865979381443299,
+   "docs": 15,
+   "docs_share_failed": 0.17647058823529413,
+   "ceiling_docs": 6,
+   "examples": [
+    {
+     "item_id": "00031_upd_clean_200dpi",
+     "field": "lines",
+     "ref": "3",
+     "pred": "4",
+     "required": true,
+     "cause": "rows_extra",
+     "row": null
+    },
+    {
+     "item_id": "00107_torg12_clean_200dpi",
+     "field": "lines",
+     "ref": "17",
+     "pred": "18",
+     "required": true,
+     "cause": "rows_extra",
+     "row": null
+    },
+    {
+     "item_id": "00159_torg12_clean_200dpi",
+     "field": "lines",
+     "ref": "4",
+     "pred": "5",
+     "required": true,
+     "cause": "rows_extra",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "doc_type",
+   "title": "неверный тип документа (и поля, которые от него зависят)",
+   "errors": 12,
+   "share_all": 0.01054481546572935,
+   "blocking": 12,
+   "share_blocking": 0.030927835051546393,
+   "docs": 4,
+   "docs_share_failed": 0.047058823529411764,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "00947_upd_clean_200dpi",
+     "field": "upd_status",
+     "ref": "2",
+     "pred": "1",
+     "required": true,
+     "cause": "doc_type",
+     "row": null
+    },
+    {
+     "item_id": "01355_bill_clean_200dpi",
+     "field": "doc_type",
+     "ref": "bill",
+     "pred": "upd",
+     "required": true,
+     "cause": "doc_type",
+     "row": null
+    },
+    {
+     "item_id": "01454_bill_clean_200dpi",
+     "field": "doc_type",
+     "ref": "bill",
+     "pred": "upd",
+     "required": true,
+     "cause": "doc_type",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "party_swap",
+   "title": "перепутаны продавец и покупатель",
+   "errors": 14,
+   "share_all": 0.012302284710017574,
+   "blocking": 9,
+   "share_blocking": 0.023195876288659795,
+   "docs": 5,
+   "docs_share_failed": 0.058823529411764705,
+   "ceiling_docs": 2,
+   "examples": [
+    {
+     "item_id": "00821_bill_clean_200dpi",
+     "field": "seller.name",
+     "ref": "ип горбачева валерия аскольдовна",
+     "pred": "ооо урал-групп",
+     "required": true,
+     "cause": "party_swap",
+     "row": null
+    },
+    {
+     "item_id": "01355_bill_clean_200dpi",
+     "field": "buyer.name",
+     "ref": "ооо север-комплект",
+     "pred": "ооо диалог-торг",
+     "required": true,
+     "cause": "party_swap",
+     "row": null
+    },
+    {
+     "item_id": "01454_bill_clean_200dpi",
+     "field": "buyer.name",
+     "ref": "ооо гранит-сервис",
+     "pred": "ооо статус",
+     "required": true,
+     "cause": "party_swap",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "missing",
+   "title": "поле не найдено (null при значении в документе)",
+   "errors": 261,
+   "share_all": 0.22934973637961337,
+   "blocking": 8,
+   "share_blocking": 0.020618556701030927,
+   "docs": 2,
+   "docs_share_failed": 0.023529411764705882,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00337_bill_clean_200dpi",
+     "field": "seller_bank.bank_name",
+     "ref": "ао центральный эксперт банк",
+     "pred": null,
+     "required": true,
+     "cause": "missing",
+     "row": null
+    },
+    {
+     "item_id": "02533_bill_clean_200dpi",
+     "field": "seller_bank.bank_name",
+     "ref": "ооо балтийский эксперт банк",
+     "pred": null,
+     "required": true,
+     "cause": "missing",
+     "row": null
+    },
+    {
+     "item_id": "00022_bill_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "778",
+     "pred": null,
+     "required": false,
+     "cause": "missing",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "hallucinated",
+   "title": "выдуманное значение (нет ни в документе, ни в эталоне поля)",
+   "errors": 209,
+   "share_all": 0.18365553602811951,
+   "blocking": 7,
+   "share_blocking": 0.01804123711340206,
+   "docs": 2,
+   "docs_share_failed": 0.023529411764705882,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "01278_torg12_clean_200dpi",
+     "field": "lines[].name",
+     "ref": "картридж для принтера, набор 10 шт",
+     "pred": "товар / наименование, характеристика, сорт, артикул товара: картридж для принтера, набор 10 шт; единица измерения / наименование: шт; единица измерения / код по океи: 796; количество: 2; цена, руб. коп.: 3 361,68; сумма без учета ндс, руб. коп.: 6 723,36; ндс / ставка, %: 22%; ндс / сумма, руб. коп.: 1 479,14; сумма с учетом ндс, руб. коп.: 8 202,50",
+     "required": true,
+     "cause": "hallucinated",
+     "row": 0
+    },
+    {
+     "item_id": "01463_vat_invoice_clean_200dpi",
+     "field": "seller.address",
+     "ref": "117312, г. саратов, бул. матросова, д. 116/2",
+     "pred": "бул. матросова, д. 116/2, г. саратов",
+     "required": true,
+     "cause": "hallucinated",
+     "row": null
+    },
+    {
+     "item_id": "00169_act_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "876",
+     "pred": "001",
+     "required": false,
+     "cause": "hallucinated",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "not_extracted",
+   "title": "документ не собран",
+   "errors": 5,
+   "share_all": 0.004393673110720563,
+   "blocking": 5,
+   "share_blocking": 0.01288659793814433,
+   "docs": 5,
+   "docs_share_failed": 0.058823529411764705,
+   "ceiling_docs": 5,
+   "examples": [
+    {
+     "item_id": "00592_act_clean_200dpi",
+     "field": "document",
+     "ref": null,
+     "pred": null,
+     "required": true,
+     "cause": "not_extracted",
+     "row": null
+    },
+    {
+     "item_id": "01767_torg12_clean_200dpi",
+     "field": "document",
+     "ref": null,
+     "pred": null,
+     "required": true,
+     "cause": "not_extracted",
+     "row": null
+    },
+    {
+     "item_id": "02337_torg12_clean_200dpi",
+     "field": "document",
+     "ref": null,
+     "pred": null,
+     "required": true,
+     "cause": "not_extracted",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "text_marks",
+   "title": "в значение попали пометки формы («(2а)», «ИНН», «КПП»)",
+   "errors": 4,
+   "share_all": 0.0035149384885764497,
+   "blocking": 4,
+   "share_blocking": 0.010309278350515464,
+   "docs": 2,
+   "docs_share_failed": 0.023529411764705882,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "01093_vat_invoice_clean_200dpi",
+     "field": "seller.address",
+     "ref": "813810, г. камень-на-оби, наб. осипенко, д. 86",
+     "pred": "813810, г. камень-на-оби, наб. осипенко, д. 86 (2а)",
+     "required": true,
+     "cause": "text_marks",
+     "row": null
+    },
+    {
+     "item_id": "02443_vat_invoice_clean_200dpi",
+     "field": "seller.address",
+     "ref": "596902, г. псебай, бул. пушкина, д. 100",
+     "pred": "596902, г. псебай, бул. пушкина, д. 100 (2а)",
+     "required": true,
+     "cause": "text_marks",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "rows_lost",
+   "title": "потеряны строки таблицы",
+   "errors": 2,
+   "share_all": 0.0017574692442882249,
+   "blocking": 2,
+   "share_blocking": 0.005154639175257732,
+   "docs": 2,
+   "docs_share_failed": 0.023529411764705882,
+   "ceiling_docs": 1,
+   "examples": [
+    {
+     "item_id": "01543_bill_clean_200dpi",
+     "field": "lines",
+     "ref": "25",
+     "pred": "22",
+     "required": true,
+     "cause": "rows_lost",
+     "row": null
+    },
+    {
+     "item_id": "02821_upd_clean_200dpi",
+     "field": "lines",
+     "ref": "9",
+     "pred": "8",
+     "required": true,
+     "cause": "rows_lost",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "date",
+   "title": "ошибка даты",
+   "errors": 2,
+   "share_all": 0.0017574692442882249,
+   "blocking": 2,
+   "share_blocking": 0.005154639175257732,
+   "docs": 2,
+   "docs_share_failed": 0.023529411764705882,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "01355_bill_clean_200dpi",
+     "field": "date",
+     "ref": "2026-06-05",
+     "pred": "2024-02-04",
+     "required": true,
+     "cause": "date",
+     "row": null
+    },
+    {
+     "item_id": "01454_bill_clean_200dpi",
+     "field": "date",
+     "ref": "2025-09-04",
+     "pred": "2025-05-09",
+     "required": true,
+     "cause": "date",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "text_postcode",
+   "title": "адрес без почтового индекса",
+   "errors": 27,
+   "share_all": 0.023725834797891036,
+   "blocking": 1,
+   "share_blocking": 0.002577319587628866,
+   "docs": 1,
+   "docs_share_failed": 0.011764705882352941,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "01943_vat_invoice_clean_200dpi",
+     "field": "buyer.address",
+     "ref": "112161, г. грозный, пер. о.кошевого, д. 66",
+     "pred": "г. грозный, пер. о.кошевого, д. 66",
+     "required": true,
+     "cause": "text_postcode",
+     "row": null
+    },
+    {
+     "item_id": "00041_act_clean_200dpi",
+     "field": "seller.address",
+     "ref": "978369, г. гремячинск (перм.), пр. социалистический, д. 87/1, офис 187",
+     "pred": "г. гремячинск (перм.), пр. социалистический, д. 87/1, офис 187",
+     "required": false,
+     "cause": "text_postcode",
+     "row": null
+    },
+    {
+     "item_id": "00202_bill_clean_200dpi",
+     "field": "seller.address",
+     "ref": "424594, г. костомукша, бул. береговой, д. 42, офис 434",
+     "pred": "г. костомукша, бул. береговой, д. 42, офис 434",
+     "required": false,
+     "cause": "text_postcode",
+     "row": null
+    }
+   ]
+  },
+  {
+   "cause": "column_shift",
+   "title": "значение из соседней графы той же строки",
+   "errors": 72,
+   "share_all": 0.0632688927943761,
+   "blocking": 0,
+   "share_blocking": 0.0,
+   "docs": 0,
+   "docs_share_failed": 0.0,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00169_act_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "359",
+     "pred": "001",
+     "required": false,
+     "cause": "column_shift",
+     "row": 2
+    },
+    {
+     "item_id": "00202_bill_clean_200dpi",
+     "field": "lines[].unit_name",
+     "ref": "мес",
+     "pred": "резервное копирование данных, с выездом",
+     "required": false,
+     "cause": "column_shift",
+     "row": 0
+    },
+    {
+     "item_id": "00321_act_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "356",
+     "pred": "001",
+     "required": false,
+     "cause": "column_shift",
+     "row": 0
+    }
+   ]
+  },
+  {
+   "cause": "digits",
+   "title": "ошибка в цифрах (число есть в документе, но не то)",
+   "errors": 42,
+   "share_all": 0.03690685413005272,
+   "blocking": 0,
+   "share_blocking": 0.0,
+   "docs": 0,
+   "docs_share_failed": 0.0,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00169_act_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "008",
+     "pred": "001",
+     "required": false,
+     "cause": "digits",
+     "row": 7
+    },
+    {
+     "item_id": "00337_bill_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "356",
+     "pred": "001",
+     "required": false,
+     "cause": "digits",
+     "row": 0
+    },
+    {
+     "item_id": "01053_bill_clean_200dpi",
+     "field": "lines[].unit_code",
+     "ref": "113",
+     "pred": "003",
+     "required": false,
+     "cause": "digits",
+     "row": 3
+    }
+   ]
+  },
+  {
+   "cause": "autofix",
+   "title": "постобработка испортила верный ответ модели",
+   "errors": 1,
+   "share_all": 0.0008787346221441124,
+   "blocking": 0,
+   "share_blocking": 0.0,
+   "docs": 0,
+   "docs_share_failed": 0.0,
+   "ceiling_docs": 0,
+   "examples": [
+    {
+     "item_id": "00025_upd_clean_200dpi",
+     "field": "lines[].vat_amount",
+     "ref": "198.00",
+     "pred": "115.00",
+     "required": false,
+     "cause": "autofix",
+     "row": 4
+    }
+   ]
+  }
+ ],
+ "cause_sets": [
+  {
+   "causes": "text_other",
+   "docs": 20
+  },
+  {
+   "causes": "other",
+   "docs": 15
+  },
+  {
+   "causes": "neighbour_field",
+   "docs": 10
+  },
+  {
+   "causes": "rows_extra",
+   "docs": 6
+  },
+  {
+   "causes": "not_extracted",
+   "docs": 5
+  },
+  {
+   "causes": "other + rows_extra",
+   "docs": 5
+  },
+  {
+   "causes": "neighbour_field + text_other",
+   "docs": 3
+  },
+  {
+   "causes": "party_swap",
+   "docs": 2
+  },
+  {
+   "causes": "missing + text_other",
+   "docs": 2
+  },
+  {
+   "causes": "neighbour_field + other",
+   "docs": 2
+  },
+  {
+   "causes": "party_swap + text_other",
+   "docs": 1
+  },
+  {
+   "causes": "neighbour_field + other + text_other",
+   "docs": 1
+  },
+  {
+   "causes": "date + doc_type + neighbour_field + other + party_swap",
+   "docs": 1
+  },
+  {
+   "causes": "date + doc_type + neighbour_field + party_swap + text_other",
+   "docs": 1
+  },
+  {
+   "causes": "other + rows_lost",
+   "docs": 1
+  },
+  {
+   "causes": "neighbour_field + rows_extra",
+   "docs": 1
+  },
+  {
+   "causes": "neighbour_field + other + rows_extra",
+   "docs": 1
+  },
+  {
+   "causes": "hallucinated",
+   "docs": 1
+  },
+  {
+   "causes": "doc_type",
+   "docs": 1
+  },
+  {
+   "causes": "doc_type + rows_extra",
+   "docs": 1
+  },
+  {
+   "causes": "rows_lost",
+   "docs": 1
+  },
+  {
+   "causes": "rows_extra + text_marks",
+   "docs": 1
+  },
+  {
+   "causes": "hallucinated + neighbour_field + other + text_other",
+   "docs": 1
+  },
+  {
+   "causes": "neighbour_field + text_postcode",
+   "docs": 1
+  },
+  {
+   "causes": "text_marks",
+   "docs": 1
+  }
+ ],
+ "by_doc_type": {
+  "act": {
+   "documents": 20,
+   "ok": 11,
+   "blocking": {
+    "neighbour_field": 10,
+    "party_swap": 4,
+    "text_other": 2,
+    "not_extracted": 1
+   }
+  },
+  "bill": {
+   "documents": 37,
+   "ok": 1,
+   "blocking": {
+    "text_other": 170,
+    "other": 51,
+    "doc_type": 10,
+    "neighbour_field": 9,
+    "missing": 8,
+    "party_swap": 5,
+    "date": 2,
+    "rows_lost": 1
+   }
+  },
+  "torg12": {
+   "documents": 29,
+   "ok": 8,
+   "blocking": {
+    "other": 43,
+    "rows_extra": 7,
+    "neighbour_field": 7,
+    "hallucinated": 5,
+    "not_extracted": 4
+   }
+  },
+  "upd": {
+   "documents": 45,
+   "ok": 32,
+   "blocking": {
+    "other": 11,
+    "rows_extra": 7,
+    "neighbour_field": 4,
+    "text_other": 2,
+    "doc_type": 2,
+    "rows_lost": 1
+   }
+  },
+  "vat_invoice": {
+   "documents": 19,
+   "ok": 13,
+   "blocking": {
+    "text_other": 7,
+    "neighbour_field": 6,
+    "text_marks": 4,
+    "hallucinated": 2,
+    "rows_extra": 1,
+    "other": 1,
+    "text_postcode": 1
+   }
+  }
+ },
+ "source": {
+  "config": "configs\\eval\\p13_val_e3b_tables_v2.yaml",
+  "cell": null,
+  "docs": 150
+ }
+}

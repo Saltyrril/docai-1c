@@ -451,9 +451,12 @@ def test_pipeline_fixes_and_reports(monkeypatch: pytest.MonkeyPatch) -> None:
     report = result.postprocess
     assert report is not None
     assert report.status_ru in {"нужна проверка", "отклонить", "можно загружать"}
-    assert [c.field for c in report.corrections if c.kind == "autofix"] == [
-        "lines[0].amount_with_vat"
+    sums = [
+        c.field for c in report.corrections if c.kind == "autofix" and c.rule != "doc_type_by_title"
     ]
+    assert sums == ["lines[0].amount_with_vat"]
+    # Подменённый ответ — «upd», а PDF — счёт на оплату: тип исправлен по заголовку (D50).
+    assert result.document["doc_type"] == "bill"
     assert Decimal(result.document["lines"][0]["amount_with_vat"]) == Decimal("2440.00")
     assert "postprocess" in result.meta.timings_s
 

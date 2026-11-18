@@ -41,7 +41,7 @@ class ExtractConfig(BaseModel):
     options: OllamaOptions = Field(default_factory=OllamaOptions)
 
     # Версии промптов: имя файла без расширения в src/docai/extract/prompts/.
-    text_prompt: str = "text_v2"
+    text_prompt: str = "text_v3"  # P13 (D51); text_v2 — умолчание P11–P12
     vision_prompt: str = "vision_v2"
     # Даты в ответе модели: iso — грамматика ГГГГ-ММ-ДД (P9–P11), printed — как в документе.
     # printed идёт вместе с промптами *_v2 (в v1 написано «в формате ГГГГ-ММ-ДД»). Умолчание
@@ -55,6 +55,9 @@ class ExtractConfig(BaseModel):
     max_image_side: int = 1280
     # Текстовый путь: если текст всего документа длиннее, страницы идут в модель по одной.
     max_text_chars: int = 12000
+    # Текстовый путь: таблица позиций в тексте для модели — grid (`| a | b |`, P9) или
+    # labeled / labeled_v2 (построчно «графа: значение», D52).
+    text_tables: Literal["grid", "labeled", "labeled_v2"] = "grid"
 
     # OCR-путь (Tesseract).
     tesseract_cmd: str | None = None

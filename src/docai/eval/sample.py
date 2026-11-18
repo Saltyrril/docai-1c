@@ -82,6 +82,10 @@ def _read_manifest(path: Path) -> list[dict]:
 def select_dataset_items(cfg: EvalConfig) -> list[EvalItem]:
     data = cfg.data
     root = data.dataset
+    excluded = set(data.exclude_doc_ids)
+    if data.exclude_ids_file is not None:
+        lines = data.exclude_ids_file.read_text(encoding="utf-8").splitlines()
+        excluded |= {ln.strip() for ln in lines if ln.strip() and not ln.startswith("#")}
     rows = [
         r
         for r in _read_manifest(root / "manifest.jsonl")
@@ -89,7 +93,7 @@ def select_dataset_items(cfg: EvalConfig) -> list[EvalItem]:
         and r["dpi"] == data.dpi
         and r["level"] in data.levels
         and (data.doc_types is None or r["doc_type"] in data.doc_types)
-        and r["doc_id"] not in data.exclude_doc_ids
+        and r["doc_id"] not in excluded
     ]
     by_key = {(r["doc_id"], r["level"]): r for r in rows}
     doc_types = {r["doc_id"]: r["doc_type"] for r in rows}

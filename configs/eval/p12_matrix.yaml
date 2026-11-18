@@ -4,7 +4,7 @@
 # Отчёт:   uv run docai eval-matrix report --config configs/eval/p12_matrix.yaml
 # Ячейка = модель + путь. Уровни clean/scan/photo раздаются по документам по кругу (по 100 на уровень
 # при 300 документах); путь text читает текстовый слой PDF, поэтому только clean и все документы.
-# Промпты и формат даты — из configs/extract.yaml (text_v2, vision_v2, printed).
+# Промпты и формат даты — из configs/extract_d48.yaml (text_v2, vision_v2, printed; копия умолчания D48).
 name: p12_matrix
 description: >-
   300 синтетических документов сплита test (из 304) и все
@@ -22,7 +22,7 @@ data:
   exclude_doc_ids: []
   include_real: true
   real_root: data/real
-extract_config: configs/extract.yaml
+extract_config: configs/extract_d48.yaml
 paths:
   text:   {mode: text,   levels: [clean],               clean_input: pdf}
   vision: {mode: vision, levels: [clean, scan, photo],  clean_input: image}

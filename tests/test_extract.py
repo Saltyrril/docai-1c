@@ -492,7 +492,7 @@ def test_extract_text_route(fake: FakeOllama) -> None:
     result = extract([TEXT_PDF])
     assert result.valid
     assert result.meta.route == "text"
-    assert result.meta.prompt_version == "text_v2"
+    assert result.meta.prompt_version == "text_v3"
     assert result.meta.tokens.prompt == 100
     assert {"route", "pdf_text", "llm", "assemble", "total"} <= set(result.meta.timings_s)
     assert len(fake.bodies) == 1

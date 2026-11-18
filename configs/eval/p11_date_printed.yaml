@@ -22,7 +22,7 @@ data:
                     00088_act, 00144_bill, 00158_torg12, 00224_upd, 00449_torg12]
   dpi: 200
 extract:
-  config: configs/extract.yaml
+  config: configs/extract_d48.yaml   # умолчание до P13 (D48)
   mode: auto
   cross_check: null
   model: qwen3.5:2b-q8_0
