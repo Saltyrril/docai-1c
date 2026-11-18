@@ -1,15 +1,19 @@
-﻿# Сборка внешней обработки 1С из исходников onec\src в build\DocaiCheck.epf (P15, D54).
+﻿# Сборка внешних обработок 1С из исходников onec\src в build\<имя>.epf (P15, P16; D54, D55).
 #
-#   .\scripts\onec_build.ps1            # собрать .epf из onec\src
-#   .\scripts\onec_build.ps1 -Dump      # обратно: выгрузить build\DocaiCheck.epf в onec\src
-#                                       # (после правок обработки в Конфигураторе)
+#   .\scripts\onec_build.ps1                    # собрать все: DocaiCheck и DocaiLoad
+#   .\scripts\onec_build.ps1 -Name DocaiLoad    # собрать одну
+#   .\scripts\onec_build.ps1 -Name DocaiLoad -Dump
+#                                   # обратно: выгрузить build\DocaiLoad.epf в onec\src
+#                                   # (после правок обработки в Конфигураторе)
 #
+# Платформа — самая новая установленная (Find-Platform). Учебной Бухгалтерии 3.0.111 нужна
+# 8.3.16+, поэтому с P16 это учебная 8.3.18; исходники остаются в формате выгрузки 2.1.
 # Конфигуратор в пакетном режиме требует информационную базу. Скрипт создаёт пустую
 # служебную базу build\onec_ib и работает только с ней: ваши базы не открываются.
 param(
+    [string[]]$Name = @("DocaiCheck", "DocaiLoad"),
     [switch]$Dump,
-    [string]$Platform = "",
-    [string]$Epf = "build\DocaiCheck.epf"
+    [string]$Platform = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -34,8 +38,6 @@ Write-Host "Платформа: $Platform"
 
 New-Item -ItemType Directory -Force "build" | Out-Null
 $Ib = Join-Path $Root "build\onec_ib"
-$Src = Join-Path $Root "onec\src\DocaiCheck.xml"
-$EpfPath = Join-Path $Root $Epf
 
 # Служебная пустая база: нужна Конфигуратору, данные в ней не хранятся.
 if (-not (Test-Path (Join-Path $Ib "1Cv8.1CD"))) {
@@ -47,17 +49,23 @@ if (-not (Test-Path (Join-Path $Ib "1Cv8.1CD"))) {
     if ($p.ExitCode -ne 0) { Write-Host "Не удалось создать базу (код $($p.ExitCode))." -ForegroundColor Red; exit 1 }
 }
 
-$Log = Join-Path $Root "build\onec_designer.log"
-if ($Dump) {
-    if (-not (Test-Path $EpfPath)) { Write-Host "Нет файла $EpfPath" -ForegroundColor Red; exit 1 }
-    $code = Invoke-Designer @("/F", "`"$Ib`"", "/DumpExternalDataProcessorOrReportToFiles", "`"$Src`"", "`"$EpfPath`"") $Log
-} else {
-    if (Test-Path $EpfPath) { Remove-Item $EpfPath }
-    $code = Invoke-Designer @("/F", "`"$Ib`"", "/LoadExternalDataProcessorOrReportFromFiles", "`"$Src`"", "`"$EpfPath`"") $Log
-    if ($code -eq 0 -and -not (Test-Path $EpfPath)) { $code = 1 }
-}
+if ($Dump -and $Name.Count -ne 1) { Write-Host "Для -Dump укажите одну обработку: -Name DocaiLoad" -ForegroundColor Red; exit 1 }
 
-if ($code -ne 0) { Write-Host "Ошибка (код $code), журнал выше и в $Log" -ForegroundColor Red; exit $code }
-if ($Dump) { Write-Host "Исходники обновлены: onec\src" -ForegroundColor Green }
-else { Write-Host "Готово: $EpfPath" -ForegroundColor Green }
+$Log = Join-Path $Root "build\onec_designer.log"
+foreach ($item in $Name) {
+    $Src = Join-Path $Root "onec\src\$item.xml"
+    $EpfPath = Join-Path $Root "build\$item.epf"
+    if (-not (Test-Path $Src)) { Write-Host "Нет исходников $Src" -ForegroundColor Red; exit 1 }
+    if ($Dump) {
+        if (-not (Test-Path $EpfPath)) { Write-Host "Нет файла $EpfPath" -ForegroundColor Red; exit 1 }
+        $code = Invoke-Designer @("/F", "`"$Ib`"", "/DumpExternalDataProcessorOrReportToFiles", "`"$Src`"", "`"$EpfPath`"") $Log
+    } else {
+        if (Test-Path $EpfPath) { Remove-Item $EpfPath }
+        $code = Invoke-Designer @("/F", "`"$Ib`"", "/LoadExternalDataProcessorOrReportFromFiles", "`"$Src`"", "`"$EpfPath`"") $Log
+        if ($code -eq 0 -and -not (Test-Path $EpfPath)) { $code = 1 }
+    }
+    if ($code -ne 0) { Write-Host "Ошибка ($item, код $code), журнал выше и в $Log" -ForegroundColor Red; exit $code }
+    if ($Dump) { Write-Host "Исходники обновлены: onec\src\$item" -ForegroundColor Green }
+    else { Write-Host "Готово: $EpfPath" -ForegroundColor Green }
+}
 exit 0

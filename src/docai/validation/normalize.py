@@ -106,6 +106,8 @@ _MONTHS = {
 _NUMERIC_DATE_RE = re.compile(r"(\d{1,2})[./\-](\d{1,2})[./\-](\d{4}|\d{2})")
 _ISO_DATE_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
 _TEXT_DATE_RE = re.compile(r"(\d{1,2})\s+([а-яё]+)\.?\s+(\d{4})", re.IGNORECASE)
+# Подпись перед датой: «от 06.02.2025», «Дата: 06.02.2025», «дата составления — 06.02.2025».
+_DATE_PREFIX_RE = re.compile(r"^(?:от|дата(?:\s+[а-яё]+)?)\s*[:\-—–]?\s*(?=\d)", re.IGNORECASE)
 
 
 def _make_date(year: int, month: int, day: int, source: str) -> dt.date:
@@ -127,6 +129,9 @@ def parse_date(value: str | dt.date) -> dt.date:
     text = re.sub(r"[«»\"'“”„]", "", value).strip()
     text = re.sub(r"\s+", " ", text)
     text = re.sub(r"\s*(?:г\.?|года?)$", "", text, flags=re.IGNORECASE).strip()
+    # Модель захватывает подпись из шапки: «Счёт-фактура № 6510 от 06.02.2025» → «от 06.02.2025»
+    # (найдено при P16 на скане УПД: без даты документ отклонялся целиком).
+    text = _DATE_PREFIX_RE.sub("", text)
     if match := _ISO_DATE_RE.fullmatch(text):
         year, month, day = (int(g) for g in match.groups())
         return _make_date(year, month, day, value)
