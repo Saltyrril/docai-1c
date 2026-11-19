@@ -1,0 +1,90 @@
+{
+  "documents": {
+    "contract": 300,
+    "amendment": 89,
+    "regulation": 7
+  },
+  "contracts_by_kind": {
+    "lease": 45,
+    "services": 90,
+    "works": 55,
+    "supply": 110
+  },
+  "counterparties": 186,
+  "counterparties_with_several_contracts": 80,
+  "contracts_with_amendments": 81,
+  "amendment_changes": {
+    "acceptance": 18,
+    "requisites.them": 19,
+    "payment": 19,
+    "validity": 9,
+    "termination": 10,
+    "price": 10,
+    "prolongation": 9,
+    "penalty.us": 8,
+    "supply.delivery": 6,
+    "works.period": 1
+  },
+  "fragments": 7435,
+  "chars_total": 1257627,
+  "chars_per_doc": {
+    "min": 685,
+    "mean": 3176,
+    "max": 4484
+  },
+  "registry_rows": 900,
+  "registry_by_type": {
+    "bill": 201,
+    "upd": 267,
+    "vat_invoice": 136,
+    "act": 124,
+    "torg12": 172
+  },
+  "registry_counterparties": 107,
+  "questions_by_category": {
+    "simple_fact": 40,
+    "paraphrase": 30,
+    "multi_condition": 30,
+    "amendment_override": 30,
+    "comparison": 25,
+    "registry_aggregate": 25,
+    "no_answer": 20
+  },
+  "questions_by_route": {
+    "rag": 155,
+    "table": 25,
+    "none": 20
+  },
+  "questions_from_regulations": 23,
+  "templates": {
+    "simple": 47,
+    "reg": 14,
+    "para": 37,
+    "multi": 26,
+    "reg-multi": 4,
+    "reg-amend": 2,
+    "compare": 22,
+    "compare-equal": 3,
+    "count_type": 3,
+    "sum_shipping": 3,
+    "count_contract": 2,
+    "sum_bills": 4,
+    "max_doc": 3,
+    "last_doc": 4,
+    "vat_sum": 3,
+    "top_cp": 2,
+    "distinct_cp": 1,
+    "unknown_counterparty": 4,
+    "unknown_number": 4,
+    "missing": 6,
+    "absent_concept": 3,
+    "reg-absent": 3
+  },
+  "question_source_overlap": {
+    "simple_fact": 0.412,
+    "paraphrase": 0.226,
+    "multi_condition": 0.41,
+    "amendment_override": 0.336,
+    "comparison": 0.259
+  }
+}

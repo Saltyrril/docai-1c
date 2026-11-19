@@ -1,0 +1,90 @@
+# 30 вопросов владельца своими словами (шаг P18).
+#
+# Как заполнять
+# 1. Соберите корпус: uv run docai rag build   (документы появятся в data/rag/corpus/).
+# 2. Откройте договор или регламент, придумайте вопрос так, как спросил бы бухгалтер.
+# 3. Заполните поля ниже. Пустые заготовки (без question) проверка пропускает.
+# 4. Проверьте: uv run docai rag check-manual
+#    Проверка найдёт id фрагмента по цитате и запишет вопросы в data/rag/questions_manual.jsonl.
+#
+# Поля
+#   id        M01…M30, не меняйте.
+#   category  simple_fact | paraphrase | multi_condition | amendment_override | comparison |
+#             registry_aggregate | no_answer
+#             (простой факт; перефразированный; несколько условий одного договора;
+#              доп. соглашение отменяет условие; сравнение двух договоров; агрегат по реестру;
+#              ответа нет в корпусе). Распределение ниже — предложение, его можно менять.
+#   question  вопрос своими словами.
+#   answer    эталонный ответ, как его дал бы опытный бухгалтер.
+#   keys      необязательно: что обязательно должно быть в ответе ("30", "31.12.2026", "0,1%").
+#             Альтернативы через «|»: "не предусмотрен|нет".
+#   sources   откуда ответ: doc_id (имя файла без .md: K-0012, K-0012-DS1, REG-03) и quote —
+#             фраза из документа, скопированная дословно (внутри одного пункта; переносы строк
+#             и «ё/е» не важны). Для no_answer — пусто. Для доп. соглашения укажите и
+#             соглашение, и пункт договора, который оно меняет (wrong_answers — старое значение).
+#   sql       для registry_aggregate: запрос к таблице registry (колонки — как в registry.csv),
+#             или expected_value — ответ числом.
+#   note      необязательно: комментарий (почему вопрос трудный).
+#
+# Примеры (раскомментируйте, если хотите проверить формат):
+#
+#  - id: M00
+#    category: paraphrase
+#    question: Поставщик прислал акт, сумма в нём на две тысячи больше, чем в договоре. Что делать?
+#    answer: Вернуть документ инициатору для выяснения причин — расхождение больше 1 000 руб.
+#    keys: ["1000", "инициатор"]
+#    sources:
+#      - doc_id: REG-04
+#        quote: расходится с договором или заявкой более чем на 1 000 рублей
+#    note: в вопросе нет слов «расхождение» и «возвращается»
+#
+#  - id: M00
+#    category: registry_aggregate
+#    question: Сколько всего документов в реестре за октябрь 2026 года?
+#    answer: "…"
+#    sql: SELECT COUNT(*) FROM registry WHERE date BETWEEN '2026-10-01' AND '2026-10-31'
+#
+#  - id: M00
+#    category: no_answer
+#    question: Какой у нас лимит на представительские расходы?
+#    answer: В корпусе нет ответа.
+#    sources: []
+
+questions:
+  # --- простой факт (5) ---
+  - {id: M01, category: simple_fact, question: "", answer: "", keys: [], sources: []}
+  - {id: M02, category: simple_fact, question: "", answer: "", keys: [], sources: []}
+  - {id: M03, category: simple_fact, question: "", answer: "", keys: [], sources: []}
+  - {id: M04, category: simple_fact, question: "", answer: "", keys: [], sources: []}
+  - {id: M05, category: simple_fact, question: "", answer: "", keys: [], sources: []}
+  # --- перефразированный вопрос (5) ---
+  - {id: M06, category: paraphrase, question: "", answer: "", keys: [], sources: []}
+  - {id: M07, category: paraphrase, question: "", answer: "", keys: [], sources: []}
+  - {id: M08, category: paraphrase, question: "", answer: "", keys: [], sources: []}
+  - {id: M09, category: paraphrase, question: "", answer: "", keys: [], sources: []}
+  - {id: M10, category: paraphrase, question: "", answer: "", keys: [], sources: []}
+  # --- несколько условий из одного договора (4) ---
+  - {id: M11, category: multi_condition, question: "", answer: "", keys: [], sources: []}
+  - {id: M12, category: multi_condition, question: "", answer: "", keys: [], sources: []}
+  - {id: M13, category: multi_condition, question: "", answer: "", keys: [], sources: []}
+  - {id: M14, category: multi_condition, question: "", answer: "", keys: [], sources: []}
+  # --- доп. соглашение отменяет условие (4) ---
+  - {id: M15, category: amendment_override, question: "", answer: "", keys: [], sources: [], wrong_answers: []}
+  - {id: M16, category: amendment_override, question: "", answer: "", keys: [], sources: [], wrong_answers: []}
+  - {id: M17, category: amendment_override, question: "", answer: "", keys: [], sources: [], wrong_answers: []}
+  - {id: M18, category: amendment_override, question: "", answer: "", keys: [], sources: [], wrong_answers: []}
+  # --- сравнение двух договоров (4) ---
+  - {id: M19, category: comparison, question: "", answer: "", keys: [], sources: []}
+  - {id: M20, category: comparison, question: "", answer: "", keys: [], sources: []}
+  - {id: M21, category: comparison, question: "", answer: "", keys: [], sources: []}
+  - {id: M22, category: comparison, question: "", answer: "", keys: [], sources: []}
+  # --- агрегат по реестру (4) ---
+  - {id: M23, category: registry_aggregate, question: "", answer: "", keys: [], sql: ""}
+  - {id: M24, category: registry_aggregate, question: "", answer: "", keys: [], sql: ""}
+  - {id: M25, category: registry_aggregate, question: "", answer: "", keys: [], sql: ""}
+  - {id: M26, category: registry_aggregate, question: "", answer: "", keys: [], sql: ""}
+  # --- ответа нет в корпусе (4) ---
+  - {id: M27, category: no_answer, question: "", answer: "", sources: []}
+  - {id: M28, category: no_answer, question: "", answer: "", sources: []}
+  - {id: M29, category: no_answer, question: "", answer: "", sources: []}
+  - {id: M30, category: no_answer, question: "", answer: "", sources: []}

@@ -1,0 +1,12 @@
+# Корпус и вопросы для RAG (шаг P18). Запуск:
+#   uv run docai rag build --config configs/rag/corpus_v1.yaml
+#   uv run docai rag review --config configs/rag/corpus_v1.yaml   # выборка для ручной проверки
+name: docai-rag
+version: rag-v1
+seed: 42
+n_contracts: 300       # договоров нашей организации (поставка 110, услуги 90, аренда 45, подряд 55)
+n_registry: 900        # строк реестра первичных документов (из генератора P3)
+out: data/rag          # папка не коммитится (data/ в .gitignore)
+review:
+  n: 20                # вопросов для ручной проверки эталона
+  seed: 2026
