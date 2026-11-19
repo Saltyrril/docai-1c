@@ -8,12 +8,17 @@
 #
 # Платформа — самая новая установленная (Find-Platform). Учебной Бухгалтерии 3.0.111 нужна
 # 8.3.16+, поэтому с P16 это учебная 8.3.18; исходники остаются в формате выгрузки 2.1.
+#
+# DocaiLoad ссылается на объекты Бухгалтерии (СправочникСсылка.Контрагенты и др.), поэтому
+# собирается на базе с этой конфигурацией: -BpInfobase, по умолчанию пустая учебная база
+# %USERPROFILE%\Documents\1c\docai_bp_empty (D58). База не должна быть открыта в 1С.
 # Конфигуратор в пакетном режиме требует информационную базу. Скрипт создаёт пустую
 # служебную базу build\onec_ib и работает только с ней: ваши базы не открываются.
 param(
     [string[]]$Name = @("DocaiCheck", "DocaiLoad"),
     [switch]$Dump,
-    [string]$Platform = ""
+    [string]$Platform = "",
+    [string]$BpInfobase = (Join-Path $env:USERPROFILE "Documents\1c\docai_bp_empty")
 )
 
 $ErrorActionPreference = "Stop"
@@ -55,13 +60,21 @@ $Log = Join-Path $Root "build\onec_designer.log"
 foreach ($item in $Name) {
     $Src = Join-Path $Root "onec\src\$item.xml"
     $EpfPath = Join-Path $Root "build\$item.epf"
+    $Base = $Ib
+    if ($item -eq "DocaiLoad") {
+        if (-not (Test-Path (Join-Path $BpInfobase "1Cv8.1CD"))) {
+            Write-Host "DocaiLoad собирается на базе учебной Бухгалтерии, а её нет: $BpInfobase. Укажите -BpInfobase <папка базы>." -ForegroundColor Red
+            exit 1
+        }
+        $Base = $BpInfobase
+    }
     if (-not (Test-Path $Src)) { Write-Host "Нет исходников $Src" -ForegroundColor Red; exit 1 }
     if ($Dump) {
         if (-not (Test-Path $EpfPath)) { Write-Host "Нет файла $EpfPath" -ForegroundColor Red; exit 1 }
-        $code = Invoke-Designer @("/F", "`"$Ib`"", "/DumpExternalDataProcessorOrReportToFiles", "`"$Src`"", "`"$EpfPath`"") $Log
+        $code = Invoke-Designer @("/F", "`"$Base`"", "/DumpExternalDataProcessorOrReportToFiles", "`"$Src`"", "`"$EpfPath`"") $Log
     } else {
         if (Test-Path $EpfPath) { Remove-Item $EpfPath }
-        $code = Invoke-Designer @("/F", "`"$Ib`"", "/LoadExternalDataProcessorOrReportFromFiles", "`"$Src`"", "`"$EpfPath`"") $Log
+        $code = Invoke-Designer @("/F", "`"$Base`"", "/LoadExternalDataProcessorOrReportFromFiles", "`"$Src`"", "`"$EpfPath`"") $Log
         if ($code -eq 0 -and -not (Test-Path $EpfPath)) { $code = 1 }
     }
     if ($code -ne 0) { Write-Host "Ошибка ($item, код $code), журнал выше и в $Log" -ForegroundColor Red; exit $code }

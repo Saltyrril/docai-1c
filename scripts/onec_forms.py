@@ -115,6 +115,11 @@ def t_bool() -> list[str]:
     return ["<v8:Type>xs:boolean</v8:Type>"]
 
 
+def t_ref(name: str) -> list[str]:
+    """Ссылка на объект конфигурации, например «CatalogRef.Контрагенты» (D58)."""
+    return [f"<v8:Type>cfg:{name}</v8:Type>"]
+
+
 def t_vt() -> list[str]:
     return ["<v8:Type>v8:ValueTable</v8:Type>"]
 
@@ -163,6 +168,7 @@ class Form:
         wrap: bool | None = None,
         events: dict[str, str] | None = None,
         fmt: str | None = None,
+        links: dict[str, str] | None = None,
         saved_hint: str | None = None,
     ) -> list[str]:
         i = self.nid()
@@ -189,6 +195,17 @@ class Form:
             out += ml("Format", fmt, ind + "\t")
         if saved_hint is not None:
             out += ml("InputHint", saved_hint, ind + "\t")
+        if links:
+            out.append(f"{ind}\t<ChoiceParameterLinks>")
+            for link_name, data_path in links.items():
+                out += [
+                    f"{ind}\t\t<xr:Link>",
+                    f"{ind}\t\t\t<xr:Name>{link_name}</xr:Name>",
+                    f'{ind}\t\t\t<xr:DataPath xsi:type="xs:string">{data_path}</xr:DataPath>',
+                    f"{ind}\t\t\t<xr:ValueChange>Clear</xr:ValueChange>",
+                    f"{ind}\t\t</xr:Link>",
+                ]
+            out.append(f"{ind}\t</ChoiceParameterLinks>")
         out.append(f'{ind}\t<ContextMenu name="{name}КонтекстноеМеню" id="{self.nid()}"/>')
         out.append(f'{ind}\t<ExtendedTooltip name="{name}РасширеннаяПодсказка" id="{self.nid()}"/>')
         if events:
@@ -197,6 +214,16 @@ class Form:
                 out.append(f'{ind}\t\t<Event name="{ev}">{handler}</Event>')
             out.append(f"{ind}\t</Events>")
         out.append(f"{ind}</InputField>")
+        return out
+
+    def checkbox(self, name: str, path: str, ind: str) -> list[str]:
+        out = [f'{ind}<CheckBoxField name="{name}" id="{self.nid()}">']
+        out.append(f"{ind}\t<DataPath>{path}</DataPath>")
+        out.append(f"{ind}\t<EditMode>EnterOnInput</EditMode>")
+        out.append(f"{ind}\t<CheckBoxType>Auto</CheckBoxType>")
+        out.append(f'{ind}\t<ContextMenu name="{name}КонтекстноеМеню" id="{self.nid()}"/>')
+        out.append(f'{ind}\t<ExtendedTooltip name="{name}РасширеннаяПодсказка" id="{self.nid()}"/>')
+        out.append(f"{ind}</CheckBoxField>")
         return out
 
     def picture(self, name: str, path: str, ind: str, empty_text: str) -> list[str]:
@@ -307,6 +334,7 @@ class Form:
         height: int | None = None,
         events: dict[str, str] | None = None,
         show_title: bool = False,
+        bar_buttons: list[tuple[str, str]] | None = None,
     ) -> list[str]:
         i = self.nid()
         out = [
@@ -331,6 +359,11 @@ class Form:
         out.append(f'{ind}\t<AutoCommandBar name="{name}КоманднаяПанель" id="{self.nid()}">')
         if not change_rows:
             out.append(f"{ind}\t\t<Autofill>false</Autofill>")
+        if bar_buttons:
+            out.append(f"{ind}\t\t<ChildItems>")
+            for button_name, command in bar_buttons:
+                out += self.button(button_name, command, ind + "\t\t\t", bar=True)
+            out.append(f"{ind}\t\t</ChildItems>")
         out.append(f"{ind}\t</AutoCommandBar>")
         out.append(f'{ind}\t<ExtendedTooltip name="{name}РасширеннаяПодсказка" id="{self.nid()}"/>')
         if events:
@@ -604,7 +637,11 @@ LINE_COLUMNS = [
 
 def review_form() -> Form:
     f = Form("DocaiLoad")
-    f.events = [("OnCreateAtServer", "ПриСозданииНаСервере"), ("OnOpen", "ПриОткрытии")]
+    f.events = [
+        ("OnCreateAtServer", "ПриСозданииНаСервере"),
+        ("OnOpen", "ПриОткрытии"),
+        ("NotificationProcessing", "ОбработкаОповещения"),
+    ]
     f.bar += f.button("ФормаГотово", "Готово", "\t\t\t", bar=True, default=True)
     f.bar += f.button("ФормаОтправитьПравки", "ОтправитьПравки", "\t\t\t", bar=True)
 
@@ -662,11 +699,29 @@ def review_form() -> Form:
         i,
         [
             col("СтрокиН", "Строки.Н", ro=True, width=3),
-            *[col(f"Строки{n}", f"Строки.{n}", width=w) for n, _t, _ty, w in LINE_COLUMNS],
+            col("СтрокиНаименование", "Строки.Наименование", width=30),
+            col(
+                "СтрокиНоменклатура",
+                "Строки.Номенклатура",
+                width=25,
+                events={
+                    "StartChoice": "СтрокиНоменклатураНачалоВыбора",
+                    "OnChange": "СтрокиНоменклатураПриИзменении",
+                },
+            ),
+            col("СтрокиСостояниеНоменклатуры", "Строки.СостояниеНоменклатуры", ro=True, width=22),
+            lambda i: f.checkbox("СтрокиЭтоУслуга", "Строки.ЭтоУслуга", i),
+            col("СтрокиЕдиницаИзмерения", "Строки.ЕдиницаИзмерения", width=8),
+            *[
+                col(f"Строки{n}", f"Строки.{n}", width=w)
+                for n, _t, _ty, w in LINE_COLUMNS
+                if n != "Наименование"
+            ],
             col("СтрокиЗамечание", "Строки.Замечание", ro=True, width=30),
         ],
         ro=False,
         change_rows=True,
+        bar_buttons=[("СтрокиСоздатьНоменклатуру", "СоздатьНоменклатуру")],
         events={
             "OnEditEnd": "СтрокиПриОкончанииРедактирования",
             "AfterDeleteRow": "СтрокиПослеУдаления",
@@ -680,7 +735,54 @@ def review_form() -> Form:
             ("СтраницаСтроки", "Товары и услуги", [lines_table]),
         ],
     )
-    f.items += f.group("ГруппаОсновная", "Документ", ind, [left, right], kind="Horizontal")
+
+    def match_row(name, title, field, handler, button=None, links=None):
+        children = [
+            lambda k: f.input(
+                field, field, k, title=title, width=28, events={"OnChange": handler}, links=links
+            ),
+            lambda k: f.input(
+                f"Состояние{field}",
+                f"Состояние{field}",
+                k,
+                ro=True,
+                title_loc="None",
+                hstretch=True,
+            ),
+        ]
+        if button:
+            children.append(lambda k: f.button(button, button, k, bar=False))
+        return lambda j: f.group(name, title, j, children, kind="Horizontal")
+
+    matching = lambda i: f.group(  # noqa: E731
+        "ГруппаСопоставление",
+        "Справочники 1С",
+        i,
+        [
+            match_row("ГруппаОрганизация", "Организация", "Организация", "ОрганизацияПриИзменении"),
+            match_row(
+                "ГруппаКонтрагент",
+                "Контрагент",
+                "Контрагент",
+                "КонтрагентПриИзменении",
+                "СоздатьКонтрагента",
+            ),
+            match_row(
+                "ГруппаДоговор",
+                "Договор",
+                "Договор",
+                "ДоговорПриИзменении",
+                "СоздатьДоговор",
+                links={"Отбор.Владелец": "Контрагент"},
+            ),
+        ],
+        show_title=True,
+        representation="NormalSeparation",
+    )
+    right_column = lambda i: f.group(  # noqa: E731
+        "ГруппаПравая", "Реквизиты и справочники", i, [matching, right]
+    )
+    f.items += f.group("ГруппаОсновная", "Документ", ind, [left, right_column], kind="Horizontal")
     f.items += f.label(
         "Легенда",
         "Жёлтым — модель не уверена в значении, красным — значение не прошло проверку "
@@ -699,6 +801,12 @@ def review_form() -> Form:
     f.attr("ТекстСтраницы", "Страница", t_str())
     f.attr("Сводка", "Сводка", t_str())
     f.attr("Автопроверка", "Автопроверка", t_bool())
+    f.attr("Организация", "Организация", t_ref("CatalogRef.Организации"))
+    f.attr("Контрагент", "Контрагент", t_ref("CatalogRef.Контрагенты"))
+    f.attr("Договор", "Договор", t_ref("CatalogRef.ДоговорыКонтрагентов"))
+    for name in ("Организация", "Контрагент", "Договор"):
+        f.attr(f"Состояние{name}", f"Состояние: {name}", t_str())
+        f.attr(f"Уровень{name}", f"Уровень: {name}", t_num(1, 0))
     f.attr(
         "Поля",
         "Реквизиты",
@@ -725,6 +833,22 @@ def review_form() -> Form:
             *[(f"Уровень{n}", f"Уровень: {t}", t_num(1, 0)) for n, t, _ty, _w in LINE_COLUMNS],
             ("Индекс", "Индекс в документе", t_num(5, 0)),
             ("Замечание", "Замечание", t_str()),
+            ("Номенклатура", "Номенклатура 1С", t_ref("CatalogRef.Номенклатура")),
+            ("ЕдиницаИзмерения", "Ед. 1С", t_ref("CatalogRef.КлассификаторЕдиницИзмерения")),
+            ("ЭтоУслуга", "Услуга", t_bool()),
+            ("УровеньНоменклатуры", "Уровень: номенклатура", t_num(1, 0)),
+            ("СостояниеНоменклатуры", "Сопоставление", t_str()),
+        ],
+    )
+    f.attr(
+        "Похожие",
+        "Похожая номенклатура",
+        t_vt(),
+        columns=[
+            ("ИдентификаторСтроки", "Строка формы", t_num(10, 0)),
+            ("Номенклатура", "Номенклатура", t_ref("CatalogRef.Номенклатура")),
+            ("Наименование", "Наименование", t_str()),
+            ("Сходство", "Сходство", t_num(3, 2)),
         ],
     )
     f.attr(
@@ -743,6 +867,15 @@ def review_form() -> Form:
         "ОтправитьПравки",
         "Отправить правки",
         "Отправить проверенные значения в сервис (/v1/jobs/{id}/feedback)",
+    )
+    f.command("СоздатьКонтрагента", "Создать...", "Новый контрагент, заполненный из документа")
+    f.command(
+        "СоздатьДоговор", "Создать...", "Новый договор с поставщиком, заполненный из документа"
+    )
+    f.command(
+        "СоздатьНоменклатуру",
+        "Создать номенклатуру",
+        "Новая номенклатура для текущей строки, заполненная из документа",
     )
     f.command("ПредыдущаяСтраница", "<")
     f.command("СледующаяСтраница", ">")

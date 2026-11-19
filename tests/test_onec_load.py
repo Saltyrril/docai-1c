@@ -103,6 +103,7 @@ def test_form_ids_and_data_paths_are_consistent(form: Path) -> None:
                 "AutoCommandBar",
                 "Pages",
                 "Page",
+                "CheckBoxField",
             )
         )
     ]
@@ -280,3 +281,87 @@ def test_form_sources_match_generator(tmp_path: Path, monkeypatch: pytest.Monkey
     assert generated == stored
     for rel in generated:
         assert (tmp_path / rel).read_bytes() == (SRC / rel).read_bytes(), rel
+
+
+# --- сопоставление со справочниками (P16, часть 2) ------------------------------------------------
+
+# Объекты учебной Бухгалтерии 3.0.111.25, которые использует обработка. Сверено с выгрузкой
+# конфигурации (DumpConfigToFiles, 2026-11-18, D55/D58): опечатка в имени объекта видна только
+# при запуске в 1С, поэтому список зафиксирован здесь.
+BP_OBJECTS = {
+    ("Справочник", "Организации"),
+    ("Справочник", "Контрагенты"),
+    ("Справочник", "ДоговорыКонтрагентов"),
+    ("Справочник", "Номенклатура"),
+    ("Справочник", "КлассификаторЕдиницИзмерения"),
+    ("Справочник", "СтраныМира"),
+    ("Перечисление", "ВидыДоговоровКонтрагентов"),
+    ("Перечисление", "ЮридическоеФизическоеЛицо"),
+}
+BP_VALUES = {
+    "ВидыДоговоровКонтрагентов": {"СПоставщиком"},
+    "ЮридическоеФизическоеЛицо": {"ЮридическоеЛицо", "ФизическоеЛицо"},
+    "СтраныМира": {"Россия"},
+}
+BP_FORMS = {"ФормаОбъекта", "ФормаВыбора", "ФормаЭлемента", "ПустаяСсылка"}
+
+
+def test_configuration_objects_are_known() -> None:
+    kinds = {"Справочник": "Справочник", "Справочники": "Справочник", "Справочника": "Справочник"}
+    kinds |= {"Перечисление": "Перечисление", "Перечисления": "Перечисление"}
+    for path in [OBJECT_MODULE, REVIEW_MODULE]:
+        text = code(path)
+        for kind, name, member in re.findall(
+            r"\b(Справочник[иа]?|Перечислени[яе])\.(\w+)(?:\.(\w+))?", text
+        ):
+            assert (kinds[kind], name) in BP_OBJECTS, (path.name, kind, name)
+            if member and member not in BP_FORMS:
+                assert member in BP_VALUES.get(name, set()), (path.name, name, member)
+
+
+def test_form_types_are_known_catalogs() -> None:
+    for form in [MAIN_FORM, REVIEW_FORM]:
+        text = form.read_text(encoding="utf-8-sig")
+        for name in re.findall(r"cfg:CatalogRef\.(\w+)", text):
+            assert ("Справочник", name) in BP_OBJECTS, (form.name, name)
+
+
+def loops_with_queries(text: str) -> list[int]:
+    """Номера строк, где запрос выполняется внутри цикла (стандарт 1С: без запросов в цикле)."""
+    depth = 0
+    found = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        stripped = line.split("//", 1)[0].strip()
+        if re.search(r"\bЦикл\s*$", stripped):
+            depth += 1
+        if depth and re.search(r"\.(Выполнить|ВыполнитьПакет)\(|Новый Запрос\b", stripped):
+            found.append(number)
+        if stripped.startswith("КонецЦикла"):
+            depth -= 1
+    return found
+
+
+def test_no_queries_in_loops() -> None:
+    for path in MODULES:
+        assert loops_with_queries(code(path)) == [], path.name
+    # сама проверка видит запрос в цикле
+    sample = "Для Каждого А Из Б Цикл\n\tРезультат = Запрос.Выполнить();\nКонецЦикла;"
+    assert loops_with_queries(sample) == [2]
+
+
+def test_matching_reads_catalogs_in_one_batch() -> None:
+    text = code(OBJECT_MODULE)
+    assert "Запрос.ВыполнитьПакет()" in text
+    # Пакет: организации, контрагенты, единицы, номенклатура — ровно четыре запроса
+    batch = text.split("Функция ТекстЗапросаСопоставления", 1)[1].split("КонецФункции", 1)[0]
+    assert batch.count("ВЫБРАТЬ") == 4
+    for table in ("Организации", "Контрагенты", "КлассификаторЕдиницИзмерения", "Номенклатура"):
+        assert f"Справочник.{table}" in batch
+
+
+def test_review_form_waits_for_standard_write_notifications() -> None:
+    # Имена оповещений — из форм элементов Бухгалтерии (ПослеЗаписи, ПриЗакрытии), D58
+    text = code(REVIEW_MODULE)
+    assert '"Запись_Контрагенты"' in text
+    assert '"Запись_ДоговорыКонтрагентов"' in text
+    assert "ДополнительныеПараметры" in text or 'Параметры.Свойство("Номенклатура")' in text
