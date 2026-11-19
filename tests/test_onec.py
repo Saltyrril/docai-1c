@@ -308,8 +308,8 @@ def test_serve_passes_exchange_options(monkeypatch: pytest.MonkeyPatch, tmp_path
 
 def test_onec_sources_are_wellformed_xml_of_format_2_1() -> None:
     files = sorted(ONEC_SRC.rglob("*.xml"))
-    # DocaiCheck (P15): 3 файла, DocaiLoad (P16): описание и две формы — 5 файлов
-    assert len(files) == 8
+    # DocaiCheck (P15): 3 файла, DocaiLoad (P16): описание и три формы — 7 файлов
+    assert len(files) == 10
     for path in files:
         root = ET.parse(path).getroot()
         # Учебная платформа 8.3.8 принимает выгрузку формата не новее 2.1 (D54)

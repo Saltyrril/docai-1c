@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Журнал загрузки документов</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаОбновитьЖурнал" id="1">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ОбновитьЖурнал</CommandName>
+				<ExtendedTooltip name="ФормаОбновитьЖурналРасширеннаяПодсказка" id="2"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelDecoration name="Пояснение" id="3">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документы 1С, созданные обработкой «Загрузка первичных документов (ИИ)» — по метке [docai] в комментарии. Двойной щелчок открывает документ.</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ПояснениеКонтекстноеМеню" id="4"/>
+			<ExtendedTooltip name="ПояснениеРасширеннаяПодсказка" id="5"/>
+		</LabelDecoration>
+		<Table name="Журнал" id="6">
+			<Representation>List</Representation>
+			<TitleLocation>None</TitleLocation>
+			<ReadOnly>true</ReadOnly>
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<SelectionMode>SingleRow</SelectionMode>
+			<HorizontalStretch>true</HorizontalStretch>
+			<VerticalStretch>true</VerticalStretch>
+			<DataPath>Журнал</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Созданные документы</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ЖурналКонтекстноеМеню" id="7"/>
+			<AutoCommandBar name="ЖурналКоманднаяПанель" id="8">
+				<Autofill>false</Autofill>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ЖурналРасширеннаяПодсказка" id="9"/>
+			<Events>
+				<Event name="Selection">ЖурналВыбор</Event>
+			</Events>
+			<ChildItems>
+				<InputField name="ЖурналДата" id="10">
+					<DataPath>Журнал.Дата</DataPath>
+					<Width>10</Width>
+					<ContextMenu name="ЖурналДатаКонтекстноеМеню" id="11"/>
+					<ExtendedTooltip name="ЖурналДатаРасширеннаяПодсказка" id="12"/>
+				</InputField>
+				<InputField name="ЖурналДокумент" id="13">
+					<DataPath>Журнал.Документ</DataPath>
+					<Width>35</Width>
+					<ContextMenu name="ЖурналДокументКонтекстноеМеню" id="14"/>
+					<ExtendedTooltip name="ЖурналДокументРасширеннаяПодсказка" id="15"/>
+				</InputField>
+				<InputField name="ЖурналПроведен" id="16">
+					<DataPath>Журнал.Проведен</DataPath>
+					<Width>8</Width>
+					<ContextMenu name="ЖурналПроведенКонтекстноеМеню" id="17"/>
+					<ExtendedTooltip name="ЖурналПроведенРасширеннаяПодсказка" id="18"/>
+				</InputField>
+				<InputField name="ЖурналКонтрагент" id="19">
+					<DataPath>Журнал.Контрагент</DataPath>
+					<Width>25</Width>
+					<ContextMenu name="ЖурналКонтрагентКонтекстноеМеню" id="20"/>
+					<ExtendedTooltip name="ЖурналКонтрагентРасширеннаяПодсказка" id="21"/>
+				</InputField>
+				<InputField name="ЖурналСумма" id="22">
+					<DataPath>Журнал.Сумма</DataPath>
+					<Width>12</Width>
+					<ContextMenu name="ЖурналСуммаКонтекстноеМеню" id="23"/>
+					<ExtendedTooltip name="ЖурналСуммаРасширеннаяПодсказка" id="24"/>
+				</InputField>
+				<InputField name="ЖурналФайл" id="25">
+					<DataPath>Журнал.Файл</DataPath>
+					<Width>40</Width>
+					<ContextMenu name="ЖурналФайлКонтекстноеМеню" id="26"/>
+					<ExtendedTooltip name="ЖурналФайлРасширеннаяПодсказка" id="27"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.DocaiLoad</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="Журнал" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Журнал</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Документ" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:DocumentRef.ПоступлениеТоваровУслуг</v8:Type>
+						<v8:Type>cfg:DocumentRef.СчетНаОплатуПоставщика</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Дата" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="Проведен" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проведён</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Контрагент" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Контрагент</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Контрагенты</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Сумма" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Сумма</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Файл" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Файл и задание</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ОбновитьЖурнал" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОбновитьЖурнал</Action>
+		</Command>
+	</Commands>
+</Form>

@@ -26,6 +26,7 @@
 		<ChildObjects>
 			<Form>Форма</Form>
 			<Form>ФормаПроверки</Form>
+			<Form>ФормаЖурнала</Form>
 		</ChildObjects>
 	</ExternalDataProcessor>
 </MetaDataObject>

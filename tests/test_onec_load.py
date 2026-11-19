@@ -42,7 +42,10 @@ MAIN_FORM = LOAD / "Forms" / "Форма" / "Ext" / "Form.xml"
 MAIN_MODULE = LOAD / "Forms" / "Форма" / "Ext" / "Form" / "Module.bsl"
 REVIEW_FORM = LOAD / "Forms" / "ФормаПроверки" / "Ext" / "Form.xml"
 REVIEW_MODULE = LOAD / "Forms" / "ФормаПроверки" / "Ext" / "Form" / "Module.bsl"
-MODULES = [OBJECT_MODULE, MAIN_MODULE, REVIEW_MODULE]
+JOURNAL_FORM = LOAD / "Forms" / "ФормаЖурнала" / "Ext" / "Form.xml"
+JOURNAL_MODULE = LOAD / "Forms" / "ФормаЖурнала" / "Ext" / "Form" / "Module.bsl"
+MODULES = [OBJECT_MODULE, MAIN_MODULE, REVIEW_MODULE, JOURNAL_MODULE]
+FORMS = [(MAIN_FORM, MAIN_MODULE), (REVIEW_FORM, REVIEW_MODULE), (JOURNAL_FORM, JOURNAL_MODULE)]
 NS = {"f": "http://v8.1c.ru/8.3/xcf/logform"}
 
 
@@ -55,13 +58,13 @@ def code(path: Path) -> str:
 # --- исходники --------------------------------------------------------------------------------
 
 
-def test_processor_lists_both_forms() -> None:
+def test_processor_lists_its_forms() -> None:
     root = ET.parse(SRC / "DocaiLoad.xml").getroot()
     md = {"m": "http://v8.1c.ru/8.3/MDClasses"}
     assert root.get("version") == "2.1"
     assert root.findtext(".//m:Properties/m:Name", namespaces=md) == "DocaiLoad"
     forms = [e.text for e in root.findall(".//m:ChildObjects/m:Form", md)]
-    assert forms == ["Форма", "ФормаПроверки"]
+    assert forms == ["Форма", "ФормаПроверки", "ФормаЖурнала"]
     default = root.findtext(".//m:DefaultForm", namespaces=md)
     assert default == "ExternalDataProcessor.DocaiLoad.Form.Форма"
     for name in forms:
@@ -69,9 +72,7 @@ def test_processor_lists_both_forms() -> None:
         assert (LOAD / "Forms" / name / "Ext" / "Form.xml").is_file()
 
 
-@pytest.mark.parametrize(
-    ("form", "module"), [(MAIN_FORM, MAIN_MODULE), (REVIEW_FORM, REVIEW_MODULE)]
-)
+@pytest.mark.parametrize(("form", "module"), FORMS)
 def test_form_handlers_exist_in_module(form: Path, module: Path) -> None:
     root = ET.parse(form).getroot()
     handlers = {e.text for e in root.iter(f"{{{NS['f']}}}Event")}
@@ -81,7 +82,7 @@ def test_form_handlers_exist_in_module(form: Path, module: Path) -> None:
         assert re.search(rf"^(Процедура|Функция) {name}\(", text, re.MULTILINE), name
 
 
-@pytest.mark.parametrize("form", [MAIN_FORM, REVIEW_FORM])
+@pytest.mark.parametrize("form", [form for form, _module in FORMS])
 def test_form_ids_and_data_paths_are_consistent(form: Path) -> None:
     root = ET.parse(form).getroot()
     # Идентификаторы элементов уникальны, иначе Конфигуратор не загрузит форму
@@ -141,7 +142,7 @@ def test_context_directives_are_valid() -> None:
         "&НаСервереБезКонтекста",
         "&НаКлиентеНаСервереБезКонтекста",
     }
-    for path in [MAIN_MODULE, REVIEW_MODULE]:
+    for path in [MAIN_MODULE, REVIEW_MODULE, JOURNAL_MODULE]:
         for line in path.read_text(encoding="utf-8-sig").splitlines():
             if line.startswith("&"):
                 assert line.strip() in allowed, (path.name, line)
@@ -297,22 +298,51 @@ BP_OBJECTS = {
     ("Справочник", "СтраныМира"),
     ("Перечисление", "ВидыДоговоровКонтрагентов"),
     ("Перечисление", "ЮридическоеФизическоеЛицо"),
+    ("Перечисление", "СтавкиНДС"),
+    ("Перечисление", "ВидыОперацийПоступлениеТоваровУслуг"),
+    ("Перечисление", "ВидСчетаФактурыПолученного"),
+    ("Документ", "ПоступлениеТоваровУслуг"),
+    ("Документ", "СчетНаОплатуПоставщика"),
+    ("Документ", "СчетФактураПолученный"),
 }
 BP_VALUES = {
     "ВидыДоговоровКонтрагентов": {"СПоставщиком"},
     "ЮридическоеФизическоеЛицо": {"ЮридическоеЛицо", "ФизическоеЛицо"},
     "СтраныМира": {"Россия"},
+    "ВидыОперацийПоступлениеТоваровУслуг": {"Товары", "Услуги", "ПокупкаКомиссия"},
+    "ВидСчетаФактурыПолученного": {"НаПоступление"},
+    "СчетФактураПолученный": {"ПолучитьКодВидаОперации"},
 }
-BP_FORMS = {"ФормаОбъекта", "ФормаВыбора", "ФормаЭлемента", "ПустаяСсылка"}
+BP_FORMS = {
+    "ФормаОбъекта",
+    "ФормаВыбора",
+    "ФормаЭлемента",
+    "ПустаяСсылка",
+    "СоздатьДокумент",
+    "ЗначенияПеречисления",
+}
+
+# Общие модули Бухгалтерии, которые вызывает обработка, — так же сверено с выгрузкой: функция
+# экспортная и принимает эти параметры (D58, D59).
+BP_CALLS = {
+    "БухгалтерскийУчетПереопределяемый.ПолучитьЗначениеПоУмолчанию",
+    "ОбщегоНазначения.ЗначенияРеквизитовОбъекта",
+    "УчетНДСКлиентСервер.НовыеПараметрыСозданияПолученногоСчетаФактуры",
+    "УчетНДСВызовСервера.СоздатьСчетФактуруПолученныйНаОсновании",
+    "РаботаСДоговорамиКонтрагентовБП.ДокументСНДС",
+    "УчетнаяПолитика.РаздельныйУчетНДС",
+    "ПоступлениеТоваровУслугФормыКлиентСервер.ОтражениеВУСН",
+}
 
 
 def test_configuration_objects_are_known() -> None:
     kinds = {"Справочник": "Справочник", "Справочники": "Справочник", "Справочника": "Справочник"}
     kinds |= {"Перечисление": "Перечисление", "Перечисления": "Перечисление"}
-    for path in [OBJECT_MODULE, REVIEW_MODULE]:
+    kinds |= {"Документ": "Документ", "Документы": "Документ"}
+    for path in MODULES:
         text = code(path)
         for kind, name, member in re.findall(
-            r"\b(Справочник[иа]?|Перечислени[яе])\.(\w+)(?:\.(\w+))?", text
+            r"(?<![.\w])(Справочник[иа]?|Перечислени[яе]|Документы?)\.(\w+)(?:\.(\w+))?", text
         ):
             assert (kinds[kind], name) in BP_OBJECTS, (path.name, kind, name)
             if member and member not in BP_FORMS:
@@ -365,3 +395,64 @@ def test_review_form_waits_for_standard_write_notifications() -> None:
     assert '"Запись_Контрагенты"' in text
     assert '"Запись_ДоговорыКонтрагентов"' in text
     assert "ДополнительныеПараметры" in text or 'Параметры.Свойство("Номенклатура")' in text
+
+
+def test_configuration_common_modules_are_known() -> None:
+    modules = {call.split(".")[0] for call in BP_CALLS}
+    for path in MODULES:
+        for module, function in re.findall(r"\b(\w+)\.(\w+)\(", code(path)):
+            if module in modules:
+                assert f"{module}.{function}" in BP_CALLS, (path.name, module, function)
+
+
+def vat_rate_names() -> dict[str, str]:
+    """Таблица «ставка из сервиса → значение СтавкиНДС» из модуля объекта."""
+    text = code(OBJECT_MODULE)
+    return dict(re.findall(r'Имена\.Вставить\("([^"]+)", "(\w+)"\)', text))
+
+
+def test_every_service_vat_rate_maps_to_enum_name() -> None:
+    from docai.schemas.common import VatRate
+
+    names = vat_rate_names()
+    for rate in VatRate:
+        key = str(rate.value).replace(" ", "").replace(",", ".").lower()
+        assert key in names, rate.value
+    # 22% ищется по имени: в учебной конфигурации его нет, и документ не создаётся (D56)
+    assert names["22%"] == "НДС22"
+    assert names["20%"] == "НДС20"
+
+
+def test_documents_are_written_not_posted() -> None:
+    text = code(OBJECT_MODULE)
+    assert "РежимЗаписиДокумента.Запись" in text
+    assert "РежимЗаписиДокумента.Проведение" not in text
+    assert ".Записать()" not in text  # запись без режима у документа — тоже запись, но явно
+
+
+def test_creation_runs_in_one_transaction_and_checks_duplicates() -> None:
+    text = code(OBJECT_MODULE)
+    body = text.split("Функция СоздатьДокумент1С(", 1)[1].split("КонецФункции", 1)[0]
+    assert "НачатьТранзакцию()" in body and "ЗафиксироватьТранзакцию()" in body
+    assert "ОтменитьТранзакцию()" in body
+    assert body.index("НайтиСозданныйРанее") < body.index("НачатьТранзакцию")
+
+
+def test_form_modules_do_not_assign_main_attribute() -> None:
+    # «Объект» в модуле формы — главный реквизит: присваивание падает «Нельзя изменять поле,
+    # содержащее объект данных формы» (найдено при P16, часть 3).
+    for path in [MAIN_MODULE, REVIEW_MODULE, JOURNAL_MODULE]:
+        assert not re.search(r"^\s*Объект\s*=", code(path), re.MULTILINE), path.name
+
+
+def test_receipt_sets_contract_and_accounts_like_edo_import() -> None:
+    # У поступления реквизит «ДоговорКонтрагента» не заполняется из данных заполнения,
+    # а счета учёта при «пользователь управляет счетами» не заполняются перед записью.
+    # Найдено в 1С при P16, часть 3: договор и счета оставались пустыми.
+    text = code(OBJECT_MODULE)
+    body = text.split("Функция СоздатьПоступление(", 1)[1].split("КонецФункции", 1)[0]
+    fill = body.split("ДокументОбъект.Заполнить(", 1)[1].split(");", 1)[0]
+    assert "ДоговорКонтрагента" not in fill
+    assert "ДокументОбъект.ДоговорКонтрагента = Данные.Договор;" in body
+    assert '"ЗаполнитьСчетаУчетаПередЗаписью", Истина' in body
+    assert body.index("ДокументОбъект.Дата =") < body.index("ДокументОбъект.Заполнить(")

@@ -3,10 +3,13 @@
 # Собирает build\DocaiLoad.epf и запускает 1С:Предприятие с ней на указанной базе Бухгалтерии.
 # Обработка сама отправляет документ в сервис, ждёт распознавания, открывает форму проверки,
 # отправляет правки (/v1/jobs/{id}/feedback), пишет отчёт в build\onec_load_smoke.txt и
-# закрывает 1С. Сервис должен быть запущен (.\scripts\start.ps1). В базу обработка не пишет.
+# закрывает 1С. Сервис должен быть запущен (.\scripts\start.ps1). Без -Create в базу обработка
+# не пишет; с -Create создаёт непроведённый документ — запускайте только на копии базы.
 #
 #   .\scripts\onec_load_smoke.ps1 -Infobase "$env:USERPROFILE\Documents\1c\docai_bp_empty"
 #   .\scripts\onec_load_smoke.ps1 -Infobase <папка базы> -User Admin -Document data\synth\pdf\00002_upd.pdf
+#   .\scripts\onec_load_smoke.ps1 -Infobase <КОПИЯ базы> -User <имя> -Document <файл> -Create
+#                                   # часть 3: ещё и создать документ 1С (пишет в базу!)
 #
 # Учебная версия разрешает один сеанс на базу: перед запуском закройте 1С с этой базой.
 param(
@@ -14,6 +17,7 @@ param(
     [string]$Document = "data\synth\pdf\00001_bill.pdf",
     [string]$User = "",
     [string]$Platform = "",
+    [switch]$Create,
     [int]$TimeoutSec = 300
 )
 
@@ -39,7 +43,9 @@ Write-Host "Документ: $Doc"
 Write-Host "Запускаю 1С:Предприятие с обработкой (окно закроется само, распознавание до минуты)..."
 $args1c = @("ENTERPRISE", "/F", "`"$Ib`"")
 if ($User) { $args1c += @("/N", "`"$User`"") }
-$args1c += @("/Execute", "`"$Epf`"", "/C", "`"docai-load-smoke=$Result|$Doc`"", "/DisableStartupDialogs", "/DisableStartupMessages")
+$smoke = "docai-load-smoke=$Result|$Doc"
+if ($Create) { $smoke += "|create" }
+$args1c += @("/Execute", "`"$Epf`"", "/C", "`"$smoke`"", "/DisableStartupDialogs", "/DisableStartupMessages")
 $proc = Start-Process -FilePath $Platform -ArgumentList $args1c -PassThru
 if (-not $proc.WaitForExit($TimeoutSec * 1000)) {
     Stop-Process -Id $proc.Id -Force
@@ -60,4 +66,9 @@ $okFeedback = $text -match "Правки: отправлено \d+"
 Write-Host ("Отправка и распознавание: " + $(if ($okUpload) { "работает" } else { "НЕ работает" }))
 Write-Host ("Форма проверки: " + $(if ($okReview) { "работает" } else { "НЕ работает" }))
 Write-Host ("Правки в сервис: " + $(if ($okFeedback) { "работает" } else { "НЕ работает" }))
-if ($okUpload -and $okReview -and $okFeedback) { exit 0 } else { exit 1 }
+$okCreate = $true
+if ($Create) {
+    $okCreate = ($text -match "== Создание ==") -and -not ($text -match "Документ: не создан")
+    Write-Host ("Создание документа 1С: " + $(if ($okCreate) { "работает" } else { "НЕ работает" }))
+}
+if ($okUpload -and $okReview -and $okFeedback -and $okCreate) { exit 0 } else { exit 1 }
