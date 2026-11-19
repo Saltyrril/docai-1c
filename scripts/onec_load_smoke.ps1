@@ -10,6 +10,8 @@
 #   .\scripts\onec_load_smoke.ps1 -Infobase <папка базы> -User Admin -Document data\synth\pdf\00002_upd.pdf
 #   .\scripts\onec_load_smoke.ps1 -Infobase <КОПИЯ базы> -User <имя> -Document <файл> -Create
 #                                   # часть 3: ещё и создать документ 1С (пишет в базу!)
+#   .\scripts\onec_load_smoke.ps1 -Infobase <папка базы> -Port 8012 -SkipBuild
+#                                   # P17: сервис на другом порту (например, на пустом - проверка «сервис недоступен»)
 #
 # Учебная версия разрешает один сеанс на базу: перед запуском закройте 1С с этой базой.
 param(
@@ -18,6 +20,8 @@ param(
     [string]$User = "",
     [string]$Platform = "",
     [switch]$Create,
+    [int]$Port = 0,
+    [switch]$SkipBuild,
     [int]$TimeoutSec = 300
 )
 
@@ -26,10 +30,12 @@ $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
 . (Join-Path $PSScriptRoot "onec_common.ps1")
 
-$buildArgs = @{ Name = @("DocaiLoad") }
-if ($Platform) { $buildArgs["Platform"] = $Platform }
-& (Join-Path $PSScriptRoot "onec_build.ps1") @buildArgs
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+if (-not $SkipBuild) {
+    $buildArgs = @{ Name = @("DocaiLoad") }
+    if ($Platform) { $buildArgs["Platform"] = $Platform }
+    & (Join-Path $PSScriptRoot "onec_build.ps1") @buildArgs
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
 
 if (-not $Platform) { $Platform = Find-Platform }
 $Ib = (Resolve-Path $Infobase).Path
@@ -45,6 +51,7 @@ $args1c = @("ENTERPRISE", "/F", "`"$Ib`"")
 if ($User) { $args1c += @("/N", "`"$User`"") }
 $smoke = "docai-load-smoke=$Result|$Doc"
 if ($Create) { $smoke += "|create" }
+if ($Port -gt 0) { $smoke += "|port=$Port" }
 $args1c += @("/Execute", "`"$Epf`"", "/C", "`"$smoke`"", "/DisableStartupDialogs", "/DisableStartupMessages")
 $proc = Start-Process -FilePath $Platform -ArgumentList $args1c -PassThru
 if (-not $proc.WaitForExit($TimeoutSec * 1000)) {

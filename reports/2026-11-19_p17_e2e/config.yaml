@@ -1,0 +1,8 @@
+# P17: замер полного цикла «файл → документ в 1С». Воспроизведение:
+#   .\scripts\demo_e2e.ps1 -Out reports\2026-11-19_p17_e2e\api_run.json      # часть «через API», 10 документов
+#   .\scripts\onec_load_smoke.ps1 -Infobase <КОПИЯ базы> -User <имя> -Document <файл> [-Create] -SkipBuild
+# Железо и модель — как в описании проекта. Документы — синтетические, реальные не использовались.
+seed: 42                      # из configs/extract.yaml (temperature 0, seed 42)
+model: qwen3.5:2b-q4_K_M
+platform_1c: 8.3.18.1741 (учебная), Бухгалтерия 3.0.111, копия демо-базы
+demo_set: data/demo (10 файлов, собираются demo_e2e.ps1)

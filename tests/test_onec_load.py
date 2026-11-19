@@ -456,3 +456,44 @@ def test_receipt_sets_contract_and_accounts_like_edo_import() -> None:
     assert "ДокументОбъект.ДоговорКонтрагента = Данные.Договор;" in body
     assert '"ЗаполнитьСчетаУчетаПередЗаписью", Истина' in body
     assert body.index("ДокументОбъект.Дата =") < body.index("ДокументОбъект.Заполнить(")
+
+
+# --- устойчивость (P17) --------------------------------------------------------------------------
+
+
+def test_service_answers_are_parsed_under_try() -> None:
+    # Если на порту отвечает чужая программа или сервис другой версии, разбор JSON не должен
+    # ронять форму диалогом об ошибке: каждый разбор ответа сервиса — внутри Попытки.
+    lines = code(OBJECT_MODULE).splitlines()
+    parses = [i for i, line in enumerate(lines) if "РазобратьJSON(Ответ.Текст" in line]
+    assert len(parses) >= 5
+    for i in parses:
+        assert any("Попытка" in line for line in lines[max(0, i - 6) : i]), lines[i]
+
+
+def test_unreachable_service_gives_actionable_message() -> None:
+    text = OBJECT_MODULE.read_text(encoding="utf-8-sig")
+    assert "Сервис docai не отвечает по адресу" in text
+    assert r".\scripts\start.ps1" in text
+    assert "отвечает не сервис docai" in text
+
+
+def test_smoke_port_parameter_is_parsed() -> None:
+    text = code(MAIN_MODULE)
+    assert 'СтрНачинаетсяС(Части[Индекс], "port=")' in text
+    # сохранённый порт прошлых сеансов не должен влиять на автопроверку
+    assert "Порт = 8000; // сохранённый порт" in MAIN_MODULE.read_text(encoding="utf-8-sig")
+
+
+def test_demo_scripts_are_utf8_with_bom_for_powershell_5() -> None:
+    # Windows PowerShell 5.1 читает файл без BOM в ANSI и ломает кириллицу.
+    for name in ["demo_e2e.ps1", "start.ps1", "onec_load_smoke.ps1"]:
+        raw = (ROOT / "scripts" / name).read_bytes()
+        assert raw.startswith(b"\xef\xbb\xbf"), name
+
+
+def test_review_form_disables_buttons_when_service_gave_no_data() -> None:
+    # Иначе «Готово» отправит и сохранит пустые значения поверх сохранённых правок.
+    text = code(REVIEW_MODULE)
+    for name in ["ФормаГотово", "ФормаСоздатьДокумент", "ФормаОтправитьПравки"]:
+        assert f"Элементы.{name}.Доступность = Ложь;" in text
