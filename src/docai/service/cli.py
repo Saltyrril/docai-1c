@@ -23,6 +23,12 @@ def serve(
         typer.Option(help="Папка обмена с 1С (способ Б); по умолчанию <data-dir>/exchange."),
     ] = None,
     exchange: Annotated[bool, typer.Option(help="Обмен файлами с 1С (способ Б).")] = True,
+    rag_config: Annotated[
+        Path | None, typer.Option(help="YAML конвейера RAG (configs/rag/pipeline.yaml).")
+    ] = None,
+    rag_warm_up: Annotated[
+        bool, typer.Option(help="Загрузить модели RAG при старте, а не при первом вопросе.")
+    ] = False,
 ) -> None:
     """Запустить сервис: Swagger — http://127.0.0.1:<порт>/docs, контракт — docs/API.md."""
     import uvicorn
@@ -34,6 +40,8 @@ def serve(
         extract=load_config(config),
         exchange_enabled=exchange,
         exchange_root=exchange_dir,
+        rag_config=rag_config,
+        rag_warm_up=rag_warm_up,
     )
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s %(name)s %(message)s", datefmt="%H:%M:%S"

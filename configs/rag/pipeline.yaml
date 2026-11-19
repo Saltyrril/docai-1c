@@ -1,0 +1,50 @@
+# Настройки RAG-конвейера (шаг P19). Значения совпадают с умолчаниями RagConfig
+# (тест test_pipeline_config_file_matches_defaults).
+# Индексация: uv run docai rag index   Вопрос: uv run docai ask "вопрос"
+corpus_dir: data/rag/corpus          # договоры, доп. соглашения, регламенты (P18)
+registry_csv: data/rag/registry.csv  # реестр первичных документов → SQLite для текста-в-SQL
+index_dir: data/rag_index            # индекс: куски, леммы, Chroma, registry.sqlite
+today: "2026-11-19"                  # «сегодня» набора P18 (D64)
+max_chunk_chars: 1200                # пункт длиннее режется по предложениям
+our_company:
+  names: ["АО «Тайга-Строй»"]
+  inns: ["7704037472"]
+embedding:                           # на CPU
+  model: Qwen/Qwen3-Embedding-0.6B
+  batch_size: 16
+  max_seq_length: 512
+  query_instruction: "Instruct: Given a question in Russian about company contracts or internal regulations, retrieve the clause that answers it\nQuery: "
+  threads: 6
+reranker:                            # на CPU; выбор — D67
+  kind: bge                          # qwen3 | bge | none
+  model: BAAI/bge-reranker-v2-m3
+  max_length: 384
+  batch_size: 8
+  prefix_cache: true                 # Qwen3: префикс «инструкция + вопрос» считается один раз
+  instruction: "Given a question in Russian about company contracts or internal regulations, judge whether the clause answers it"
+retrieval:
+  bm25_top_k: 30
+  vector_top_k: 30
+  rrf_k: 60
+  rerank_candidates: 12              # кандидатов после RRF в реранкер (D67)
+  per_list_guaranteed: 4            # первые 4 из BM25 и из векторов — в реранкер всегда
+  context_top_k: 5                   # лучших пунктов в модель
+  max_amendment_chunks: 4            # пунктов доп. соглашений к ним
+  use_filters: true                  # фильтр по договору/контрагенту из вопроса
+llm:                                 # на GPU, Ollama
+  model: qwen3.5:2b-q4_K_M          # как у сервиса извлечения (D48): Ollama не перезагружает модель (D71)
+  ollama_url: http://127.0.0.1:11434
+  think: false
+  keep_alive: 5m
+  timeout_s: 120
+  options:
+    temperature: 0
+    seed: 42
+    top_k: 20
+    top_p: 0.95
+    presence_penalty: 0
+    num_ctx: 8192                    # как у извлечения: иначе Ollama перезагружает модель
+    num_predict: 600
+sql:
+  max_rows: 50
+  max_vm_steps: 5000000

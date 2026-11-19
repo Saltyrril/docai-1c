@@ -24,6 +24,9 @@ dependencies = [
     "fastapi>=0.163.0",
     "uvicorn>=0.54.0",
     "python-multipart>=0.0.33",
+    "sentence-transformers>=6.3.0",
+    "chromadb>=1.5.9",
+    "pymorphy3>=2.0.6",
 ]
 
 [project.scripts]
@@ -91,3 +94,8 @@ source = ["docai"]
 "src/docai/rag/regulations.py" = ["E501"]
 # Шаблоны вопросов: строка вопроса целиком читается лучше, чем разрезанная.
 "src/docai/rag/questions.py" = ["E501"]
+# Промпты RAG (P19): строка правила целиком читается лучше, чем разрезанная.
+"src/docai/rag/generate.py" = ["E501"]
+"src/docai/rag/text_sql.py" = ["E501"]
+# Мини-корпус договоров в тестах P19: длинные строки — абзацы документа.
+"tests/test_rag_pipeline.py" = ["E501"]

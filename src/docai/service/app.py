@@ -4,20 +4,25 @@ import json
 import logging
 import re
 import shutil
+import threading
 import uuid
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Annotated, BinaryIO
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse
+from pydantic import BaseModel, Field
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 from docai import __version__
 from docai.extract import ExtractionResult, Mode
+from docai.extract.ollama import OllamaError
 from docai.extract.router import InputKind, RoutingError, sniff_kind
+from docai.rag.index import IndexNotReadyError
+from docai.rag.pipeline import AskResult, RagPipeline
 from docai.service.exchange import ExchangeError, FileExchange
 from docai.service.health import HealthProbe, default_probe
 from docai.service.models import (
@@ -90,6 +95,23 @@ class BodyLimitMiddleware:
         await send({"type": "http.response.body", "body": body})
 
 
+class AskIn(BaseModel):
+    question: str = Field(min_length=1, max_length=2000, description="Вопрос на русском")
+    debug: bool = Field(False, description="Вернуть кандидатов поиска и контекст модели")
+
+
+RagFactory = Callable[[], RagPipeline]
+
+
+def default_rag_factory(settings: ServiceSettings) -> RagFactory:
+    def make() -> RagPipeline:
+        from docai.rag.config import load_rag_config
+
+        return RagPipeline(load_rag_config(settings.rag_config))
+
+    return make
+
+
 def detect_upload(head: bytes) -> tuple[InputKind, str]:
     """Тип и расширение по первым байтам. Допустимы PDF, PNG, JPEG и XML."""
     try:
@@ -116,8 +138,9 @@ def create_app(
     *,
     extractor: Extractor | None = None,
     health_probe: HealthProbe | None = None,
+    rag_factory: RagFactory | None = None,
 ) -> FastAPI:
-    """Собрать приложение. `extractor` и `health_probe` подменяются в тестах."""
+    """Собрать приложение. `extractor`, `health_probe`, `rag_factory` подменяются в тестах."""
     settings = settings or ServiceSettings()
     settings.uploads_dir.mkdir(parents=True, exist_ok=True)
     store = Store(settings.db_path)
@@ -210,9 +233,29 @@ def create_app(
         else None
     )
 
+    make_rag = rag_factory or default_rag_factory(settings)
+    rag_lock = threading.Lock()
+    rag_state: dict[str, RagPipeline] = {}
+
+    def get_rag() -> RagPipeline:
+        """Конвейер RAG создаётся один раз, при первом вопросе (или прогреве)."""
+        with rag_lock:
+            if "pipeline" not in rag_state:
+                rag_state["pipeline"] = make_rag()
+            return rag_state["pipeline"]
+
+    def warm_up_rag() -> None:
+        try:
+            get_rag().warm_up()
+            log.info("RAG: модели загружены")
+        except Exception as exc:  # прогрев необязателен: ошибка придёт с первым вопросом
+            log.warning("RAG: прогрев не удался: %s", exc)
+
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         worker.start()
+        if settings.rag_enabled and settings.rag_warm_up:
+            threading.Thread(target=warm_up_rag, name="rag-warm-up", daemon=True).start()
         if exchange is not None:
             exchange.start()
         try:
@@ -307,6 +350,28 @@ def create_app(
         return FeedbackOut(
             job_id=job_id, feedback_id=feedback_id, total=len(corrections), changed=changed
         )
+
+    @app.post("/v1/rag/ask", response_model=AskResult, tags=["RAG"])
+    def rag_ask(body: AskIn) -> AskResult:
+        """Вопрос по договорам, доп. соглашениям, регламентам или реестру документов.
+
+        Ответ — текст со ссылками [n] и цитаты (id пункта, документ, полный текст пункта).
+        Вопросы-агрегаты по реестру («сколько УПД получено от … за 2025 год») решаются
+        запросом SQL к реестру; запрос возвращается в поле `sql`. Если ответа в документах
+        нет — `found = false` и «В документах не нашёл.».
+        """
+        if not settings.rag_enabled:
+            raise HTTPException(404, "RAG выключен в настройках сервиса")
+        try:
+            pipeline = get_rag()
+        except IndexNotReadyError as exc:
+            raise HTTPException(503, str(exc)) from exc
+        try:
+            return pipeline.ask(body.question, debug=body.debug)
+        except IndexNotReadyError as exc:
+            raise HTTPException(503, str(exc)) from exc
+        except OllamaError as exc:
+            raise HTTPException(503, str(exc)) from exc
 
     @app.get("/v1/health", response_model=HealthView, tags=["Служебное"])
     def health() -> HealthView:

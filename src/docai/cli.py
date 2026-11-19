@@ -11,6 +11,7 @@ from docai.eval.cli import eval_command, eval_compare_command, eval_errors_comma
 from docai.eval.matrix_cli import app as matrix_app
 from docai.extract.cli import extract
 from docai.labeling.cli import app as label_app
+from docai.rag.ask_cli import ask_command, index_command
 from docai.rag.cli import app as rag_app
 from docai.render.cli import render
 from docai.service.cli import serve
@@ -24,6 +25,7 @@ app.add_typer(edo_app, name="edo")
 app.add_typer(label_app, name="label")
 app.add_typer(matrix_app, name="eval-matrix")
 app.add_typer(rag_app, name="rag")
+rag_app.command(name="index")(index_command)
 app.command(name="render")(render)
 app.command(name="augment")(augment)
 app.command(name="extract")(extract)
@@ -31,6 +33,7 @@ app.command(name="serve")(serve)
 app.command(name="eval")(eval_command)
 app.command(name="eval-compare")(eval_compare_command)
 app.command(name="eval-errors")(eval_errors_command)
+app.command(name="ask")(ask_command)
 
 
 @app.callback()

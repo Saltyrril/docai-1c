@@ -1,0 +1,22 @@
+# P19: сравнение реранкеров на CPU (Qwen3-Reranker-0.6B против bge-reranker-v2-m3).
+# Запуск (нужен готовый индекс: uv run docai rag index):
+#   uv run python reports/2026-11-19_p19_rerankers/run.py
+seed: 2026
+pipeline_config: configs/rag/pipeline.yaml
+questions: data/rag/questions.jsonl
+fragments: data/rag/fragments.jsonl
+# 50 вопросов маршрута rag (без «нет ответа» и реестра), по категориям.
+per_category:
+  simple_fact: 12
+  paraphrase: 10
+  multi_condition: 10
+  amendment_override: 10
+  comparison: 8
+# Оба реранкера переставляют одни и те же кандидаты: 20 лучших после RRF (BM25 + векторы).
+candidates: 20
+ks: [1, 3, 5]
+rerankers:
+  - kind: qwen3
+    model: Qwen/Qwen3-Reranker-0.6B
+  - kind: bge
+    model: BAAI/bge-reranker-v2-m3

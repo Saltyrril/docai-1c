@@ -1,0 +1,6244 @@
+{
+  "config": {
+    "seed": 2027,
+    "holdout_seed": 2028,
+    "pipeline_config": "configs/rag/pipeline.yaml",
+    "questions": "data/rag/questions.jsonl",
+    "fragments": "data/rag/fragments.jsonl",
+    "exclude_from": "reports/2026-11-19_p19_rerankers/results.json",
+    "per_category": {
+      "simple_fact": 3,
+      "paraphrase": 3,
+      "multi_condition": 3,
+      "amendment_override": 3,
+      "comparison": 2,
+      "registry_aggregate": 3,
+      "no_answer": 3
+    },
+    "max_seconds": 15,
+    "max_vram_gib": 3.8
+  },
+  "summary": {
+    "model": "qwen3.5:2b-q4_K_M",
+    "reranker": "BAAI/bge-reranker-v2-m3",
+    "questions": 20,
+    "citations_ok": 20,
+    "keys_ok": 11,
+    "keys_total": 14,
+    "max_s": 8.902,
+    "mean_s": 5.34,
+    "over_limit": 0,
+    "vram_peak_gib": 2.347,
+    "vram_baseline_mib": 2403,
+    "vram_poll_s": 0.25,
+    "cold_start_cpu_s": 22.8,
+    "cold_start_llm_s": 0.4,
+    "passed": true
+  },
+  "rows": [
+    {
+      "question": {
+        "id": "Q011",
+        "category": "simple_fact",
+        "category_name": "простой факт",
+        "question": "Какова площадь и адрес арендуемого помещения по договору аренды № 218-А от 06.12.2023 с АО «Заря-Ресурс»?",
+        "answer": "192,2 кв. м по адресу: г. Воронеж, алл. Привольная, д. 77, помещение 36 (договор аренды № 218-А от 06.12.2023, п. 1.2).",
+        "keys": [
+          "192,2"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0014#1.2",
+            "doc_id": "K-0014",
+            "quote": "1.2. Площадь Помещения — 192,2 м²; адрес: г. Воронеж, алл. Привольная, д. 77, помещение 36."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0014"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "simple:lease.premises",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Какова площадь и адрес арендуемого помещения по договору аренды № 218-А от 06.12.2023 с АО «Заря-Ресурс»?",
+        "route": "rag",
+        "found": true,
+        "answer": "Площадь помещения составляет 192,2 м², адрес — г. Воронеж, алл. Привольная, д. 77, помещение 36 [1]. Факты взяты из пункта 1.2 договора аренды № 218-А от 06.12.2023 с АО «Заря-Ресурс» [1].",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0014#1.2",
+            "doc_id": "K-0014",
+            "label": "1.2",
+            "document": "Договор аренды № 218-А от 06.12.2023, АО «Заря-Ресурс», раздел «Предмет договора», п. 1.2",
+            "quote": "1.2. Площадь Помещения — 192,2 м²; адрес: г. Воронеж, алл. Привольная, д. 77, помещение 36.",
+            "start": 459,
+            "end": 550,
+            "path": "contracts/K-0014.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "АО «Заря-Ресурс»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "218-А",
+                "date": "2023-12-06"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "lease"
+            ]
+          },
+          "contracts": [
+            "K-0014"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0014#1.2",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.9999,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0014#1.3",
+              "rrf": 0.03055,
+              "bm25_rank": 4,
+              "vector_rank": 7,
+              "rerank": 0.9315,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0014#req-1",
+              "rrf": 0.03083,
+              "bm25_rank": 8,
+              "vector_rank": 2,
+              "rerank": 0.9288,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0014#1.1",
+              "rrf": 0.03126,
+              "bm25_rank": 5,
+              "vector_rank": 3,
+              "rerank": 0.9213,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0014#preamble",
+              "rrf": 0.03128,
+              "bm25_rank": 2,
+              "vector_rank": 6,
+              "rerank": 0.7174,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.178,
+          "bm25_s": 0.003,
+          "vector_s": 1.752,
+          "rerank_s": 3.437,
+          "retrieve_s": 5.193,
+          "generate_s": 1.275,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 1083,
+          "llm_completion_tokens": 95,
+          "total_s": 6.652
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0014#1.2",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.9999,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#1.3",
+            "rrf": 0.03055,
+            "bm25_rank": 4,
+            "vector_rank": 7,
+            "rerank": 0.9315,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#req-1",
+            "rrf": 0.03083,
+            "bm25_rank": 8,
+            "vector_rank": 2,
+            "rerank": 0.9288,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#1.1",
+            "rrf": 0.03126,
+            "bm25_rank": 5,
+            "vector_rank": 3,
+            "rerank": 0.9213,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#preamble",
+            "rrf": 0.03128,
+            "bm25_rank": 2,
+            "vector_rank": 6,
+            "rerank": 0.7174,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#2.1",
+            "rrf": 0.02971,
+            "bm25_rank": 11,
+            "vector_rank": 4,
+            "rerank": 0.5998,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#1.4",
+            "rrf": 0.03126,
+            "bm25_rank": 3,
+            "vector_rank": 5,
+            "rerank": 0.4844,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#6.1",
+            "rrf": 0.02819,
+            "bm25_rank": 13,
+            "vector_rank": 9,
+            "rerank": 0.3241,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#3.2",
+            "rrf": 0.02881,
+            "bm25_rank": 7,
+            "vector_rank": 12,
+            "rerank": 0.2132,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#3.1",
+            "rrf": 0.02814,
+            "bm25_rank": 6,
+            "vector_rank": 17,
+            "rerank": 0.1823,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#2.2",
+            "rrf": 0.02762,
+            "bm25_rank": 15,
+            "vector_rank": 10,
+            "rerank": 0.1718,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#5.2",
+            "rrf": 0.02819,
+            "bm25_rank": 9,
+            "vector_rank": 13,
+            "rerank": 0.0673,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#9.1",
+            "rrf": 0.02724,
+            "bm25_rank": 16,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#4.1",
+            "rrf": 0.02694,
+            "bm25_rank": 10,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#req-2",
+            "rrf": 0.0269,
+            "bm25_rank": 22,
+            "vector_rank": 8,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#10.1",
+            "rrf": 0.02632,
+            "bm25_rank": 17,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#2.4",
+            "rrf": 0.02601,
+            "bm25_rank": 14,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#10.2",
+            "rrf": 0.02594,
+            "bm25_rank": 12,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#8.2",
+            "rrf": 0.02582,
+            "bm25_rank": 19,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#5.1",
+            "rrf": 0.02542,
+            "bm25_rank": 24,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#6.3",
+            "rrf": 0.02487,
+            "bm25_rank": 23,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#2.3",
+            "rrf": 0.02485,
+            "bm25_rank": 20,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#7.2",
+            "rrf": 0.02459,
+            "bm25_rank": 18,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#8.1",
+            "rrf": 0.02425,
+            "bm25_rank": 21,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#6.2",
+            "rrf": 0.02382,
+            "bm25_rank": 26,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0014#7.1",
+            "rrf": 0.02339,
+            "bm25_rank": 25,
+            "vector_rank": 26,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 1,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 1,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q018",
+        "category": "simple_fact",
+        "category_name": "простой факт",
+        "question": "Какая неустойка установлена за нарушение срока окончания работ по договору подряда № 2025/13 от 21.11.2025 с ООО «Фаворит»?",
+        "answer": "0,1% от стоимости работ за каждый день просрочки (договор подряда № 2025/13 от 21.11.2025, п. 6.2).",
+        "keys": [
+          "0,1%|0,1 процент"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0169#6.2",
+            "doc_id": "K-0169",
+            "quote": "6.2. При просрочке завершения Работ Заказчик вправе взыскать с Подрядчика пени — 0,1% от цены Работ за каждый день просрочки."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0169"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "simple:penalty.them",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Какая неустойка установлена за нарушение срока окончания работ по договору подряда № 2025/13 от 21.11.2025 с ООО «Фаворит»?",
+        "route": "rag",
+        "found": true,
+        "answer": "За нарушение срока окончания работ (п. 3.1) установлена пеня в размере 0,1% от цены Работ за каждый день просрочки [1].",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0169#6.2",
+            "doc_id": "K-0169",
+            "label": "6.2",
+            "document": "Договор подряда № 2025/13 от 21.11.2025, ООО «Фаворит», раздел «Ответственность сторон», п. 6.2",
+            "quote": "6.2. При просрочке завершения Работ Заказчик вправе взыскать с Подрядчика пени — 0,1% от цены Работ за каждый день просрочки.",
+            "start": 2049,
+            "end": 2174,
+            "path": "contracts/K-0169.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Фаворит»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "2025/13",
+                "date": "2025-11-21"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "works"
+            ]
+          },
+          "contracts": [
+            "K-0169"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0169#6.2",
+              "rrf": 0.03083,
+              "bm25_rank": 8,
+              "vector_rank": 2,
+              "rerank": 0.9981,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0169#6.1",
+              "rrf": 0.02821,
+              "bm25_rank": 18,
+              "vector_rank": 5,
+              "rerank": 0.9942,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0169#6.3",
+              "rrf": 0.03009,
+              "bm25_rank": 5,
+              "vector_rank": 8,
+              "rerank": 0.9678,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0169#3.1",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.9236,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0169#5.1",
+              "rrf": 0.02964,
+              "bm25_rank": 6,
+              "vector_rank": 9,
+              "rerank": 0.886,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 0
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.003,
+          "vector_s": 0.413,
+          "rerank_s": 3.582,
+          "retrieve_s": 3.998,
+          "generate_s": 0.883,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 939,
+          "llm_completion_tokens": 47,
+          "total_s": 4.883
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0169#6.2",
+            "rrf": 0.03083,
+            "bm25_rank": 8,
+            "vector_rank": 2,
+            "rerank": 0.9981,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#6.1",
+            "rrf": 0.02821,
+            "bm25_rank": 18,
+            "vector_rank": 5,
+            "rerank": 0.9942,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#6.3",
+            "rrf": 0.03009,
+            "bm25_rank": 5,
+            "vector_rank": 8,
+            "rerank": 0.9678,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#3.1",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.9236,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#5.1",
+            "rrf": 0.02964,
+            "bm25_rank": 6,
+            "vector_rank": 9,
+            "rerank": 0.886,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#preamble",
+            "rrf": 0.02881,
+            "bm25_rank": 7,
+            "vector_rank": 12,
+            "rerank": 0.7,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#3.2",
+            "rrf": 0.03128,
+            "bm25_rank": 2,
+            "vector_rank": 6,
+            "rerank": 0.6752,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#7.2",
+            "rrf": 0.02797,
+            "bm25_rank": 21,
+            "vector_rank": 4,
+            "rerank": 0.6289,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#5.2",
+            "rrf": 0.02942,
+            "bm25_rank": 9,
+            "vector_rank": 7,
+            "rerank": 0.6207,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#7.1",
+            "rrf": 0.02976,
+            "bm25_rank": 12,
+            "vector_rank": 3,
+            "rerank": 0.5712,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#1.3",
+            "rrf": 0.02957,
+            "bm25_rank": 3,
+            "vector_rank": 13,
+            "rerank": 0.5302,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#1.2",
+            "rrf": 0.02991,
+            "bm25_rank": 4,
+            "vector_rank": 10,
+            "rerank": 0.2726,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#2.1",
+            "rrf": 0.0278,
+            "bm25_rank": 10,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#1.1",
+            "rrf": 0.02686,
+            "bm25_rank": 13,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#9.2",
+            "rrf": 0.02685,
+            "bm25_rank": 14,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#2.3",
+            "rrf": 0.02643,
+            "bm25_rank": 11,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#9.1",
+            "rrf": 0.02632,
+            "bm25_rank": 15,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#2.2",
+            "rrf": 0.02613,
+            "bm25_rank": 23,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#8.2",
+            "rrf": 0.02565,
+            "bm25_rank": 17,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#4.1",
+            "rrf": 0.02548,
+            "bm25_rank": 19,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#9.3",
+            "rrf": 0.02535,
+            "bm25_rank": 16,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#8.1",
+            "rrf": 0.025,
+            "bm25_rank": 20,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#req-1",
+            "rrf": 0.02424,
+            "bm25_rank": 22,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#req-2",
+            "rrf": 0.02381,
+            "bm25_rank": 24,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 1,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 1,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q036",
+        "category": "simple_fact",
+        "category_name": "простой факт",
+        "question": "Какой стоимостной лимит установлен для отнесения активов к основным средствам в бухгалтерском учёте?",
+        "answer": "Основные средства — активы стоимостью более 100 000 руб. за единицу со сроком использования более 12 месяцев; актив за 100 000 руб. и дешевле учитывается в составе запасов (учётная политика для целей бухгалтерского учёта, п. 2.1).",
+        "keys": [
+          "100000"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "REG-01#2.1",
+            "doc_id": "REG-01",
+            "quote": "2.1. К основным средствам относятся активы со сроком полезного использования более 12 месяцев и стоимостью более 100 000 рублей за единицу. Активы стоимостью 100 000 рублей и менее учитываются в составе запасов."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "REG-01"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "reg:acc.os_limit",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Какой стоимостной лимит установлен для отнесения активов к основным средствам в бухгалтерском учёте?",
+        "route": "rag",
+        "found": true,
+        "answer": "К основным средствам относятся активы со стоимостью более 100 000 рублей за единицу [1]. Это установлено в пункте 2.1 Учётной политики для целей бухгалтерского учёта от 27.12.2024 [1].",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "REG-01#2.1",
+            "doc_id": "REG-01",
+            "label": "2.1",
+            "document": "Учётная политика для целей бухгалтерского учёта от 27.12.2024, раздел «Основные средства», п. 2.1",
+            "quote": "2.1. К основным средствам относятся активы со сроком полезного использования более 12 месяцев и стоимостью более 100 000 рублей за единицу. Активы стоимостью 100 000 рублей и менее учитываются в составе запасов.",
+            "start": 454,
+            "end": 665,
+            "path": "regulations/REG-01.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": []
+          },
+          "context": [
+            {
+              "chunk_id": "REG-01#2.1",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.9761,
+              "added": null
+            },
+            {
+              "chunk_id": "REG-01#2.3",
+              "rrf": 0.032,
+              "bm25_rank": 2,
+              "vector_rank": 3,
+              "rerank": 0.0146,
+              "added": null
+            },
+            {
+              "chunk_id": "REG-02#2.2",
+              "rrf": 0.01493,
+              "bm25_rank": null,
+              "vector_rank": 7,
+              "rerank": 0.0122,
+              "added": null
+            },
+            {
+              "chunk_id": "REG-01#2.2",
+              "rrf": 0.032,
+              "bm25_rank": 3,
+              "vector_rank": 2,
+              "rerank": 0.0113,
+              "added": null
+            },
+            {
+              "chunk_id": "REG-06#1.2",
+              "rrf": 0.01515,
+              "bm25_rank": null,
+              "vector_rank": 6,
+              "rerank": 0.0055,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.003,
+          "bm25_s": 0.0,
+          "vector_s": 0.419,
+          "rerank_s": 2.721,
+          "retrieve_s": 3.141,
+          "generate_s": 1.061,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 830,
+          "llm_completion_tokens": 67,
+          "total_s": 4.21
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "REG-01#2.1",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.9761,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#2.3",
+            "rrf": 0.032,
+            "bm25_rank": 2,
+            "vector_rank": 3,
+            "rerank": 0.0146,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-02#2.2",
+            "rrf": 0.01493,
+            "bm25_rank": null,
+            "vector_rank": 7,
+            "rerank": 0.0122,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#2.2",
+            "rrf": 0.032,
+            "bm25_rank": 3,
+            "vector_rank": 2,
+            "rerank": 0.0113,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-06#1.2",
+            "rrf": 0.01515,
+            "bm25_rank": null,
+            "vector_rank": 6,
+            "rerank": 0.0055,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#3.1",
+            "rrf": 0.02532,
+            "bm25_rank": 11,
+            "vector_rank": 29,
+            "rerank": 0.0051,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#4.1",
+            "rrf": 0.01493,
+            "bm25_rank": 7,
+            "vector_rank": null,
+            "rerank": 0.0021,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#1.1",
+            "rrf": 0.02944,
+            "bm25_rank": 6,
+            "vector_rank": 10,
+            "rerank": 0.0017,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#4.2",
+            "rrf": 0.01538,
+            "bm25_rank": 5,
+            "vector_rank": null,
+            "rerank": 0.0015,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0114#2.1",
+            "rrf": 0.01562,
+            "bm25_rank": null,
+            "vector_rank": 4,
+            "rerank": 0.0013,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0110#2.1",
+            "rrf": 0.01538,
+            "bm25_rank": null,
+            "vector_rank": 5,
+            "rerank": 0.001,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#preamble",
+            "rrf": 0.02725,
+            "bm25_rank": 4,
+            "vector_rank": 26,
+            "rerank": 0.001,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0246#2.1",
+            "rrf": 0.01471,
+            "bm25_rank": null,
+            "vector_rank": 8,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-02#1.2",
+            "rrf": 0.01471,
+            "bm25_rank": 8,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0032#2.1",
+            "rrf": 0.01449,
+            "bm25_rank": null,
+            "vector_rank": 9,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#5.2",
+            "rrf": 0.01449,
+            "bm25_rank": 9,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#3.2",
+            "rrf": 0.01429,
+            "bm25_rank": 10,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0150#2.1",
+            "rrf": 0.01408,
+            "bm25_rank": null,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0300#2.1",
+            "rrf": 0.01389,
+            "bm25_rank": null,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-02#2.3",
+            "rrf": 0.01389,
+            "bm25_rank": 12,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0128#2.1",
+            "rrf": 0.0137,
+            "bm25_rank": null,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#1.2",
+            "rrf": 0.0137,
+            "bm25_rank": 13,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0106#2.1",
+            "rrf": 0.01351,
+            "bm25_rank": null,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-01#5.1",
+            "rrf": 0.01351,
+            "bm25_rank": 14,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0203#2.1",
+            "rrf": 0.01333,
+            "bm25_rank": null,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-04#3.1",
+            "rrf": 0.01333,
+            "bm25_rank": 15,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0028-DS1#1",
+            "rrf": 0.01316,
+            "bm25_rank": 16,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-07#1",
+            "rrf": 0.01316,
+            "bm25_rank": null,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0045-DS1#1",
+            "rrf": 0.01299,
+            "bm25_rank": 17,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0293#2.1",
+            "rrf": 0.01299,
+            "bm25_rank": null,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 1,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 1,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q045",
+        "category": "paraphrase",
+        "category_name": "перефразированный вопрос",
+        "question": "Сколько времени у нас есть, чтобы рассчитаться с «Центр-Ресурс» после подписания акта (договор оказания услуг)?",
+        "answer": "В течение 45 календарных дней с даты подписания акта (договор оказания услуг № 2025/163 от 07.06.2025, п. 2.2).",
+        "keys": [
+          "45",
+          "календарн"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0157#2.2",
+            "doc_id": "K-0157",
+            "quote": "2.2. Заказчик оплачивает Услуги в течение 45 (сорока пяти) календарных дней с даты подписания акта оказанных услуг."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0157"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "para:payment",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Сколько времени у нас есть, чтобы рассчитаться с «Центр-Ресурс» после подписания акта (договор оказания услуг)?",
+        "route": "rag",
+        "found": true,
+        "answer": "Срок рассмотрения акта Заказчиком составляет 5 рабочих дней, после чего считается приёмка услуг; срок оплаты Заказчиком — 45 календарных дней с даты подписания акта [1] [3]",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0157#2.2",
+            "doc_id": "K-0157",
+            "label": "2.2",
+            "document": "Договор оказания услуг № 2025/163 от 07.06.2025, АО «Центр-Ресурс», раздел «Порядок расчётов», п. 2.2",
+            "quote": "2.2. Заказчик оплачивает Услуги в течение 45 (сорока пяти) календарных дней с даты подписания акта оказанных услуг.",
+            "start": 823,
+            "end": 938,
+            "path": "contracts/K-0157.md",
+            "source": "matched"
+          },
+          {
+            "n": 3,
+            "fragment_id": "K-0157#4.1",
+            "doc_id": "K-0157",
+            "label": "4.1",
+            "document": "Договор оказания услуг № 2025/163 от 07.06.2025, АО «Центр-Ресурс», раздел «Сдача и приёмка услуг», п. 4.1",
+            "quote": "4.1. Приёмка Услуг оформляется актом. Срок рассмотрения акта Заказчиком — 5 (пять) рабочих дней; молчание Заказчика по истечении этого срока означает приёмку Услуг.",
+            "start": 1258,
+            "end": 1422,
+            "path": "contracts/K-0157.md",
+            "source": "matched"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "АО «Центр-Ресурс»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": [
+              "services"
+            ]
+          },
+          "counterparties": [
+            "АО «Центр-Ресурс»"
+          ],
+          "contract_kinds": [
+            "services"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0157#2.2",
+              "rrf": 0.03252,
+              "bm25_rank": 2,
+              "vector_rank": 1,
+              "rerank": 0.9896,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0157#6.1",
+              "rrf": 0.03175,
+              "bm25_rank": 4,
+              "vector_rank": 2,
+              "rerank": 0.8898,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0157#4.1",
+              "rrf": 0.03009,
+              "bm25_rank": 5,
+              "vector_rank": 8,
+              "rerank": 0.5349,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0157#6.2",
+              "rrf": 0.02822,
+              "bm25_rank": 21,
+              "vector_rank": 3,
+              "rerank": 0.3334,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0157#6.3",
+              "rrf": 0.02828,
+              "bm25_rank": 19,
+              "vector_rank": 4,
+              "rerank": 0.2694,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.002,
+          "bm25_s": 0.002,
+          "vector_s": 0.407,
+          "rerank_s": 3.493,
+          "retrieve_s": 3.904,
+          "generate_s": 0.895,
+          "llm_load_s": 0.009,
+          "llm_prompt_tokens": 971,
+          "llm_completion_tokens": 49,
+          "total_s": 4.804
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0157#2.2",
+            "rrf": 0.03252,
+            "bm25_rank": 2,
+            "vector_rank": 1,
+            "rerank": 0.9896,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#6.1",
+            "rrf": 0.03175,
+            "bm25_rank": 4,
+            "vector_rank": 2,
+            "rerank": 0.8898,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#4.1",
+            "rrf": 0.03009,
+            "bm25_rank": 5,
+            "vector_rank": 8,
+            "rerank": 0.5349,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#6.2",
+            "rrf": 0.02822,
+            "bm25_rank": 21,
+            "vector_rank": 3,
+            "rerank": 0.3334,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#6.3",
+            "rrf": 0.02828,
+            "bm25_rank": 19,
+            "vector_rank": 4,
+            "rerank": 0.2694,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#2.1",
+            "rrf": 0.03016,
+            "bm25_rank": 3,
+            "vector_rank": 10,
+            "rerank": 0.0669,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#2.3",
+            "rrf": 0.02783,
+            "bm25_rank": 9,
+            "vector_rank": 15,
+            "rerank": 0.0586,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#preamble",
+            "rrf": 0.0303,
+            "bm25_rank": 6,
+            "vector_rank": 6,
+            "rerank": 0.022,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#5.2",
+            "rrf": 0.02775,
+            "bm25_rank": 18,
+            "vector_rank": 7,
+            "rerank": 0.0179,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#3.2",
+            "rrf": 0.03178,
+            "bm25_rank": 1,
+            "vector_rank": 5,
+            "rerank": 0.0164,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#req-1",
+            "rrf": 0.02881,
+            "bm25_rank": 7,
+            "vector_rank": 12,
+            "rerank": 0.0063,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#3.1",
+            "rrf": 0.02786,
+            "bm25_rank": 8,
+            "vector_rank": 16,
+            "rerank": 0.003,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#8.1",
+            "rrf": 0.02748,
+            "bm25_rank": 17,
+            "vector_rank": 9,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#1.2",
+            "rrf": 0.0274,
+            "bm25_rank": 12,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#1.1",
+            "rrf": 0.02721,
+            "bm25_rank": 14,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#9.1",
+            "rrf": 0.02707,
+            "bm25_rank": 11,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#5.3",
+            "rrf": 0.02679,
+            "bm25_rank": 10,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#5.1",
+            "rrf": 0.02628,
+            "bm25_rank": 22,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#9.2",
+            "rrf": 0.02615,
+            "bm25_rank": 15,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#8.2",
+            "rrf": 0.02604,
+            "bm25_rank": 13,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#7.2",
+            "rrf": 0.02521,
+            "bm25_rank": 16,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#7.1",
+            "rrf": 0.02516,
+            "bm25_rank": 20,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0157#req-2",
+            "rrf": 0.02424,
+            "bm25_rank": 23,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 2,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 1,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q052",
+        "category": "paraphrase",
+        "category_name": "перефразированный вопрос",
+        "question": "Сколько Лидер-Партнёр может тянуть с ответом на нашу претензию (договор № 241-У)?",
+        "answer": "15 календарных дней с даты получения претензии; претензионный порядок обязателен (договор оказания услуг № 241-У от 03.11.2025, п. 7.1).",
+        "keys": [
+          "15"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0101#7.1",
+            "doc_id": "K-0101",
+            "quote": "7.1. Споры разрешаются в претензионном порядке. Срок ответа на претензию — 15 (пятнадцать) календарных дней с даты её получения."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0101"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "para:claims",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Сколько Лидер-Партнёр может тянуть с ответом на нашу претензию (договор № 241-У)?",
+        "route": "rag",
+        "found": true,
+        "answer": "Срок ответа составляет 15 календарных дней с даты получения претензии, согласно пункту 7.1 Договора № 241-У от 03.11.2025 [1] [4].",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0101#7.1",
+            "doc_id": "K-0101",
+            "label": "7.1",
+            "document": "Договор оказания услуг № 241-У от 03.11.2025, ООО «Лидер-Партнёр», раздел «Претензионный порядок и подсудность», п. 7.1",
+            "quote": "7.1. Споры разрешаются в претензионном порядке. Срок ответа на претензию — 15 (пятнадцать) календарных дней с даты её получения.",
+            "start": 2322,
+            "end": 2450,
+            "path": "contracts/K-0101.md",
+            "source": "matched"
+          },
+          {
+            "n": 4,
+            "fragment_id": "K-0101#preamble",
+            "doc_id": "K-0101",
+            "label": "preamble",
+            "document": "Договор оказания услуг № 241-У от 03.11.2025, ООО «Лидер-Партнёр»",
+            "quote": "# ДОГОВОР ВОЗМЕЗДНОГО ОКАЗАНИЯ УСЛУГ № 241-У\n\nг. Санкт-Петербург, «03» ноября 2025 г.\n\nАО «Тайга-Строй», в лице директора, действующего на основании Устава, далее именуемое «Заказчик» и ООО «Лидер-Партнёр» (далее — «Исполнитель») в лице генерального директора, действующего на основании Устава, заключили настоящий Договор на следующих условиях:",
+            "start": 0,
+            "end": 345,
+            "path": "contracts/K-0101.md",
+            "source": "matched"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Лидер-Партнёр»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "241-У",
+                "date": null
+              }
+            ],
+            "period": null,
+            "contract_kinds": []
+          },
+          "contracts": [
+            "K-0101"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0101#7.1",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.999,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0101#5.1",
+              "rrf": 0.0292,
+              "bm25_rank": 9,
+              "vector_rank": 8,
+              "rerank": 0.8519,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0101#7.2",
+              "rrf": 0.0289,
+              "bm25_rank": 14,
+              "vector_rank": 5,
+              "rerank": 0.4334,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0101#preamble",
+              "rrf": 0.03105,
+              "bm25_rank": 2,
+              "vector_rank": 7,
+              "rerank": 0.2467,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0101#3.2",
+              "rrf": 0.02881,
+              "bm25_rank": 7,
+              "vector_rank": 12,
+              "rerank": 0.2432,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.001,
+          "vector_s": 0.36,
+          "rerank_s": 3.221,
+          "retrieve_s": 3.584,
+          "generate_s": 0.934,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 983,
+          "llm_completion_tokens": 59,
+          "total_s": 4.522
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0101#7.1",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.999,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#5.1",
+            "rrf": 0.0292,
+            "bm25_rank": 9,
+            "vector_rank": 8,
+            "rerank": 0.8519,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#7.2",
+            "rrf": 0.0289,
+            "bm25_rank": 14,
+            "vector_rank": 5,
+            "rerank": 0.4334,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#preamble",
+            "rrf": 0.03105,
+            "bm25_rank": 2,
+            "vector_rank": 7,
+            "rerank": 0.2467,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#3.2",
+            "rrf": 0.02881,
+            "bm25_rank": 7,
+            "vector_rank": 12,
+            "rerank": 0.2432,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#6.1",
+            "rrf": 0.03016,
+            "bm25_rank": 10,
+            "vector_rank": 3,
+            "rerank": 0.2226,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#1.2",
+            "rrf": 0.032,
+            "bm25_rank": 3,
+            "vector_rank": 2,
+            "rerank": 0.103,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#8.2",
+            "rrf": 0.02904,
+            "bm25_rank": 12,
+            "vector_rank": 6,
+            "rerank": 0.0975,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#1.3",
+            "rrf": 0.03033,
+            "bm25_rank": 8,
+            "vector_rank": 4,
+            "rerank": 0.0684,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#3.1",
+            "rrf": 0.02885,
+            "bm25_rank": 6,
+            "vector_rank": 13,
+            "rerank": 0.0634,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#req-1",
+            "rrf": 0.02914,
+            "bm25_rank": 4,
+            "vector_rank": 14,
+            "rerank": 0.0613,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#8.1",
+            "rrf": 0.02817,
+            "bm25_rank": 11,
+            "vector_rank": 11,
+            "rerank": 0.0378,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#2.3",
+            "rrf": 0.02773,
+            "bm25_rank": 5,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#5.3",
+            "rrf": 0.02715,
+            "bm25_rank": 19,
+            "vector_rank": 9,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#5.2",
+            "rrf": 0.02679,
+            "bm25_rank": 20,
+            "vector_rank": 10,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#2.2",
+            "rrf": 0.02669,
+            "bm25_rank": 13,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#1.1",
+            "rrf": 0.02649,
+            "bm25_rank": 16,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#8.3",
+            "rrf": 0.02615,
+            "bm25_rank": 15,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#2.1",
+            "rrf": 0.02614,
+            "bm25_rank": 17,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#4.1",
+            "rrf": 0.02548,
+            "bm25_rank": 18,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#req-2",
+            "rrf": 0.02485,
+            "bm25_rank": 21,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 2,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 1,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q063",
+        "category": "paraphrase",
+        "category_name": "перефразированный вопрос",
+        "question": "Платим ли мы ИП Щукин за свет и отопление отдельно от аренды?",
+        "answer": "Коммунальные услуги включены в арендную плату (договор аренды № 186-А от 12.05.2024, п. 2.3).",
+        "keys": [
+          "включен|входят|входит"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0112#2.3",
+            "doc_id": "K-0112",
+            "quote": "2.3. Арендная плата включает стоимость коммунальных услуг (отопление, водоснабжение, электроэнергия)."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0112"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "para:lease.utilities",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Платим ли мы ИП Щукин за свет и отопление отдельно от аренды?",
+        "route": "rag",
+        "found": true,
+        "answer": "Нет, арендная плата включает стоимость коммунальных услуг (отопление, водоснабжение, электроэнергия), поэтому свет и отопление оплачиваются в составе общей арендной платы, а не отдельно. [1]",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0112#2.3",
+            "doc_id": "K-0112",
+            "label": "2.3",
+            "document": "Договор аренды № 186-А от 12.05.2024, ИП Щукин Василий Чеславович, раздел «Стоимость и порядок оплаты», п. 2.3",
+            "quote": "2.3. Арендная плата включает стоимость коммунальных услуг (отопление, водоснабжение, электроэнергия).",
+            "start": 971,
+            "end": 1072,
+            "path": "contracts/K-0112.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ИП Щукин Василий Чеславович"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": []
+          },
+          "counterparties": [
+            "ИП Щукин Василий Чеславович"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0112#2.3",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.9093,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0112#2.4",
+              "rrf": 0.02845,
+              "bm25_rank": 18,
+              "vector_rank": 4,
+              "rerank": 0.2712,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0112#2.1",
+              "rrf": 0.03175,
+              "bm25_rank": 4,
+              "vector_rank": 2,
+              "rerank": 0.1737,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0112#2.2",
+              "rrf": 0.02908,
+              "bm25_rank": 13,
+              "vector_rank": 5,
+              "rerank": 0.0955,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0112#1.1",
+              "rrf": 0.02879,
+              "bm25_rank": 11,
+              "vector_rank": 8,
+              "rerank": 0.0889,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 0
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.0,
+          "vector_s": 0.32,
+          "rerank_s": 5.85,
+          "retrieve_s": 6.172,
+          "generate_s": 0.968,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 870,
+          "llm_completion_tokens": 56,
+          "total_s": 7.142
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0112#2.3",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.9093,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#2.4",
+            "rrf": 0.02845,
+            "bm25_rank": 18,
+            "vector_rank": 4,
+            "rerank": 0.2712,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#2.1",
+            "rrf": 0.03175,
+            "bm25_rank": 4,
+            "vector_rank": 2,
+            "rerank": 0.1737,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#2.2",
+            "rrf": 0.02908,
+            "bm25_rank": 13,
+            "vector_rank": 5,
+            "rerank": 0.0955,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#1.1",
+            "rrf": 0.02879,
+            "bm25_rank": 11,
+            "vector_rank": 8,
+            "rerank": 0.0889,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#preamble",
+            "rrf": 0.0292,
+            "bm25_rank": 8,
+            "vector_rank": 9,
+            "rerank": 0.0589,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#3.1",
+            "rrf": 0.02942,
+            "bm25_rank": 9,
+            "vector_rank": 7,
+            "rerank": 0.0406,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#1.3",
+            "rrf": 0.03102,
+            "bm25_rank": 3,
+            "vector_rank": 6,
+            "rerank": 0.0284,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#2.5",
+            "rrf": 0.02817,
+            "bm25_rank": 12,
+            "vector_rank": 10,
+            "rerank": 0.0216,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#5.2",
+            "rrf": 0.0289,
+            "bm25_rank": 5,
+            "vector_rank": 14,
+            "rerank": 0.0141,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#req-1",
+            "rrf": 0.032,
+            "bm25_rank": 2,
+            "vector_rank": 3,
+            "rerank": 0.0133,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#8.2",
+            "rrf": 0.02862,
+            "bm25_rank": 7,
+            "vector_rank": 13,
+            "rerank": 0.0087,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#3.2",
+            "rrf": 0.02814,
+            "bm25_rank": 6,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#6.1",
+            "rrf": 0.02744,
+            "bm25_rank": 10,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#1.2",
+            "rrf": 0.02688,
+            "bm25_rank": 17,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#5.1",
+            "rrf": 0.02628,
+            "bm25_rank": 22,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#9.1",
+            "rrf": 0.02601,
+            "bm25_rank": 14,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#9.2",
+            "rrf": 0.02598,
+            "bm25_rank": 16,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#7.2",
+            "rrf": 0.02538,
+            "bm25_rank": 15,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#req-2",
+            "rrf": 0.0251,
+            "bm25_rank": 25,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#6.3",
+            "rrf": 0.025,
+            "bm25_rank": 19,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#6.2",
+            "rrf": 0.02456,
+            "bm25_rank": 24,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#8.1",
+            "rrf": 0.02454,
+            "bm25_rank": 21,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#4.1",
+            "rrf": 0.0244,
+            "bm25_rank": 20,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0112#7.1",
+            "rrf": 0.02381,
+            "bm25_rank": 23,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": false,
+        "cited": 1,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 1,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q080",
+        "category": "multi_condition",
+        "category_name": "несколько условий из одного договора",
+        "question": "Назовите размер арендной платы, обеспечительного платежа и условия индексации по договору аренды № 36-П/24 от 30.01.2026 с ООО «Альфа-Комплект».",
+        "answer": "Цена договора — 575 400,00 руб. в месяц (договор аренды № 36-П/24 от 30.01.2026, п. 2.1); обеспечительный платёж — 1 150 800,00 руб. (договор аренды № 36-П/24 от 30.01.2026, п. 2.4); индексация арендной платы — ежегодная индексация на 7% (договор аренды № 36-П/24 от 30.01.2026, п. 2.5).",
+        "keys": [
+          "575400",
+          "1150800",
+          "7%|7 процент"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0108#2.1",
+            "doc_id": "K-0108",
+            "quote": "2.1. Арендная плата составляет 575 400 (пятьсот семьдесят пять тысяч четыреста) рублей 00 копеек в месяц."
+          },
+          {
+            "fragment_id": "K-0108#2.4",
+            "doc_id": "K-0108",
+            "quote": "2.4. Обеспечительный платёж по Договору составляет 1 150 800 (один миллион сто пятьдесят тысяч восемьсот) рублей 00 копеек и вносится одновременно с первой арендной платой."
+          },
+          {
+            "fragment_id": "K-0108#2.5",
+            "doc_id": "K-0108",
+            "quote": "2.5. Арендная плата увеличивается ежегодно на 7%."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0108"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "multi:price+lease.deposit+lease.indexation",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Назовите размер арендной платы, обеспечительного платежа и условия индексации по договору аренды № 36-П/24 от 30.01.2026 с ООО «Альфа-Комплект».",
+        "route": "rag",
+        "found": true,
+        "answer": "Арендная плата составляет 575 400 рублей 00 копеек в месяц [2], обеспечительный платёж составляет 1 150 800 рублей 00 копеек [1], индексация производится ежегодно на 7% [3].",
+        "citations": [
+          {
+            "n": 2,
+            "fragment_id": "K-0108#2.1",
+            "doc_id": "K-0108",
+            "label": "2.1",
+            "document": "Договор аренды № 36-П/24 от 30.01.2026, ООО «Альфа-Комплект», раздел «Цена и порядок расчётов», п. 2.1",
+            "quote": "2.1. Арендная плата составляет 575 400 (пятьсот семьдесят пять тысяч четыреста) рублей 00 копеек в месяц.",
+            "start": 870,
+            "end": 975,
+            "path": "contracts/K-0108.md",
+            "source": "model"
+          },
+          {
+            "n": 1,
+            "fragment_id": "K-0108#2.4",
+            "doc_id": "K-0108",
+            "label": "2.4",
+            "document": "Договор аренды № 36-П/24 от 30.01.2026, ООО «Альфа-Комплект», раздел «Цена и порядок расчётов», п. 2.4",
+            "quote": "2.4. Обеспечительный платёж по Договору составляет 1 150 800 (один миллион сто пятьдесят тысяч восемьсот) рублей 00 копеек и вносится одновременно с первой арендной платой.",
+            "start": 1196,
+            "end": 1368,
+            "path": "contracts/K-0108.md",
+            "source": "model"
+          },
+          {
+            "n": 3,
+            "fragment_id": "K-0108#2.5",
+            "doc_id": "K-0108",
+            "label": "2.5",
+            "document": "Договор аренды № 36-П/24 от 30.01.2026, ООО «Альфа-Комплект», раздел «Цена и порядок расчётов», п. 2.5",
+            "quote": "2.5. Арендная плата увеличивается ежегодно на 7%.",
+            "start": 1370,
+            "end": 1419,
+            "path": "contracts/K-0108.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Альфа-Комплект»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "36-П/24",
+                "date": "2026-01-30"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "lease"
+            ]
+          },
+          "contracts": [
+            "K-0108"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0108#2.4",
+              "rrf": 0.032,
+              "bm25_rank": 2,
+              "vector_rank": 3,
+              "rerank": 0.9995,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0108#2.1",
+              "rrf": 0.03132,
+              "bm25_rank": 7,
+              "vector_rank": 1,
+              "rerank": 0.9983,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0108#2.5",
+              "rrf": 0.03252,
+              "bm25_rank": 1,
+              "vector_rank": 2,
+              "rerank": 0.9938,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0108#preamble",
+              "rrf": 0.02885,
+              "bm25_rank": 6,
+              "vector_rank": 13,
+              "rerank": 0.906,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0108#6.1",
+              "rrf": 0.02964,
+              "bm25_rank": 9,
+              "vector_rank": 6,
+              "rerank": 0.9017,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 0
+        },
+        "timings": {
+          "analyze_s": 0.002,
+          "bm25_s": 0.004,
+          "vector_s": 0.426,
+          "rerank_s": 3.811,
+          "retrieve_s": 4.242,
+          "generate_s": 1.125,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 1023,
+          "llm_completion_tokens": 74,
+          "total_s": 5.369
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0108#2.4",
+            "rrf": 0.032,
+            "bm25_rank": 2,
+            "vector_rank": 3,
+            "rerank": 0.9995,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#2.1",
+            "rrf": 0.03132,
+            "bm25_rank": 7,
+            "vector_rank": 1,
+            "rerank": 0.9983,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#2.5",
+            "rrf": 0.03252,
+            "bm25_rank": 1,
+            "vector_rank": 2,
+            "rerank": 0.9938,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#preamble",
+            "rrf": 0.02885,
+            "bm25_rank": 6,
+            "vector_rank": 13,
+            "rerank": 0.906,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#6.1",
+            "rrf": 0.02964,
+            "bm25_rank": 9,
+            "vector_rank": 6,
+            "rerank": 0.9017,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#2.2",
+            "rrf": 0.0315,
+            "bm25_rank": 3,
+            "vector_rank": 4,
+            "rerank": 0.8287,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#5.1",
+            "rrf": 0.02951,
+            "bm25_rank": 4,
+            "vector_rank": 12,
+            "rerank": 0.6619,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#1.4",
+            "rrf": 0.02899,
+            "bm25_rank": 8,
+            "vector_rank": 10,
+            "rerank": 0.6082,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#1.3",
+            "rrf": 0.0276,
+            "bm25_rank": 11,
+            "vector_rank": 14,
+            "rerank": 0.5832,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#req-1",
+            "rrf": 0.02808,
+            "bm25_rank": 16,
+            "vector_rank": 7,
+            "rerank": 0.5467,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#2.6",
+            "rrf": 0.02804,
+            "bm25_rank": 15,
+            "vector_rank": 8,
+            "rerank": 0.3774,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#2.3",
+            "rrf": 0.03077,
+            "bm25_rank": 5,
+            "vector_rank": 5,
+            "rerank": 0.3723,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#3.1",
+            "rrf": 0.0276,
+            "bm25_rank": 14,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#5.2",
+            "rrf": 0.02744,
+            "bm25_rank": 10,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#1.1",
+            "rrf": 0.02731,
+            "bm25_rank": 18,
+            "vector_rank": 9,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#9.2",
+            "rrf": 0.02669,
+            "bm25_rank": 13,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#3.2",
+            "rrf": 0.02639,
+            "bm25_rank": 12,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#6.2",
+            "rrf": 0.02581,
+            "bm25_rank": 17,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#1.2",
+            "rrf": 0.0251,
+            "bm25_rank": 25,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#7.2",
+            "rrf": 0.025,
+            "bm25_rank": 19,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#8.2",
+            "rrf": 0.02426,
+            "bm25_rank": 20,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#9.1",
+            "rrf": 0.02425,
+            "bm25_rank": 21,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#4.1",
+            "rrf": 0.02424,
+            "bm25_rank": 22,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#req-2",
+            "rrf": 0.02415,
+            "bm25_rank": 27,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#6.3",
+            "rrf": 0.0241,
+            "bm25_rank": 24,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#8.1",
+            "rrf": 0.02368,
+            "bm25_rank": 23,
+            "vector_rank": 26,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0108#7.1",
+            "rrf": 0.02312,
+            "bm25_rank": 26,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 3,
+        "cited_gold": 3,
+        "sources_cited": 3,
+        "sources": 3,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q085",
+        "category": "multi_condition",
+        "category_name": "несколько условий из одного договора",
+        "question": "Назовите по договору поставки № П-668/23 от 31.01.2023 с ООО «Ракурс-Комплект» условия оплаты, срок поставки и неустойку за просрочку поставки.",
+        "answer": "Срок и порядок оплаты — предоплата 50% в течение 5 банковских дней с даты получения счёта, оставшиеся 50% — в течение 15 календарных дней с даты подписания УПД (товарной накладной) (договор поставки № П-668/23 от 31.01.2023, п. 2.2); срок и условия поставки — в течение 10 рабочих дней с даты получения заявки, доставка силами и за счёт поставщика на склад покупателя (договор поставки № П-668/23 от 31.01.2023, п. 3.1); неустойка за просрочку со стороны контрагента — 0,01% от стоимости не поставленного в срок товара за каждый день просрочки (договор поставки № П-668/23 от 31.01.2023, п. 5.2).",
+        "keys": [
+          "50%|50 процент",
+          "15",
+          "календарн",
+          "10",
+          "0,01%|0,01 процент"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0013#2.2",
+            "doc_id": "K-0013",
+            "quote": "2.2. Оплата производится в два этапа: аванс 50% — в течение 5 (пяти) банковских дней с даты получения счёта, окончательный расчёт (50%) — не позднее 15 (пятнадцати) календарных дней с даты подписания Сторонами универсального передаточного документа (товарной накладной)."
+          },
+          {
+            "fragment_id": "K-0013#3.1",
+            "doc_id": "K-0013",
+            "quote": "3.1. Поставка каждой партии Товара осуществляется в течение 10 (десяти) рабочих дней с даты получения заявки Покупателя силами и за счёт Поставщика на склад Покупателя."
+          },
+          {
+            "fragment_id": "K-0013#5.2",
+            "doc_id": "K-0013",
+            "quote": "5.2. За просрочку поставки Поставщик уплачивает Покупателю неустойку в размере 0,01 (ноль целых одна сотая) процента от стоимости не поставленного в срок Товара за каждый день просрочки."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0013"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "multi:payment+supply.delivery+penalty.them",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Назовите по договору поставки № П-668/23 от 31.01.2023 с ООО «Ракурс-Комплект» условия оплаты, срок поставки и неустойку за просрочку поставки.",
+        "route": "rag",
+        "found": true,
+        "answer": "Условия оплаты: аванс 50% в течение 5 банковских дней с даты получения счёта, окончательный расчёт — не позднее 15 календарных дней с даты подписания универсального передаточного документа [5]. Срок поставки: 10 рабочих дней с даты получения заявки [3]. Неустойка за просрочку: 0,01% от стоимости не поставленного Товара за каждый день просрочки [1].",
+        "citations": [
+          {
+            "n": 5,
+            "fragment_id": "K-0013#2.2",
+            "doc_id": "K-0013",
+            "label": "2.2",
+            "document": "Договор поставки № П-668/23 от 31.01.2023, ООО «Ракурс-Комплект», раздел «Цена и порядок расчётов», п. 2.2",
+            "quote": "2.2. Оплата производится в два этапа: аванс 50% — в течение 5 (пяти) банковских дней с даты получения счёта, окончательный расчёт (50%) — не позднее 15 (пятнадцати) календарных дней с даты подписания Сторонами универсального передаточного документа (товарной накладной).",
+            "start": 988,
+            "end": 1258,
+            "path": "contracts/K-0013.md",
+            "source": "matched"
+          },
+          {
+            "n": 3,
+            "fragment_id": "K-0013#3.1",
+            "doc_id": "K-0013",
+            "label": "3.1",
+            "document": "Договор поставки № П-668/23 от 31.01.2023, ООО «Ракурс-Комплект», раздел «Условия поставки», п. 3.1",
+            "quote": "3.1. Поставка каждой партии Товара осуществляется в течение 10 (десяти) рабочих дней с даты получения заявки Покупателя силами и за счёт Поставщика на склад Покупателя.",
+            "start": 1359,
+            "end": 1527,
+            "path": "contracts/K-0013.md",
+            "source": "matched"
+          },
+          {
+            "n": 1,
+            "fragment_id": "K-0013#5.2",
+            "doc_id": "K-0013",
+            "label": "5.2",
+            "document": "Договор поставки № П-668/23 от 31.01.2023, ООО «Ракурс-Комплект», раздел «Санкции», п. 5.2",
+            "quote": "5.2. За просрочку поставки Поставщик уплачивает Покупателю неустойку в размере 0,01 (ноль целых одна сотая) процента от стоимости не поставленного в срок Товара за каждый день просрочки.",
+            "start": 2120,
+            "end": 2306,
+            "path": "contracts/K-0013.md",
+            "source": "matched"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Ракурс-Комплект»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "П-668/23",
+                "date": "2023-01-31"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "supply"
+            ]
+          },
+          "contracts": [
+            "K-0013"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0013#5.2",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.9932,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0013#5.1",
+              "rrf": 0.03102,
+              "bm25_rank": 6,
+              "vector_rank": 3,
+              "rerank": 0.9857,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0013#3.1",
+              "rrf": 0.02858,
+              "bm25_rank": 11,
+              "vector_rank": 9,
+              "rerank": 0.9784,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0013#6.1",
+              "rrf": 0.03126,
+              "bm25_rank": 3,
+              "vector_rank": 5,
+              "rerank": 0.9739,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0013#2.2",
+              "rrf": 0.02782,
+              "bm25_rank": 22,
+              "vector_rank": 4,
+              "rerank": 0.97,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 3
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.004,
+          "vector_s": 0.455,
+          "rerank_s": 3.96,
+          "retrieve_s": 4.42,
+          "generate_s": 1.559,
+          "llm_load_s": 0.008,
+          "llm_prompt_tokens": 1065,
+          "llm_completion_tokens": 109,
+          "total_s": 5.986
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0013#5.2",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.9932,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#5.1",
+            "rrf": 0.03102,
+            "bm25_rank": 6,
+            "vector_rank": 3,
+            "rerank": 0.9857,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#3.1",
+            "rrf": 0.02858,
+            "bm25_rank": 11,
+            "vector_rank": 9,
+            "rerank": 0.9784,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#6.1",
+            "rrf": 0.03126,
+            "bm25_rank": 3,
+            "vector_rank": 5,
+            "rerank": 0.9739,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#2.2",
+            "rrf": 0.02782,
+            "bm25_rank": 22,
+            "vector_rank": 4,
+            "rerank": 0.97,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#preamble",
+            "rrf": 0.03009,
+            "bm25_rank": 5,
+            "vector_rank": 8,
+            "rerank": 0.924,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#3.2",
+            "rrf": 0.02743,
+            "bm25_rank": 7,
+            "vector_rank": 20,
+            "rerank": 0.8448,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#1.2",
+            "rrf": 0.02844,
+            "bm25_rank": 14,
+            "vector_rank": 7,
+            "rerank": 0.8344,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#5.3",
+            "rrf": 0.03128,
+            "bm25_rank": 2,
+            "vector_rank": 6,
+            "rerank": 0.8293,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#2.1",
+            "rrf": 0.03002,
+            "bm25_rank": 12,
+            "vector_rank": 2,
+            "rerank": 0.7951,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#2.3",
+            "rrf": 0.02878,
+            "bm25_rank": 9,
+            "vector_rank": 10,
+            "rerank": 0.5419,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#1.3",
+            "rrf": 0.02932,
+            "bm25_rank": 4,
+            "vector_rank": 13,
+            "rerank": 0.5167,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#8.1",
+            "rrf": 0.02736,
+            "bm25_rank": 8,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#7.2",
+            "rrf": 0.02727,
+            "bm25_rank": 10,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#1.1",
+            "rrf": 0.02705,
+            "bm25_rank": 16,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#6.3",
+            "rrf": 0.02703,
+            "bm25_rank": 13,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#6.2",
+            "rrf": 0.02658,
+            "bm25_rank": 20,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#9.2",
+            "rrf": 0.02615,
+            "bm25_rank": 15,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#req-1",
+            "rrf": 0.02598,
+            "bm25_rank": 18,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#4.1",
+            "rrf": 0.02586,
+            "bm25_rank": 21,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#9.1",
+            "rrf": 0.02504,
+            "bm25_rank": 17,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#7.1",
+            "rrf": 0.025,
+            "bm25_rank": 19,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0013#req-2",
+            "rrf": 0.02424,
+            "bm25_rank": 23,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 3,
+        "cited_gold": 3,
+        "sources_cited": 3,
+        "sources": 3,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q088",
+        "category": "multi_condition",
+        "category_name": "несколько условий из одного договора",
+        "question": "Сколько стоит аренда по договору аренды № А-092/25 от 21.11.2025 и входят ли в неё коммунальные услуги?",
+        "answer": "Цена договора — 1 860 300,00 руб. в месяц (договор аренды № А-092/25 от 21.11.2025, п. 2.1); оплата коммунальных услуг — коммунальные услуги в арендную плату не входят и оплачиваются отдельно по показаниям приборов учёта (договор аренды № А-092/25 от 21.11.2025, п. 2.3).",
+        "keys": [
+          "1860300",
+          "отдельно|не входят|не включ"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0171#2.1",
+            "doc_id": "K-0171",
+            "quote": "2.1. Арендная плата составляет 1 860 300,00 руб. в месяц."
+          },
+          {
+            "fragment_id": "K-0171#2.3",
+            "doc_id": "K-0171",
+            "quote": "2.3. Стоимость коммунальных услуг возмещается Арендатором сверх арендной платы по счетам Арендодателя на основании показаний счётчиков."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0171"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "multi:price+lease.utilities",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Сколько стоит аренда по договору аренды № А-092/25 от 21.11.2025 и входят ли в неё коммунальные услуги?",
+        "route": "rag",
+        "found": true,
+        "answer": "Арендная плата составляет 1 860 300,00 руб. в месяц, а коммунальные услуги возмещаются Арендатором сверх арендной платы по счетам Арендодателя [1]. Сумма аренды 1 860 300,00 руб. [1], коммунальные услуги включены в стоимость аренды. Ссылки: [1][2]",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0171#2.1",
+            "doc_id": "K-0171",
+            "label": "2.1",
+            "document": "Договор аренды № А-092/25 от 21.11.2025, ООО «Терра», раздел «Порядок расчётов», п. 2.1",
+            "quote": "2.1. Арендная плата составляет 1 860 300,00 руб. в месяц.",
+            "start": 657,
+            "end": 714,
+            "path": "contracts/K-0171.md",
+            "source": "model"
+          },
+          {
+            "n": 2,
+            "fragment_id": "K-0171#2.3",
+            "doc_id": "K-0171",
+            "label": "2.3",
+            "document": "Договор аренды № А-092/25 от 21.11.2025, ООО «Терра», раздел «Порядок расчётов», п. 2.3",
+            "quote": "2.3. Стоимость коммунальных услуг возмещается Арендатором сверх арендной платы по счетам Арендодателя на основании показаний счётчиков.",
+            "start": 819,
+            "end": 954,
+            "path": "contracts/K-0171.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "А-092/25",
+                "date": "2025-11-21"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "lease"
+            ]
+          },
+          "contracts": [
+            "K-0171"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0171#2.1",
+              "rrf": 0.0311,
+              "bm25_rank": 8,
+              "vector_rank": 1,
+              "rerank": 0.996,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0171#2.3",
+              "rrf": 0.03252,
+              "bm25_rank": 1,
+              "vector_rank": 2,
+              "rerank": 0.9741,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0171#1.1",
+              "rrf": 0.02957,
+              "bm25_rank": 13,
+              "vector_rank": 3,
+              "rerank": 0.667,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0171#preamble",
+              "rrf": 0.03062,
+              "bm25_rank": 2,
+              "vector_rank": 9,
+              "rerank": 0.4101,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0171#2.2",
+              "rrf": 0.02797,
+              "bm25_rank": 18,
+              "vector_rank": 6,
+              "rerank": 0.3422,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.002,
+          "vector_s": 0.381,
+          "rerank_s": 5.953,
+          "retrieve_s": 6.338,
+          "generate_s": 1.355,
+          "llm_load_s": 0.008,
+          "llm_prompt_tokens": 961,
+          "llm_completion_tokens": 97,
+          "total_s": 7.697
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0171#2.1",
+            "rrf": 0.0311,
+            "bm25_rank": 8,
+            "vector_rank": 1,
+            "rerank": 0.996,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#2.3",
+            "rrf": 0.03252,
+            "bm25_rank": 1,
+            "vector_rank": 2,
+            "rerank": 0.9741,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#1.1",
+            "rrf": 0.02957,
+            "bm25_rank": 13,
+            "vector_rank": 3,
+            "rerank": 0.667,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#preamble",
+            "rrf": 0.03062,
+            "bm25_rank": 2,
+            "vector_rank": 9,
+            "rerank": 0.4101,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#2.2",
+            "rrf": 0.02797,
+            "bm25_rank": 18,
+            "vector_rank": 6,
+            "rerank": 0.3422,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#9.3",
+            "rrf": 0.02801,
+            "bm25_rank": 9,
+            "vector_rank": 14,
+            "rerank": 0.1619,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#9.1",
+            "rrf": 0.03031,
+            "bm25_rank": 7,
+            "vector_rank": 5,
+            "rerank": 0.1528,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#1.3",
+            "rrf": 0.03125,
+            "bm25_rank": 4,
+            "vector_rank": 4,
+            "rerank": 0.1356,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#3.2",
+            "rrf": 0.02837,
+            "bm25_rank": 11,
+            "vector_rank": 10,
+            "rerank": 0.1066,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#2.6",
+            "rrf": 0.02814,
+            "bm25_rank": 6,
+            "vector_rank": 17,
+            "rerank": 0.0728,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#8.1",
+            "rrf": 0.0275,
+            "bm25_rank": 3,
+            "vector_rank": 26,
+            "rerank": 0.0579,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#6.2",
+            "rrf": 0.02821,
+            "bm25_rank": 5,
+            "vector_rank": 18,
+            "rerank": 0.0301,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#1.2",
+            "rrf": 0.02769,
+            "bm25_rank": 17,
+            "vector_rank": 8,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#2.5",
+            "rrf": 0.02743,
+            "bm25_rank": 20,
+            "vector_rank": 7,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#8.2",
+            "rrf": 0.02722,
+            "bm25_rank": 15,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#5.1",
+            "rrf": 0.02705,
+            "bm25_rank": 12,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#9.2",
+            "rrf": 0.02685,
+            "bm25_rank": 14,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#3.1",
+            "rrf": 0.02663,
+            "bm25_rank": 10,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#2.4",
+            "rrf": 0.02628,
+            "bm25_rank": 22,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#6.1",
+            "rrf": 0.0256,
+            "bm25_rank": 24,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#7.2",
+            "rrf": 0.02492,
+            "bm25_rank": 16,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#5.3",
+            "rrf": 0.02485,
+            "bm25_rank": 19,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#req-1",
+            "rrf": 0.02442,
+            "bm25_rank": 25,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#4.1",
+            "rrf": 0.02439,
+            "bm25_rank": 21,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#req-2",
+            "rrf": 0.02399,
+            "bm25_rank": 27,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#7.1",
+            "rrf": 0.02354,
+            "bm25_rank": 23,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0171#5.2",
+            "rrf": 0.02353,
+            "bm25_rank": 26,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": false,
+        "cited": 2,
+        "cited_gold": 2,
+        "sources_cited": 2,
+        "sources": 2,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q101",
+        "category": "amendment_override",
+        "category_name": "доп. соглашение отменяет условие",
+        "question": "Куда переводить деньги «Горизонт-Логистик» — какой у них счёт в действующей редакции (договор оказания услуг)?",
+        "answer": "Р/с 40702810482813085163 в АО «Центральный Финанс», БИК 045695207, к/с 30101810900000000207 — по доп. соглашению № 1 от 01.04.2024 (действует с 01.05.2024, доп. соглашение № 1 к договору № 2023/176, п. 2). В первоначальной редакции договора было: р/с 40702810263536441876 в ПАО «Балтийский Эксперт Банк», БИК 046420379, к/с 30101810500000000379.",
+        "keys": [
+          "40702810482813085163",
+          "045695207"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0249-DS1#2",
+            "doc_id": "K-0249-DS1",
+            "quote": "2. Изложить банковские реквизиты Исполнителя в следующей редакции: р/с 40702810482813085163 в АО «Центральный Финанс», БИК 045695207, к/с 30101810900000000207. Оплата по прежним реквизитам с даты вступления в силу Соглашения не производится."
+          },
+          {
+            "fragment_id": "K-0249-DS1#3",
+            "doc_id": "K-0249-DS1",
+            "quote": "3. Соглашение вступает в силу с «01» мая 2024 г."
+          }
+        ],
+        "superseded": [
+          {
+            "fragment_id": "K-0249#req-1",
+            "doc_id": "K-0249",
+            "quote": "**Исполнитель:** ООО «Горизонт-Логистик»\nИНН 4302555863, КПП 430250521\nАдрес: 808031, г. Усинск, ш. Бажова, д. 78\nр/с 40702810263536441876 в ПАО «Балтийский Эксперт Банк»\nБИК 046420379, к/с 30101810500000000379"
+          }
+        ],
+        "wrong_answers": [
+          "р/с 40702810263536441876 в ПАО «Балтийский Эксперт Банк», БИК 046420379, к/с 30101810500000000379"
+        ],
+        "doc_ids": [
+          "K-0249",
+          "K-0249-DS1"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "para:requisites.them",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Куда переводить деньги «Горизонт-Логистик» — какой у них счёт в действующей редакции (договор оказания услуг)?",
+        "route": "rag",
+        "found": true,
+        "answer": "Деньги переводить по реквизитам из дополнительного соглашения № 1 от 01.04.2024, так как оно вступило в силу с 01.05.2024 и изменило пункт 2 договора [1]. Ссылки: [1][2]",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0249-DS1#2",
+            "doc_id": "K-0249-DS1",
+            "label": "2",
+            "document": "Доп. соглашение № 1 от 01.04.2024 к договору № 2023/176 от 30.05.2023 (действует с 01.05.2024), ООО «Горизонт-Логистик», п. 2",
+            "quote": "2. Изложить банковские реквизиты Исполнителя в следующей редакции: р/с 40702810482813085163 в АО «Центральный Финанс», БИК 045695207, к/с 30101810900000000207. Оплата по прежним реквизитам с даты вступления в силу Соглашения не производится.",
+            "start": 827,
+            "end": 1068,
+            "path": "contracts/K-0249-DS1.md",
+            "source": "model"
+          },
+          {
+            "n": 2,
+            "fragment_id": "K-0249#req-1",
+            "doc_id": "K-0249",
+            "label": "req-1",
+            "document": "Договор оказания услуг № 2023/176 от 30.05.2023, ООО «Горизонт-Логистик», раздел «Реквизиты и подписи Сторон», реквизиты стороны",
+            "quote": "**Исполнитель:** ООО «Горизонт-Логистик»\nИНН 4302555863, КПП 430250521\nАдрес: 808031, г. Усинск, ш. Бажова, д. 78\nр/с 40702810263536441876 в ПАО «Балтийский Эксперт Банк»\nБИК 046420379, к/с 30101810500000000379",
+            "start": 3269,
+            "end": 3479,
+            "path": "contracts/K-0249.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Горизонт-Логистик»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": [
+              "services"
+            ]
+          },
+          "counterparties": [
+            "ООО «Горизонт-Логистик»"
+          ],
+          "contract_kinds": [
+            "services"
+          ],
+          "documents": 2,
+          "context": [
+            {
+              "chunk_id": "K-0249-DS1#2",
+              "rrf": 0.03062,
+              "bm25_rank": 9,
+              "vector_rank": 2,
+              "rerank": 0.6497,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0249#req-1",
+              "rrf": 0.03202,
+              "bm25_rank": 4,
+              "vector_rank": 1,
+              "rerank": 0.293,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0249#2.2",
+              "rrf": 0.03175,
+              "bm25_rank": 3,
+              "vector_rank": 3,
+              "rerank": 0.1782,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0249#2.3",
+              "rrf": 0.03083,
+              "bm25_rank": 2,
+              "vector_rank": 8,
+              "rerank": 0.1427,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0249#preamble",
+              "rrf": 0.03178,
+              "bm25_rank": 1,
+              "vector_rank": 5,
+              "rerank": 0.0577,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.002,
+          "vector_s": 0.363,
+          "rerank_s": 4.152,
+          "retrieve_s": 4.518,
+          "generate_s": 1.049,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 1227,
+          "llm_completion_tokens": 76,
+          "total_s": 5.572
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0249-DS1#2",
+            "rrf": 0.03062,
+            "bm25_rank": 9,
+            "vector_rank": 2,
+            "rerank": 0.6497,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#req-1",
+            "rrf": 0.03202,
+            "bm25_rank": 4,
+            "vector_rank": 1,
+            "rerank": 0.293,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#2.2",
+            "rrf": 0.03175,
+            "bm25_rank": 3,
+            "vector_rank": 3,
+            "rerank": 0.1782,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#2.3",
+            "rrf": 0.03083,
+            "bm25_rank": 2,
+            "vector_rank": 8,
+            "rerank": 0.1427,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#preamble",
+            "rrf": 0.03178,
+            "bm25_rank": 1,
+            "vector_rank": 5,
+            "rerank": 0.0577,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#2.1",
+            "rrf": 0.02932,
+            "bm25_rank": 13,
+            "vector_rank": 4,
+            "rerank": 0.054,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249-DS1#preamble",
+            "rrf": 0.02881,
+            "bm25_rank": 12,
+            "vector_rank": 7,
+            "rerank": 0.0416,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#1.1",
+            "rrf": 0.02858,
+            "bm25_rank": 11,
+            "vector_rank": 9,
+            "rerank": 0.0228,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#5.1",
+            "rrf": 0.02765,
+            "bm25_rank": 6,
+            "vector_rank": 20,
+            "rerank": 0.0145,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#3.2",
+            "rrf": 0.02837,
+            "bm25_rank": 5,
+            "vector_rank": 17,
+            "rerank": 0.0073,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#8.1",
+            "rrf": 0.02724,
+            "bm25_rank": 16,
+            "vector_rank": 11,
+            "rerank": 0.0061,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#3.1",
+            "rrf": 0.02859,
+            "bm25_rank": 8,
+            "vector_rank": 12,
+            "rerank": 0.0059,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249-DS1#1",
+            "rrf": 0.02669,
+            "bm25_rank": 7,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#9.1",
+            "rrf": 0.02669,
+            "bm25_rank": 17,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#9.3",
+            "rrf": 0.02667,
+            "bm25_rank": 15,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#req-2",
+            "rrf": 0.02665,
+            "bm25_rank": 27,
+            "vector_rank": 6,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#6.3",
+            "rrf": 0.02663,
+            "bm25_rank": 10,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#1.2",
+            "rrf": 0.02633,
+            "bm25_rank": 14,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249-DS1#4",
+            "rrf": 0.02619,
+            "bm25_rank": 24,
+            "vector_rank": 10,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249-DS1#3",
+            "rrf": 0.02617,
+            "bm25_rank": 19,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#9.2",
+            "rrf": 0.02566,
+            "bm25_rank": 20,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#6.1",
+            "rrf": 0.025,
+            "bm25_rank": 21,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#7.1",
+            "rrf": 0.02431,
+            "bm25_rank": 18,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#7.2",
+            "rrf": 0.02424,
+            "bm25_rank": 23,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#6.2",
+            "rrf": 0.0241,
+            "bm25_rank": 22,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#5.2",
+            "rrf": 0.02368,
+            "bm25_rank": 26,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0249#4.1",
+            "rrf": 0.02339,
+            "bm25_rank": 25,
+            "vector_rank": 26,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": false,
+        "cited": 2,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 2,
+        "cited_superseded": 1,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q107",
+        "category": "amendment_override",
+        "category_name": "доп. соглашение отменяет условие",
+        "question": "На какой срок мы заключили договор с ИП Александрова с учётом дополнительных соглашений?",
+        "answer": "До 31.12.2026 включительно — по доп. соглашению № 1 от 16.03.2025 (действует с 01.04.2025, доп. соглашение № 1 к договору № 2024/66, п. 1). В первоначальной редакции договора было: до 31.12.2024 включительно.",
+        "keys": [
+          "31.12.2026"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0196-DS1#1",
+            "doc_id": "K-0196-DS1",
+            "quote": "1. Продлить срок действия Договора до 31.12.2026."
+          },
+          {
+            "fragment_id": "K-0196-DS1#2",
+            "doc_id": "K-0196-DS1",
+            "quote": "2. Соглашение вступает в силу с 01.04.2025."
+          }
+        ],
+        "superseded": [
+          {
+            "fragment_id": "K-0196#6.1",
+            "doc_id": "K-0196",
+            "quote": "6.1. Договор вступает в силу с даты подписания и действует до 31.12.2024."
+          }
+        ],
+        "wrong_answers": [
+          "до 31.12.2024 включительно"
+        ],
+        "doc_ids": [
+          "K-0196",
+          "K-0196-DS1"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "para:validity",
+        "author": "generator"
+      },
+      "result": {
+        "question": "На какой срок мы заключили договор с ИП Александрова с учётом дополнительных соглашений?",
+        "route": "rag",
+        "found": true,
+        "answer": "Договор продлен до 31.12.2026 с 01.04.2025 согласно Дополнительному соглашению № 1 от 16.03.2025, которое вступает в силу с этой даты и изменяет пункт 1 договора на срок действия до 31.12.2026 [2] [3] [4].",
+        "citations": [
+          {
+            "n": 2,
+            "fragment_id": "K-0196-DS1#preamble",
+            "doc_id": "K-0196-DS1",
+            "label": "preamble",
+            "document": "Доп. соглашение № 1 от 16.03.2025 к договору № 2024/66 от 21.07.2024 (действует с 01.04.2025), ИП Александрова Жанна Сергеевна",
+            "quote": "# ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ № 1\n\nк договору поставки № 2024/66 от 21.07.2024\n\nг. Самара, 16.03.2025\n\nАО «Тайга-Строй», именуемое в дальнейшем «Покупатель», в лице генерального директора, действующего на основании Устава, и индивидуальный предприниматель Александрова Жанна Сергеевна (далее — «Поставщик»), совместно именуемые «Стороны», заключили настоящее дополнительное соглашение (далее — «Соглашение») к Договору № 2024/66 от 21.07.2024 (далее — «Договор») о нижеследующем:",
+            "start": 0,
+            "end": 477,
+            "path": "contracts/K-0196-DS1.md",
+            "source": "matched"
+          },
+          {
+            "n": 3,
+            "fragment_id": "K-0196-DS1#1",
+            "doc_id": "K-0196-DS1",
+            "label": "1",
+            "document": "Доп. соглашение № 1 от 16.03.2025 к договору № 2024/66 от 21.07.2024 (действует с 01.04.2025), ИП Александрова Жанна Сергеевна, п. 1",
+            "quote": "1. Продлить срок действия Договора до 31.12.2026.",
+            "start": 479,
+            "end": 528,
+            "path": "contracts/K-0196-DS1.md",
+            "source": "matched"
+          },
+          {
+            "n": 4,
+            "fragment_id": "K-0196-DS1#2",
+            "doc_id": "K-0196-DS1",
+            "label": "2",
+            "document": "Доп. соглашение № 1 от 16.03.2025 к договору № 2024/66 от 21.07.2024 (действует с 01.04.2025), ИП Александрова Жанна Сергеевна, п. 2",
+            "quote": "2. Соглашение вступает в силу с 01.04.2025.",
+            "start": 530,
+            "end": 573,
+            "path": "contracts/K-0196-DS1.md",
+            "source": "matched"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ИП Александрова Жанна Сергеевна"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": []
+          },
+          "counterparties": [
+            "ИП Александрова Жанна Сергеевна"
+          ],
+          "documents": 2,
+          "context": [
+            {
+              "chunk_id": "K-0196#6.1",
+              "rrf": 0.03055,
+              "bm25_rank": 7,
+              "vector_rank": 4,
+              "rerank": 0.9552,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0196-DS1#preamble",
+              "rrf": 0.03178,
+              "bm25_rank": 1,
+              "vector_rank": 5,
+              "rerank": 0.9551,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0196-DS1#1",
+              "rrf": 0.03252,
+              "bm25_rank": 2,
+              "vector_rank": 1,
+              "rerank": 0.9395,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0196-DS1#2",
+              "rrf": 0.03175,
+              "bm25_rank": 3,
+              "vector_rank": 3,
+              "rerank": 0.9029,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0196#preamble",
+              "rrf": 0.02804,
+              "bm25_rank": 5,
+              "vector_rank": 19,
+              "rerank": 0.7475,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.002,
+          "vector_s": 0.338,
+          "rerank_s": 6.573,
+          "retrieve_s": 6.914,
+          "generate_s": 1.236,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 1136,
+          "llm_completion_tokens": 91,
+          "total_s": 8.153
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0196#6.1",
+            "rrf": 0.03055,
+            "bm25_rank": 7,
+            "vector_rank": 4,
+            "rerank": 0.9552,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196-DS1#preamble",
+            "rrf": 0.03178,
+            "bm25_rank": 1,
+            "vector_rank": 5,
+            "rerank": 0.9551,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196-DS1#1",
+            "rrf": 0.03252,
+            "bm25_rank": 2,
+            "vector_rank": 1,
+            "rerank": 0.9395,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196-DS1#2",
+            "rrf": 0.03175,
+            "bm25_rank": 3,
+            "vector_rank": 3,
+            "rerank": 0.9029,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#preamble",
+            "rrf": 0.02804,
+            "bm25_rank": 5,
+            "vector_rank": 19,
+            "rerank": 0.7475,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196-DS1#3",
+            "rrf": 0.03175,
+            "bm25_rank": 4,
+            "vector_rank": 2,
+            "rerank": 0.6681,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#6.2",
+            "rrf": 0.02964,
+            "bm25_rank": 9,
+            "vector_rank": 6,
+            "rerank": 0.4925,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#1.1",
+            "rrf": 0.02724,
+            "bm25_rank": 11,
+            "vector_rank": 16,
+            "rerank": 0.2235,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#req-1",
+            "rrf": 0.02797,
+            "bm25_rank": 6,
+            "vector_rank": 18,
+            "rerank": 0.1351,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#9.3",
+            "rrf": 0.02791,
+            "bm25_rank": 17,
+            "vector_rank": 7,
+            "rerank": 0.1304,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#8.2",
+            "rrf": 0.02724,
+            "bm25_rank": 16,
+            "vector_rank": 11,
+            "rerank": 0.0516,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#8.1",
+            "rrf": 0.02941,
+            "bm25_rank": 8,
+            "vector_rank": 8,
+            "rerank": 0.0467,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#1.2",
+            "rrf": 0.02703,
+            "bm25_rank": 13,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#1.3",
+            "rrf": 0.02699,
+            "bm25_rank": 20,
+            "vector_rank": 9,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#9.1",
+            "rrf": 0.02636,
+            "bm25_rank": 19,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#2.3",
+            "rrf": 0.02633,
+            "bm25_rank": 18,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#9.2",
+            "rrf": 0.02594,
+            "bm25_rank": 23,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#5.2",
+            "rrf": 0.02591,
+            "bm25_rank": 10,
+            "vector_rank": 26,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#5.3",
+            "rrf": 0.02571,
+            "bm25_rank": 14,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#3.1",
+            "rrf": 0.02568,
+            "bm25_rank": 15,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#5.1",
+            "rrf": 0.02565,
+            "bm25_rank": 12,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#2.2",
+            "rrf": 0.02565,
+            "bm25_rank": 28,
+            "vector_rank": 10,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#7.1",
+            "rrf": 0.02475,
+            "bm25_rank": 25,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#2.1",
+            "rrf": 0.0244,
+            "bm25_rank": 24,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#3.2",
+            "rrf": 0.02439,
+            "bm25_rank": 21,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#7.2",
+            "rrf": 0.0241,
+            "bm25_rank": 22,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#4.1",
+            "rrf": 0.02312,
+            "bm25_rank": 26,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0196#req-2",
+            "rrf": 0.02286,
+            "bm25_rank": 27,
+            "vector_rank": 28,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 3,
+        "cited_gold": 2,
+        "sources_cited": 2,
+        "sources": 2,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q112",
+        "category": "amendment_override",
+        "category_name": "доп. соглашение отменяет условие",
+        "question": "В какой срок заказчик подписывает акт КС-2 и справку КС-3 по договору подряда № 293-ПД от 17.03.2024 сейчас?",
+        "answer": "В течение 5 рабочих дней с даты получения акта КС-2 и справки КС-3 заказчик подписывает их или направляет мотивированный отказ — по доп. соглашению № 1 от 11.09.2024 (действует с 01.10.2024, доп. соглашение № 1 к договору № 293-ПД, п. 1). В первоначальной редакции договора было: в течение 14 рабочих дней с даты получения акта КС-2 и справки КС-3 заказчик подписывает их или направляет мотивированный отказ.",
+        "keys": [
+          "5"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0008-DS1#1",
+            "doc_id": "K-0008-DS1",
+            "quote": "1. Внести изменение в Договор, изложив пункт 4.1 следующим образом: «Заказчик в течение 5 рабочих дней с даты получения акта о приёмке выполненных работ (КС-2) и справки о стоимости (КС-3) подписывает их или направляет Подрядчику мотивированный отказ.»"
+          },
+          {
+            "fragment_id": "K-0008-DS1#2",
+            "doc_id": "K-0008-DS1",
+            "quote": "2. Настоящее Соглашение вступает в силу с 01.10.2024 и является неотъемлемой частью Договора."
+          }
+        ],
+        "superseded": [
+          {
+            "fragment_id": "K-0008#4.1",
+            "doc_id": "K-0008",
+            "quote": "4.1. Заказчик в течение 14 рабочих дней с даты получения акта о приёмке выполненных работ (КС-2) и справки о стоимости (КС-3) подписывает их или направляет Подрядчику мотивированный отказ."
+          }
+        ],
+        "wrong_answers": [
+          "в течение 14 рабочих дней с даты получения акта КС-2 и справки КС-3 заказчик подписывает их или направляет мотивированный отказ"
+        ],
+        "doc_ids": [
+          "K-0008",
+          "K-0008-DS1"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "simple:acceptance",
+        "author": "generator"
+      },
+      "result": {
+        "question": "В какой срок заказчик подписывает акт КС-2 и справку КС-3 по договору подряда № 293-ПД от 17.03.2024 сейчас?",
+        "route": "rag",
+        "found": true,
+        "answer": "Согласно дополнительному соглашению № 1 от 11.09.2024 (действует с 01.10.2024), срок сократился до 5 рабочих дней с даты получения документов, что является изменением пункта 4.1 договора [2]. Ответ: [2]",
+        "citations": [
+          {
+            "n": 2,
+            "fragment_id": "K-0008-DS1#1",
+            "doc_id": "K-0008-DS1",
+            "label": "1",
+            "document": "Доп. соглашение № 1 от 11.09.2024 к договору № 293-ПД от 17.03.2024 (действует с 01.10.2024), ООО «Горизонт-Системы», п. 1",
+            "quote": "1. Внести изменение в Договор, изложив пункт 4.1 следующим образом: «Заказчик в течение 5 рабочих дней с даты получения акта о приёмке выполненных работ (КС-2) и справки о стоимости (КС-3) подписывает их или направляет Подрядчику мотивированный отказ.»",
+            "start": 501,
+            "end": 753,
+            "path": "contracts/K-0008-DS1.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "293-ПД",
+                "date": "2024-03-17"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "works"
+            ]
+          },
+          "contracts": [
+            "K-0008"
+          ],
+          "documents": 2,
+          "context": [
+            {
+              "chunk_id": "K-0008#4.1",
+              "rrf": 0.03279,
+              "bm25_rank": 1,
+              "vector_rank": 1,
+              "rerank": 0.999,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0008-DS1#1",
+              "rrf": 0.03151,
+              "bm25_rank": 2,
+              "vector_rank": 5,
+              "rerank": 0.9956,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0008#2.2",
+              "rrf": 0.03016,
+              "bm25_rank": 3,
+              "vector_rank": 10,
+              "rerank": 0.9836,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0008#7.1",
+              "rrf": 0.02964,
+              "bm25_rank": 14,
+              "vector_rank": 2,
+              "rerank": 0.9031,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0008#3.1",
+              "rrf": 0.03126,
+              "bm25_rank": 5,
+              "vector_rank": 3,
+              "rerank": 0.8995,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.003,
+          "vector_s": 0.394,
+          "rerank_s": 4.13,
+          "retrieve_s": 4.528,
+          "generate_s": 1.148,
+          "llm_load_s": 0.009,
+          "llm_prompt_tokens": 1079,
+          "llm_completion_tokens": 79,
+          "total_s": 5.681
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0008#4.1",
+            "rrf": 0.03279,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "rerank": 0.999,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008-DS1#1",
+            "rrf": 0.03151,
+            "bm25_rank": 2,
+            "vector_rank": 5,
+            "rerank": 0.9956,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#2.2",
+            "rrf": 0.03016,
+            "bm25_rank": 3,
+            "vector_rank": 10,
+            "rerank": 0.9836,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#7.1",
+            "rrf": 0.02964,
+            "bm25_rank": 14,
+            "vector_rank": 2,
+            "rerank": 0.9031,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#3.1",
+            "rrf": 0.03126,
+            "bm25_rank": 5,
+            "vector_rank": 3,
+            "rerank": 0.8995,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#5.1",
+            "rrf": 0.02838,
+            "bm25_rank": 9,
+            "vector_rank": 12,
+            "rerank": 0.8352,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#2.4",
+            "rrf": 0.02879,
+            "bm25_rank": 8,
+            "vector_rank": 11,
+            "rerank": 0.717,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#preamble",
+            "rrf": 0.02963,
+            "bm25_rank": 7,
+            "vector_rank": 8,
+            "rerank": 0.7168,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008-DS1#preamble",
+            "rrf": 0.02885,
+            "bm25_rank": 6,
+            "vector_rank": 13,
+            "rerank": 0.4838,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#3.2",
+            "rrf": 0.03125,
+            "bm25_rank": 4,
+            "vector_rank": 4,
+            "rerank": 0.3485,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#11.2",
+            "rrf": 0.02775,
+            "bm25_rank": 18,
+            "vector_rank": 7,
+            "rerank": 0.3348,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#6.3",
+            "rrf": 0.02858,
+            "bm25_rank": 11,
+            "vector_rank": 9,
+            "rerank": 0.0677,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#11.1",
+            "rrf": 0.02765,
+            "bm25_rank": 20,
+            "vector_rank": 6,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#5.2",
+            "rrf": 0.02722,
+            "bm25_rank": 12,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#1.2",
+            "rrf": 0.02721,
+            "bm25_rank": 13,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#2.3",
+            "rrf": 0.02679,
+            "bm25_rank": 10,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#9.1",
+            "rrf": 0.02598,
+            "bm25_rank": 16,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#6.1",
+            "rrf": 0.02568,
+            "bm25_rank": 15,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#10.1",
+            "rrf": 0.02535,
+            "bm25_rank": 22,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#6.2",
+            "rrf": 0.02533,
+            "bm25_rank": 21,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#2.1",
+            "rrf": 0.02456,
+            "bm25_rank": 24,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#9.2",
+            "rrf": 0.02448,
+            "bm25_rank": 17,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#8.2",
+            "rrf": 0.02389,
+            "bm25_rank": 19,
+            "vector_rank": 29,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#1.1",
+            "rrf": 0.02369,
+            "bm25_rank": 27,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008-DS1#2",
+            "rrf": 0.02368,
+            "bm25_rank": 23,
+            "vector_rank": 26,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#8.1",
+            "rrf": 0.02368,
+            "bm25_rank": 26,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008-DS1#3",
+            "rrf": 0.02367,
+            "bm25_rank": 25,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#req-1",
+            "rrf": 0.023,
+            "bm25_rank": 29,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#req-2",
+            "rrf": 0.02273,
+            "bm25_rank": 28,
+            "vector_rank": 28,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 1,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 2,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q146",
+        "category": "comparison",
+        "category_name": "сравнение двух договоров",
+        "question": "В каком из договоров стоимость работ выше: договор подряда № 149 от 10.11.2023 с ООО «Горизонт-Снаб» или договор подряда № Д-1614 от 10.06.2026 с ООО «Горизонт-Снаб»?",
+        "answer": "Больше по договору № Д-1614 с ООО «Горизонт-Снаб». По договору № 149 с ООО «Горизонт-Снаб» — 4 440 000,00 руб., включая НДС (твёрдая цена) (договор подряда № 149 от 10.11.2023, п. 2.1); по договору № Д-1614 с ООО «Горизонт-Снаб» — 6 200 000,00 руб., включая НДС (твёрдая цена) (договор подряда № Д-1614 от 10.06.2026, п. 2.1).",
+        "keys": [
+          "4440000",
+          "6200000",
+          "Д-1614"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0204#2.1",
+            "doc_id": "K-0204",
+            "quote": "2.1. Общая стоимость Работ определена сметой (Приложение № 2) и составляет 4 440 000 (четыре миллиона четыреста сорок тысяч) рублей 00 копеек, в том числе НДС."
+          },
+          {
+            "fragment_id": "K-0153#2.1",
+            "doc_id": "K-0153",
+            "quote": "2.1. Общая стоимость Работ определена сметой (Приложение № 2) и составляет 6 200 000 (шесть миллионов двести тысяч) рублей 00 копеек, в том числе НДС."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0153",
+          "K-0204"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "compare:price",
+        "author": "generator"
+      },
+      "result": {
+        "question": "В каком из договоров стоимость работ выше: договор подряда № 149 от 10.11.2023 с ООО «Горизонт-Снаб» или договор подряда № Д-1614 от 10.06.2026 с ООО «Горизонт-Снаб»?",
+        "route": "rag",
+        "found": true,
+        "answer": "Стоимость работ выше в договоре подряда № Д-1614 от 10.06.2026, так как он составляет 6 200 000 рублей, что больше, чем 4 440 000 рублей в договоре № 149 от 10.11.2023 [1] [2] [3] [4].",
+        "citations": [
+          {
+            "n": 1,
+            "fragment_id": "K-0153#preamble",
+            "doc_id": "K-0153",
+            "label": "preamble",
+            "document": "Договор подряда № Д-1614 от 10.06.2026, ООО «Горизонт-Снаб»",
+            "quote": "# ДОГОВОР ПОДРЯДА НА ВЫПОЛНЕНИЕ РАБОТ № Д-1614\n\nг. Краснодар, 10 июня 2026 года\n\nАО «Тайга-Строй», именуемое в дальнейшем «Заказчик», в лице генерального директора, действующего на основании Устава, и ООО «Горизонт-Снаб», именуемое в дальнейшем «Подрядчик», в лице генерального директора, действующего на основании Устава, заключили настоящий Договор на следующих условиях:",
+            "start": 0,
+            "end": 373,
+            "path": "contracts/K-0153.md",
+            "source": "matched"
+          },
+          {
+            "n": 2,
+            "fragment_id": "K-0153#2.1",
+            "doc_id": "K-0153",
+            "label": "2.1",
+            "document": "Договор подряда № Д-1614 от 10.06.2026, ООО «Горизонт-Снаб», раздел «Цена и порядок расчётов», п. 2.1",
+            "quote": "2.1. Общая стоимость Работ определена сметой (Приложение № 2) и составляет 6 200 000 (шесть миллионов двести тысяч) рублей 00 копеек, в том числе НДС.",
+            "start": 781,
+            "end": 931,
+            "path": "contracts/K-0153.md",
+            "source": "matched"
+          },
+          {
+            "n": 3,
+            "fragment_id": "K-0204#preamble",
+            "doc_id": "K-0204",
+            "label": "preamble",
+            "document": "Договор подряда № 149 от 10.11.2023, ООО «Горизонт-Снаб»",
+            "quote": "# ДОГОВОР ПОДРЯДА НА ВЫПОЛНЕНИЕ РАБОТ № 149\n\nг. Екатеринбург, 10.11.2023\n\nООО «Горизонт-Снаб», именуемое в дальнейшем «Подрядчик», в лице генерального директора, действующего на основании Устава, и АО «Тайга-Строй» (далее — «Заказчик») в лице генерального директора, действующего на основании Устава, далее вместе — «Стороны», заключили настоящий договор (далее — Договор) о следующем:",
+            "start": 0,
+            "end": 385,
+            "path": "contracts/K-0204.md",
+            "source": "matched"
+          },
+          {
+            "n": 4,
+            "fragment_id": "K-0204#2.1",
+            "doc_id": "K-0204",
+            "label": "2.1",
+            "document": "Договор подряда № 149 от 10.11.2023, ООО «Горизонт-Снаб», раздел «Порядок расчётов», п. 2.1",
+            "quote": "2.1. Общая стоимость Работ определена сметой (Приложение № 2) и составляет 4 440 000 (четыре миллиона четыреста сорок тысяч) рублей 00 копеек, в том числе НДС.",
+            "start": 785,
+            "end": 944,
+            "path": "contracts/K-0204.md",
+            "source": "matched"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Горизонт-Снаб»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "149",
+                "date": "2023-11-10"
+              },
+              {
+                "number": "Д-1614",
+                "date": "2026-06-10"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "works"
+            ]
+          },
+          "contracts": [
+            "K-0153",
+            "K-0204"
+          ],
+          "documents": 2,
+          "context": [
+            {
+              "chunk_id": "K-0153#preamble",
+              "rrf": 0.03178,
+              "bm25_rank": 1,
+              "vector_rank": 5,
+              "rerank": 0.9906,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0153#2.1",
+              "rrf": 0.02879,
+              "bm25_rank": 19,
+              "vector_rank": 2,
+              "rerank": 0.9895,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0204#preamble",
+              "rrf": 0.03037,
+              "bm25_rank": 9,
+              "vector_rank": 3,
+              "rerank": 0.9813,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0204#2.1",
+              "rrf": 0.01639,
+              "bm25_rank": null,
+              "vector_rank": 1,
+              "rerank": 0.9803,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0153#3.1",
+              "rrf": 0.02848,
+              "bm25_rank": 6,
+              "vector_rank": 15,
+              "rerank": 0.9736,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.003,
+          "vector_s": 0.492,
+          "rerank_s": 7.096,
+          "retrieve_s": 7.592,
+          "generate_s": 1.305,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 1210,
+          "llm_completion_tokens": 90,
+          "total_s": 8.902
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0153#preamble",
+            "rrf": 0.03178,
+            "bm25_rank": 1,
+            "vector_rank": 5,
+            "rerank": 0.9906,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#2.1",
+            "rrf": 0.02879,
+            "bm25_rank": 19,
+            "vector_rank": 2,
+            "rerank": 0.9895,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#preamble",
+            "rrf": 0.03037,
+            "bm25_rank": 9,
+            "vector_rank": 3,
+            "rerank": 0.9813,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#2.1",
+            "rrf": 0.01639,
+            "bm25_rank": null,
+            "vector_rank": 1,
+            "rerank": 0.9803,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#3.1",
+            "rrf": 0.02848,
+            "bm25_rank": 6,
+            "vector_rank": 15,
+            "rerank": 0.9736,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#1.1",
+            "rrf": 0.02744,
+            "bm25_rank": 10,
+            "vector_rank": 16,
+            "rerank": 0.9605,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#1.3",
+            "rrf": 0.03037,
+            "bm25_rank": 3,
+            "vector_rank": 9,
+            "rerank": 0.9224,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#9.2",
+            "rrf": 0.02797,
+            "bm25_rank": 12,
+            "vector_rank": 11,
+            "rerank": 0.9216,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#req-1",
+            "rrf": 0.02769,
+            "bm25_rank": 8,
+            "vector_rank": 17,
+            "rerank": 0.9124,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#6.2",
+            "rrf": 0.02821,
+            "bm25_rank": 5,
+            "vector_rank": 18,
+            "rerank": 0.8889,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#1.2",
+            "rrf": 0.03125,
+            "bm25_rank": 4,
+            "vector_rank": 4,
+            "rerank": 0.8105,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#3.2",
+            "rrf": 0.02776,
+            "bm25_rank": 2,
+            "vector_rank": 26,
+            "rerank": 0.7675,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#1.2",
+            "rrf": 0.02712,
+            "bm25_rank": 22,
+            "vector_rank": 7,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#6.3",
+            "rrf": 0.02642,
+            "bm25_rank": 7,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#5.1",
+            "rrf": 0.02553,
+            "bm25_rank": 15,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#3.1",
+            "rrf": 0.02552,
+            "bm25_rank": 29,
+            "vector_rank": 10,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#req-1",
+            "rrf": 0.02514,
+            "bm25_rank": 26,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#7.1",
+            "rrf": 0.02492,
+            "bm25_rank": 16,
+            "vector_rank": 25,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#3.2",
+            "rrf": 0.02439,
+            "bm25_rank": 23,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#9.1",
+            "rrf": 0.0241,
+            "bm25_rank": 17,
+            "vector_rank": 30,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#2.3",
+            "rrf": 0.0234,
+            "bm25_rank": 27,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#1.1",
+            "rrf": 0.01515,
+            "bm25_rank": null,
+            "vector_rank": 6,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#9.1",
+            "rrf": 0.01471,
+            "bm25_rank": null,
+            "vector_rank": 8,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#2.3",
+            "rrf": 0.01408,
+            "bm25_rank": 11,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#6.2",
+            "rrf": 0.01389,
+            "bm25_rank": null,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#2.4",
+            "rrf": 0.0137,
+            "bm25_rank": 13,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#7.1",
+            "rrf": 0.0137,
+            "bm25_rank": null,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#5.2",
+            "rrf": 0.01351,
+            "bm25_rank": 14,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#8.2",
+            "rrf": 0.01282,
+            "bm25_rank": 18,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#2.2",
+            "rrf": 0.01266,
+            "bm25_rank": null,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 4,
+        "cited_gold": 2,
+        "sources_cited": 2,
+        "sources": 2,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q154",
+        "category": "comparison",
+        "category_name": "сравнение двух договоров",
+        "question": "Одинаковые ли условия (срок оплаты) в двух договорах: договор поставки № П-309/24 от 13.03.2024 с ООО «Балтика-Инвест» и договор поставки № П-523/25 от 11.12.2025 с ООО «Прогресс-Торг»?",
+        "answer": "Да, одинаковые. По договору № П-309/24 с ООО «Балтика-Инвест» — в течение 30 календарных дней с даты подписания УПД (товарной накладной) (договор поставки № П-309/24 от 13.03.2024, п. 2.2); по договору № П-523/25 с ООО «Прогресс-Торг» — в течение 30 календарных дней с даты поставки товара (договор поставки № П-523/25 от 11.12.2025, п. 2.2).",
+        "keys": [
+          "30",
+          "календарн",
+          "30",
+          "календарн"
+        ],
+        "route": "rag",
+        "sources": [
+          {
+            "fragment_id": "K-0132#2.2",
+            "doc_id": "K-0132",
+            "quote": "2.2. Покупатель обязуется произвести оплату Товара не позднее 30 календарных дней с даты подписания Сторонами универсального передаточного документа (товарной накладной)."
+          },
+          {
+            "fragment_id": "K-0130#2.2",
+            "doc_id": "K-0130",
+            "quote": "2.2. Покупатель оплачивает Товар в течение 30 календарных дней с даты поставки Товара."
+          }
+        ],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0130",
+          "K-0132"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "compare-equal:payment",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Одинаковые ли условия (срок оплаты) в двух договорах: договор поставки № П-309/24 от 13.03.2024 с ООО «Балтика-Инвест» и договор поставки № П-523/25 от 11.12.2025 с ООО «Прогресс-Торг»?",
+        "route": "rag",
+        "found": true,
+        "answer": "Условия оплаты не одинаковы: первый договор действует до полного исполнения обязательств, а второй требует оплаты в течение 30 календарных дней с даты поставки [4]. Ссылки: [1], [4]",
+        "citations": [
+          {
+            "n": 4,
+            "fragment_id": "K-0130#2.2",
+            "doc_id": "K-0130",
+            "label": "2.2",
+            "document": "Договор поставки № П-523/25 от 11.12.2025, ООО «Прогресс-Торг», раздел «Цена Договора и расчёты», п. 2.2",
+            "quote": "2.2. Покупатель оплачивает Товар в течение 30 календарных дней с даты поставки Товара.",
+            "start": 810,
+            "end": 896,
+            "path": "contracts/K-0130.md",
+            "source": "model"
+          },
+          {
+            "n": 1,
+            "fragment_id": "K-0132#5.1",
+            "doc_id": "K-0132",
+            "label": "5.1",
+            "document": "Договор поставки № П-309/24 от 13.03.2024, ООО «Балтика-Инвест», раздел «Срок действия и порядок расторжения», п. 5.1",
+            "quote": "5.1. Настоящий Договор действует по 31 декабря 2024 года, а в части расчётов — до полного исполнения Сторонами обязательств.",
+            "start": 1529,
+            "end": 1653,
+            "path": "contracts/K-0132.md",
+            "source": "model"
+          }
+        ],
+        "reason": null,
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Балтика-Инвест»",
+              "ООО «Прогресс-Торг»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "П-309/24",
+                "date": "2024-03-13"
+              },
+              {
+                "number": "П-523/25",
+                "date": "2025-12-11"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "supply"
+            ]
+          },
+          "contracts": [
+            "K-0130",
+            "K-0132"
+          ],
+          "documents": 2,
+          "context": [
+            {
+              "chunk_id": "K-0132#5.1",
+              "rrf": 0.02821,
+              "bm25_rank": 18,
+              "vector_rank": 5,
+              "rerank": 0.9817,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0132#8.1",
+              "rrf": 0.03252,
+              "bm25_rank": 2,
+              "vector_rank": 1,
+              "rerank": 0.9716,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0132#preamble",
+              "rrf": 0.03048,
+              "bm25_rank": 1,
+              "vector_rank": 11,
+              "rerank": 0.9603,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0130#2.2",
+              "rrf": 0.02727,
+              "bm25_rank": 17,
+              "vector_rank": 10,
+              "rerank": 0.9602,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0130#10.1",
+              "rrf": 0.02837,
+              "bm25_rank": 3,
+              "vector_rank": 20,
+              "rerank": 0.9555,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 1
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.005,
+          "vector_s": 0.518,
+          "rerank_s": 4.255,
+          "retrieve_s": 4.779,
+          "generate_s": 0.834,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 1064,
+          "llm_completion_tokens": 54,
+          "total_s": 5.616
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0132#5.1",
+            "rrf": 0.02821,
+            "bm25_rank": 18,
+            "vector_rank": 5,
+            "rerank": 0.9817,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#8.1",
+            "rrf": 0.03252,
+            "bm25_rank": 2,
+            "vector_rank": 1,
+            "rerank": 0.9716,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#preamble",
+            "rrf": 0.03048,
+            "bm25_rank": 1,
+            "vector_rank": 11,
+            "rerank": 0.9603,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#2.2",
+            "rrf": 0.02727,
+            "bm25_rank": 17,
+            "vector_rank": 10,
+            "rerank": 0.9602,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#10.1",
+            "rrf": 0.02837,
+            "bm25_rank": 3,
+            "vector_rank": 20,
+            "rerank": 0.9555,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#2.2",
+            "rrf": 0.02737,
+            "bm25_rank": 27,
+            "vector_rank": 3,
+            "rerank": 0.8844,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#2.3",
+            "rrf": 0.02872,
+            "bm25_rank": 5,
+            "vector_rank": 15,
+            "rerank": 0.8245,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#8.2",
+            "rrf": 0.0292,
+            "bm25_rank": 8,
+            "vector_rank": 9,
+            "rerank": 0.5779,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#2.1",
+            "rrf": 0.02753,
+            "bm25_rank": 24,
+            "vector_rank": 4,
+            "rerank": 0.3445,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#6.3",
+            "rrf": 0.02899,
+            "bm25_rank": 10,
+            "vector_rank": 8,
+            "rerank": 0.3413,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#2.3",
+            "rrf": 0.02983,
+            "bm25_rank": 13,
+            "vector_rank": 2,
+            "rerank": 0.2609,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#1.2",
+            "rrf": 0.03055,
+            "bm25_rank": 4,
+            "vector_rank": 7,
+            "rerank": 0.2539,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#5.2",
+            "rrf": 0.02685,
+            "bm25_rank": 15,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#9.1",
+            "rrf": 0.02671,
+            "bm25_rank": 12,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#10.2",
+            "rrf": 0.02667,
+            "bm25_rank": 14,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#1.2",
+            "rrf": 0.02665,
+            "bm25_rank": 6,
+            "vector_rank": 27,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#6.1",
+            "rrf": 0.02652,
+            "bm25_rank": 28,
+            "vector_rank": 6,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#preamble",
+            "rrf": 0.02629,
+            "bm25_rank": 7,
+            "vector_rank": 28,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#1.1",
+            "rrf": 0.02589,
+            "bm25_rank": 22,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#6.1",
+            "rrf": 0.02571,
+            "bm25_rank": 11,
+            "vector_rank": 26,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#7.2",
+            "rrf": 0.02535,
+            "bm25_rank": 16,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#5.3",
+            "rrf": 0.02533,
+            "bm25_rank": 21,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#3.2",
+            "rrf": 0.02485,
+            "bm25_rank": 20,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#3.1",
+            "rrf": 0.02389,
+            "bm25_rank": 29,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#1.1",
+            "rrf": 0.02302,
+            "bm25_rank": 30,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#3.2",
+            "rrf": 0.01449,
+            "bm25_rank": 9,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0132#6.2",
+            "rrf": 0.01389,
+            "bm25_rank": null,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#3.1",
+            "rrf": 0.01266,
+            "bm25_rank": 19,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#2.1",
+            "rrf": 0.01205,
+            "bm25_rank": null,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0130#6.3",
+            "rrf": 0.01205,
+            "bm25_rank": 23,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": true,
+        "cited": 2,
+        "cited_gold": 1,
+        "sources_cited": 1,
+        "sources": 2,
+        "cited_superseded": 0,
+        "foreign_docs": []
+      }
+    },
+    {
+      "question": {
+        "id": "Q156",
+        "category": "registry_aggregate",
+        "category_name": "агрегат по реестру",
+        "question": "Сколько накладных ТОРГ-12 получено от АО «Сибирь-Опт» за 2026 год?",
+        "answer": "6: № Ф-3072 от 19.06.2026, № Ш-4150 от 08.05.2026, № УТ-030589 от 07.03.2026, № 130/Т от 11.08.2026, № В-6236 от 27.06.2026, № 7907 от 10.10.2026 (реестр первичных документов).",
+        "keys": [
+          "6"
+        ],
+        "route": "table",
+        "sources": [],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [],
+        "registry_rows": [
+          "R-00098",
+          "R-00140",
+          "R-00259",
+          "R-00290",
+          "R-00447",
+          "R-00704"
+        ],
+        "sql": "SELECT COUNT(*) FROM registry WHERE seller_inn = '8605871590' AND doc_type = 'torg12' AND date BETWEEN '2026-01-01' AND '2026-12-31'",
+        "sql_detail": null,
+        "expected_value": "6",
+        "template": "count_type",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Сколько накладных ТОРГ-12 получено от АО «Сибирь-Опт» за 2026 год?",
+        "route": "sql",
+        "found": true,
+        "answer": "За 2026 год бухгалтеру получено 6 накладных ТОРГ-12 от АО «Сибирь-Опт».",
+        "citations": [],
+        "reason": null,
+        "sql": "SELECT COUNT(*) FROM registry WHERE seller_inn = '8605871590' AND doc_type = 'torg12' AND date BETWEEN '2026-01-01' AND '2026-12-31'",
+        "sql_columns": [
+          "COUNT(*)"
+        ],
+        "sql_rows": [
+          [
+            "6"
+          ]
+        ],
+        "filters": {
+          "query": {
+            "counterparties": [
+              "АО «Сибирь-Опт»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": [
+              "2026-01-01",
+              "2026-12-31"
+            ],
+            "contract_kinds": []
+          }
+        },
+        "timings": {
+          "sql1_load_s": 0.006,
+          "sql1_prompt_tokens": 1100,
+          "sql1_completion_tokens": 70,
+          "sql_s": 1.047,
+          "generate_s": 0.458,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 186,
+          "llm_completion_tokens": 39,
+          "total_s": 1.507
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": null,
+        "candidates": null
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": null
+      }
+    },
+    {
+      "question": {
+        "id": "Q168",
+        "category": "registry_aggregate",
+        "category_name": "агрегат по реестру",
+        "question": "На какую общую сумму ООО «Балтика-Снаб» выставил нам счетов на оплату в 2025 году?",
+        "answer": "689 755,92 руб., счетов: 2 (реестр первичных документов).",
+        "keys": [
+          "689755,92"
+        ],
+        "route": "table",
+        "sources": [],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [],
+        "registry_rows": [
+          "R-00058",
+          "R-00330"
+        ],
+        "sql": "SELECT ROUND(SUM(CAST(amount_with_vat AS REAL)), 2) FROM registry WHERE seller_inn = '7434182733' AND doc_type = 'bill' AND date LIKE '2025-%'",
+        "sql_detail": null,
+        "expected_value": "689755.92",
+        "template": "sum_bills",
+        "author": "generator"
+      },
+      "result": {
+        "question": "На какую общую сумму ООО «Балтика-Снаб» выставил нам счетов на оплату в 2025 году?",
+        "route": "sql",
+        "found": true,
+        "answer": "ООО «Балтика-Снаб» выставило вам на оплату в 2025 году на общую сумму 689755,92 рубля.",
+        "citations": [],
+        "reason": null,
+        "sql": "SELECT ROUND(SUM(amount_with_vat), 2) FROM registry WHERE seller_inn = '7434182733' AND doc_type = 'bill' AND date BETWEEN '2025-01-01' AND '2025-12-31' GROUP BY seller_inn",
+        "sql_columns": [
+          "ROUND(SUM(amount_with_vat), 2)"
+        ],
+        "sql_rows": [
+          [
+            "689755.92"
+          ]
+        ],
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ООО «Балтика-Снаб»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": [
+              "2025-01-01",
+              "2025-12-31"
+            ],
+            "contract_kinds": []
+          }
+        },
+        "timings": {
+          "sql1_load_s": 0.005,
+          "sql1_prompt_tokens": 1104,
+          "sql1_completion_tokens": 89,
+          "sql2_load_s": 0.006,
+          "sql2_prompt_tokens": 1247,
+          "sql2_completion_tokens": 77,
+          "sql_s": 5.626,
+          "generate_s": 0.513,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 212,
+          "llm_completion_tokens": 44,
+          "total_s": 6.14
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": null,
+        "candidates": null
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": null
+      }
+    },
+    {
+      "question": {
+        "id": "Q173",
+        "category": "registry_aggregate",
+        "category_name": "агрегат по реестру",
+        "question": "Сколько НДС предъявил нам АО «Ладога» по счетам-фактурам и УПД за 2025 год?",
+        "answer": "17 990,97 руб., документов: 6 (реестр первичных документов).",
+        "keys": [
+          "17990,97"
+        ],
+        "route": "table",
+        "sources": [],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [],
+        "registry_rows": [
+          "R-00189",
+          "R-00228",
+          "R-00713",
+          "R-00803",
+          "R-00838",
+          "R-00896"
+        ],
+        "sql": "SELECT ROUND(SUM(CAST(vat_amount AS REAL)), 2) FROM registry WHERE seller_inn = '6422580632' AND doc_type IN ('upd', 'vat_invoice') AND date LIKE '2025-%'",
+        "sql_detail": null,
+        "expected_value": "17990.97",
+        "template": "vat_sum",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Сколько НДС предъявил нам АО «Ладога» по счетам-фактурам и УПД за 2025 год?",
+        "route": "sql",
+        "found": true,
+        "answer": "По счетам-фактурам и УПД за 2025 год АО «Ладога» предъявило НДС в размере 17990,97 рублей.",
+        "citations": [],
+        "reason": null,
+        "sql": "SELECT ROUND(SUM(vat_amount), 2) FROM registry WHERE seller_inn = '6422580632' AND doc_type IN ('vat_invoice', 'upd') AND date BETWEEN '2025-01-01' AND '2025-12-31'",
+        "sql_columns": [
+          "ROUND(SUM(vat_amount), 2)"
+        ],
+        "sql_rows": [
+          [
+            "17990.97"
+          ]
+        ],
+        "filters": {
+          "query": {
+            "counterparties": [
+              "АО «Ладога»"
+            ],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": [
+              "2025-01-01",
+              "2025-12-31"
+            ],
+            "contract_kinds": []
+          }
+        },
+        "timings": {
+          "sql1_load_s": 0.006,
+          "sql1_prompt_tokens": 1106,
+          "sql1_completion_tokens": 79,
+          "sql_s": 1.14,
+          "generate_s": 0.548,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 211,
+          "llm_completion_tokens": 47,
+          "total_s": 1.688
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": null,
+        "candidates": null
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": null
+      }
+    },
+    {
+      "question": {
+        "id": "Q182",
+        "category": "no_answer",
+        "category_name": "ответа нет в корпусе",
+        "question": "До какого числа действует договор с ООО «Полюс-Ресурс»?",
+        "answer": "В корпусе нет ответа на этот вопрос. Договоров с ООО «Полюс-Ресурс» в корпусе нет.",
+        "keys": [],
+        "route": "none",
+        "sources": [],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "unknown_counterparty",
+        "author": "generator"
+      },
+      "result": {
+        "question": "До какого числа действует договор с ООО «Полюс-Ресурс»?",
+        "route": "rag",
+        "found": false,
+        "answer": "В документах не нашёл.",
+        "citations": [],
+        "reason": "в документах нет контрагента ООО «Полюс-Ресурс»",
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [],
+            "unknown_orgs": [
+              "ООО «Полюс-Ресурс»"
+            ],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": []
+          }
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "total_s": 0.001
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": null
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": null
+      }
+    },
+    {
+      "question": {
+        "id": "Q197",
+        "category": "no_answer",
+        "category_name": "ответа нет в корпусе",
+        "question": "Какой сотрудник контрагента (ФИО, телефон) назначен ответственным за исполнение обязательств в договоре оказания услуг № У-467/24 от 12.01.2024 с ИП Пономарев Геннадий Ярославович?",
+        "answer": "В корпусе нет ответа на этот вопрос. В документах корпуса таких сведений нет.",
+        "keys": [],
+        "route": "none",
+        "sources": [],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [
+          "K-0042"
+        ],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "absent_concept",
+        "author": "generator"
+      },
+      "result": {
+        "question": "Какой сотрудник контрагента (ФИО, телефон) назначен ответственным за исполнение обязательств в договоре оказания услуг № У-467/24 от 12.01.2024 с ИП Пономарев Геннадий Ярославович?",
+        "route": "rag",
+        "found": false,
+        "answer": "В документах не нашёл.",
+        "citations": [],
+        "reason": "в найденных фрагментах ответа нет",
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [
+              "ИП Пономарев Геннадий Ярославович"
+            ],
+            "unknown_orgs": [],
+            "contracts": [
+              {
+                "number": "У-467/24",
+                "date": "2024-01-12"
+              }
+            ],
+            "period": null,
+            "contract_kinds": [
+              "services"
+            ]
+          },
+          "contracts": [
+            "K-0042"
+          ],
+          "documents": 1,
+          "context": [
+            {
+              "chunk_id": "K-0042#preamble",
+              "rrf": 0.03227,
+              "bm25_rank": 1,
+              "vector_rank": 3,
+              "rerank": 0.9334,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0042#req-1",
+              "rrf": 0.03028,
+              "bm25_rank": 12,
+              "vector_rank": 1,
+              "rerank": 0.7668,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0042#1.1",
+              "rrf": 0.03021,
+              "bm25_rank": 11,
+              "vector_rank": 2,
+              "rerank": 0.7346,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0042#3.2",
+              "rrf": 0.03077,
+              "bm25_rank": 5,
+              "vector_rank": 5,
+              "rerank": 0.5017,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0042#10.1",
+              "rrf": 0.02826,
+              "bm25_rank": 15,
+              "vector_rank": 7,
+              "rerank": 0.379,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 0
+        },
+        "timings": {
+          "analyze_s": 0.002,
+          "bm25_s": 0.003,
+          "vector_s": 1.491,
+          "rerank_s": 6.547,
+          "retrieve_s": 8.042,
+          "generate_s": 0.56,
+          "llm_load_s": 0.006,
+          "llm_prompt_tokens": 1192,
+          "llm_completion_tokens": 30,
+          "total_s": 8.604
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0042#preamble",
+            "rrf": 0.03227,
+            "bm25_rank": 1,
+            "vector_rank": 3,
+            "rerank": 0.9334,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#req-1",
+            "rrf": 0.03028,
+            "bm25_rank": 12,
+            "vector_rank": 1,
+            "rerank": 0.7668,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#1.1",
+            "rrf": 0.03021,
+            "bm25_rank": 11,
+            "vector_rank": 2,
+            "rerank": 0.7346,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#3.2",
+            "rrf": 0.03077,
+            "bm25_rank": 5,
+            "vector_rank": 5,
+            "rerank": 0.5017,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#10.1",
+            "rrf": 0.02826,
+            "bm25_rank": 15,
+            "vector_rank": 7,
+            "rerank": 0.379,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#3.1",
+            "rrf": 0.02964,
+            "bm25_rank": 6,
+            "vector_rank": 9,
+            "rerank": 0.3758,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#5.3",
+            "rrf": 0.03033,
+            "bm25_rank": 4,
+            "vector_rank": 8,
+            "rerank": 0.3215,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#6.1",
+            "rrf": 0.02921,
+            "bm25_rank": 7,
+            "vector_rank": 10,
+            "rerank": 0.284,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#1.2",
+            "rrf": 0.03175,
+            "bm25_rank": 2,
+            "vector_rank": 4,
+            "rerank": 0.2719,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#2.1",
+            "rrf": 0.02885,
+            "bm25_rank": 13,
+            "vector_rank": 6,
+            "rerank": 0.2405,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#9.1",
+            "rrf": 0.02957,
+            "bm25_rank": 3,
+            "vector_rank": 13,
+            "rerank": 0.2291,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#2.3",
+            "rrf": 0.02859,
+            "bm25_rank": 8,
+            "vector_rank": 12,
+            "rerank": 0.1995,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#10.2",
+            "rrf": 0.02801,
+            "bm25_rank": 9,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#2.2",
+            "rrf": 0.0276,
+            "bm25_rank": 14,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#8.2",
+            "rrf": 0.02744,
+            "bm25_rank": 10,
+            "vector_rank": 16,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#6.3",
+            "rrf": 0.02565,
+            "bm25_rank": 17,
+            "vector_rank": 19,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#7.2",
+            "rrf": 0.0255,
+            "bm25_rank": 16,
+            "vector_rank": 21,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#5.2",
+            "rrf": 0.02532,
+            "bm25_rank": 20,
+            "vector_rank": 18,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#req-2",
+            "rrf": 0.02524,
+            "bm25_rank": 24,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#5.1",
+            "rrf": 0.02518,
+            "bm25_rank": 22,
+            "vector_rank": 17,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#8.1",
+            "rrf": 0.02473,
+            "bm25_rank": 18,
+            "vector_rank": 24,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#7.1",
+            "rrf": 0.02471,
+            "bm25_rank": 19,
+            "vector_rank": 23,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#6.2",
+            "rrf": 0.02455,
+            "bm25_rank": 23,
+            "vector_rank": 20,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0042#4.1",
+            "rrf": 0.02454,
+            "bm25_rank": 21,
+            "vector_rank": 22,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": null
+      }
+    },
+    {
+      "question": {
+        "id": "Q200",
+        "category": "no_answer",
+        "category_name": "ответа нет в корпусе",
+        "question": "В какие сроки выплачивается премия по итогам года?",
+        "answer": "В корпусе нет ответа на этот вопрос. Во внутренних регламентах этого нет.",
+        "keys": [],
+        "route": "none",
+        "sources": [],
+        "superseded": [],
+        "wrong_answers": [],
+        "doc_ids": [],
+        "registry_rows": [],
+        "sql": null,
+        "sql_detail": null,
+        "expected_value": null,
+        "template": "reg-absent",
+        "author": "generator"
+      },
+      "result": {
+        "question": "В какие сроки выплачивается премия по итогам года?",
+        "route": "rag",
+        "found": false,
+        "answer": "В документах не нашёл.",
+        "citations": [],
+        "reason": "в найденных фрагментах ответа нет",
+        "sql": null,
+        "sql_columns": null,
+        "sql_rows": null,
+        "filters": {
+          "query": {
+            "counterparties": [],
+            "unknown_orgs": [],
+            "contracts": [],
+            "period": null,
+            "contract_kinds": []
+          },
+          "context": [
+            {
+              "chunk_id": "K-0211#2.2",
+              "rrf": 0.01515,
+              "bm25_rank": null,
+              "vector_rank": 6,
+              "rerank": 0.0114,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0101#2.2",
+              "rrf": 0.01613,
+              "bm25_rank": null,
+              "vector_rank": 2,
+              "rerank": 0.0085,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0253#2.2",
+              "rrf": 0.01587,
+              "bm25_rank": null,
+              "vector_rank": 3,
+              "rerank": 0.0048,
+              "added": null
+            },
+            {
+              "chunk_id": "REG-02#2.3",
+              "rrf": 0.01639,
+              "bm25_rank": 1,
+              "vector_rank": null,
+              "rerank": 0.0023,
+              "added": null
+            },
+            {
+              "chunk_id": "K-0204#2.3",
+              "rrf": 0.01613,
+              "bm25_rank": 2,
+              "vector_rank": null,
+              "rerank": 0.0012,
+              "added": null
+            }
+          ],
+          "uncited_sentences": 0
+        },
+        "timings": {
+          "analyze_s": 0.001,
+          "bm25_s": 0.002,
+          "vector_s": 0.301,
+          "rerank_s": 2.82,
+          "retrieve_s": 3.123,
+          "generate_s": 0.514,
+          "llm_load_s": 0.007,
+          "llm_prompt_tokens": 869,
+          "llm_completion_tokens": 19,
+          "total_s": 3.638
+        },
+        "model": "qwen3.5:2b-q4_K_M",
+        "reranker": "BAAI/bge-reranker-v2-m3",
+        "candidates": [
+          {
+            "chunk_id": "K-0211#2.2",
+            "rrf": 0.01515,
+            "bm25_rank": null,
+            "vector_rank": 6,
+            "rerank": 0.0114,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0101#2.2",
+            "rrf": 0.01613,
+            "bm25_rank": null,
+            "vector_rank": 2,
+            "rerank": 0.0085,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0253#2.2",
+            "rrf": 0.01587,
+            "bm25_rank": null,
+            "vector_rank": 3,
+            "rerank": 0.0048,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-02#2.3",
+            "rrf": 0.01639,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "rerank": 0.0023,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0204#2.3",
+            "rrf": 0.01613,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "rerank": 0.0012,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0281#2.3",
+            "rrf": 0.01538,
+            "bm25_rank": 5,
+            "vector_rank": null,
+            "rerank": 0.0011,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#2.3",
+            "rrf": 0.01562,
+            "bm25_rank": 4,
+            "vector_rank": null,
+            "rerank": 0.001,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0008#2.3",
+            "rrf": 0.01515,
+            "bm25_rank": 6,
+            "vector_rank": null,
+            "rerank": 0.0009,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0039#2.3",
+            "rrf": 0.01587,
+            "bm25_rank": 3,
+            "vector_rank": null,
+            "rerank": 0.0008,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0006#2.2",
+            "rrf": 0.01639,
+            "bm25_rank": null,
+            "vector_rank": 1,
+            "rerank": 0.0004,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0237#2.2",
+            "rrf": 0.01538,
+            "bm25_rank": null,
+            "vector_rank": 5,
+            "rerank": 0.0004,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0036#2.2",
+            "rrf": 0.01562,
+            "bm25_rank": null,
+            "vector_rank": 4,
+            "rerank": 0.0003,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0129#2.3",
+            "rrf": 0.01493,
+            "bm25_rank": 7,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0278#2.2",
+            "rrf": 0.01493,
+            "bm25_rank": null,
+            "vector_rank": 7,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0039#2.2",
+            "rrf": 0.01471,
+            "bm25_rank": null,
+            "vector_rank": 8,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0222#2.3",
+            "rrf": 0.01471,
+            "bm25_rank": 8,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0158#2.2",
+            "rrf": 0.01449,
+            "bm25_rank": null,
+            "vector_rank": 9,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "REG-06#2.1",
+            "rrf": 0.01449,
+            "bm25_rank": 9,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0116#2.2",
+            "rrf": 0.01429,
+            "bm25_rank": null,
+            "vector_rank": 10,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0118#3.1",
+            "rrf": 0.01429,
+            "bm25_rank": 10,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0121#2.2",
+            "rrf": 0.01408,
+            "bm25_rank": null,
+            "vector_rank": 11,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0153#3.1",
+            "rrf": 0.01408,
+            "bm25_rank": 11,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0061#2.2",
+            "rrf": 0.01389,
+            "bm25_rank": null,
+            "vector_rank": 12,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0220#3.1",
+            "rrf": 0.01389,
+            "bm25_rank": 12,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0021#3.1",
+            "rrf": 0.0137,
+            "bm25_rank": 13,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0139#2.2",
+            "rrf": 0.0137,
+            "bm25_rank": null,
+            "vector_rank": 13,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0081#2.2",
+            "rrf": 0.01351,
+            "bm25_rank": null,
+            "vector_rank": 14,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0289#3.1",
+            "rrf": 0.01351,
+            "bm25_rank": 14,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0006#3.1",
+            "rrf": 0.01333,
+            "bm25_rank": 15,
+            "vector_rank": null,
+            "rerank": null,
+            "added": null
+          },
+          {
+            "chunk_id": "K-0169#2.2",
+            "rrf": 0.01333,
+            "bm25_rank": null,
+            "vector_rank": 15,
+            "rerank": null,
+            "added": null
+          }
+        ]
+      },
+      "verdict": {
+        "route_ok": true,
+        "citations_ok": true,
+        "keys_ok": null
+      }
+    }
+  ]
+}

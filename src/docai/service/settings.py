@@ -29,6 +29,11 @@ class ServiceSettings(BaseModel):
     exchange_enabled: bool = True
     exchange_root: Path | None = None
     exchange_poll_s: float = 0.5
+    # RAG (P19): вопросы по договорам и реестру, POST /v1/rag/ask. Конвейер и модели CPU
+    # загружаются при первом вопросе; rag_warm_up — сразу при старте сервиса, в фоне.
+    rag_enabled: bool = True
+    rag_config: Path | None = None
+    rag_warm_up: bool = False
 
     @property
     def exchange_dir(self) -> Path:

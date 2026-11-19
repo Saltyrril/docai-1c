@@ -1,0 +1,21 @@
+# P19: приёмка RAG-конвейера на 20 вопросах P18 (цитаты, время, VRAM).
+# Запуск (нужны индекс и Ollama): uv run python reports/2026-11-19_p19_rag_smoke/run.py
+seed: 2027
+# Независимая выборка (--holdout): другой seed, без вопросов основной и сравнения реранкеров.
+holdout_seed: 2028
+pipeline_config: configs/rag/pipeline.yaml
+questions: data/rag/questions.jsonl
+fragments: data/rag/fragments.jsonl
+# Вопросы сравнения реранкеров в выборку не попадают.
+exclude_from: reports/2026-11-19_p19_rerankers/results.json
+per_category:
+  simple_fact: 3
+  paraphrase: 3
+  multi_condition: 3
+  amendment_override: 3
+  comparison: 2
+  registry_aggregate: 3
+  no_answer: 3
+# Критерии готовности шага.
+max_seconds: 15
+max_vram_gib: 3.8
