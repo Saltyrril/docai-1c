@@ -1,0 +1,27 @@
+# SFT-датасет для дообучения Qwen3.5-2B в Google Colab (шаг P21, D77). Запуск:
+#   uv run docai finetune build --config configs/finetune/sft_v1.yaml
+# Результат: data/finetune/sft_v1/ и архив data/finetune/sft_v1.zip — его загрузить в Google Drive.
+name: sft_v1
+seed: 42
+dataset: data/datasets/v1        # датасет P6; train → train, val → val, test не используется
+out: data/finetune/sft_v1
+n_train: 1200                    # примеров (страниц или текстов); подобрано под бесплатную сессию Colab (docs/FINETUNE.md)
+n_val: 100                       # в ноутбуке для eval loss берутся первые 48
+mix:                             # доли видов примеров; каждый документ — одним видом
+  text: 0.25                     # текстовый слой PDF, промпт text_v3 (основной путь, D48)
+  clean: 0.25                    # картинки страниц, промпт vision_v2
+  scan: 0.25
+  photo: 0.25
+# Как в configs/extract.yaml: обучение видит те же промпты, размер картинки и вид текста.
+vision_prompt: vision_v2
+text_prompt: text_v3
+max_image_side: 1280
+max_text_chars: 12000
+text_tables: grid
+feedback:
+  enabled: true
+  data_dir: data/service         # база и загрузки сервиса P14
+  synthetic_dirs: [data/synth, data/demo]   # где ещё лежит синтетика проекта (кроме датасета)
+  include_unknown: false         # правки к файлам не из синтетики могут быть реальными документами — не в Drive
+archive: true
+train_config: configs/finetune/train_v1.yaml   # едет в архиве как train_config.yaml

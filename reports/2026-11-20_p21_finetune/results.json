@@ -1,0 +1,144 @@
+{
+  "status": "dataset_built_training_not_run",
+  "seed": 42,
+  "dataset": {
+    "train": {
+      "examples": 1200,
+      "documents": 1102,
+      "by_kind": {
+        "clean": 301,
+        "photo": 300,
+        "scan": 299,
+        "text": 300
+      },
+      "by_doc_type": {
+        "act": 166,
+        "bill": 251,
+        "torg12": 238,
+        "upd": 367,
+        "vat_invoice": 178
+      },
+      "multipage_parts": 196,
+      "with_generator_errors": 68,
+      "from_feedback": 0,
+      "target_chars_mean": 1629.1,
+      "target_chars_max": 5903,
+      "prompt_chars_max": 8483
+    },
+    "val": {
+      "examples": 100,
+      "documents": 92,
+      "by_kind": {
+        "clean": 25,
+        "photo": 25,
+        "scan": 25,
+        "text": 25
+      },
+      "by_doc_type": {
+        "act": 11,
+        "bill": 23,
+        "torg12": 18,
+        "upd": 39,
+        "vat_invoice": 9
+      },
+      "multipage_parts": 16,
+      "with_generator_errors": 7,
+      "from_feedback": 0,
+      "target_chars_mean": 1551.8,
+      "target_chars_max": 4886,
+      "prompt_chars_max": 7436
+    }
+  },
+  "feedback": {
+    "jobs_with_feedback": 17,
+    "by_status": {
+      "synthetic": 2,
+      "unknown": 7,
+      "xml": 8
+    },
+    "include_unknown": false
+  },
+  "measurements": {
+    "chars_per_token_sample": [
+      2.49,
+      2.49,
+      2.54,
+      2.41,
+      2.49,
+      2.42,
+      2.37,
+      2.51,
+      2.47,
+      2.83,
+      2.4,
+      2.48
+    ],
+    "ollama_image_tokens_1280x905": 1122,
+    "vision_prompt_tokens": 523,
+    "estimated_tokens_per_example": {
+      "text": 2442,
+      "clean": 2399,
+      "scan": 2367,
+      "photo": 2402
+    },
+    "estimated_tokens_epoch": 2882796,
+    "build_seconds": 101,
+    "archive_mib": 682
+  },
+  "ollama_path_dryrun_base_weights": {
+    "ollama_version": "0.40.16",
+    "valid_json": "5/5",
+    "rows": [
+      {
+        "file": "00041_act.pdf",
+        "route": "text (text)",
+        "valid_json": true,
+        "doc_type_ok": true,
+        "number_ok": true,
+        "date_ok": true,
+        "seconds": 57.182,
+        "errors": []
+      },
+      {
+        "file": "00003_bill.pdf",
+        "route": "text (text)",
+        "valid_json": true,
+        "doc_type_ok": true,
+        "number_ok": true,
+        "date_ok": true,
+        "seconds": 22.06,
+        "errors": []
+      },
+      {
+        "file": "00020_torg12_p1_clean_200dpi.png",
+        "route": "vision (clean)",
+        "valid_json": true,
+        "doc_type_ok": true,
+        "number_ok": true,
+        "date_ok": true,
+        "seconds": 23.42,
+        "errors": []
+      },
+      {
+        "file": "00031_upd_p1_scan_200dpi.jpg",
+        "route": "vision (scan)",
+        "valid_json": true,
+        "doc_type_ok": true,
+        "number_ok": true,
+        "date_ok": true,
+        "seconds": 32.817,
+        "errors": []
+      },
+      {
+        "file": "00033_vat_invoice_p1_photo_200dpi.jpg",
+        "route": "vision (photo)",
+        "valid_json": true,
+        "doc_type_ok": true,
+        "number_ok": true,
+        "date_ok": true,
+        "seconds": 29.526,
+        "errors": []
+      }
+    ]
+  }
+}

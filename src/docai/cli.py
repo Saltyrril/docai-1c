@@ -10,6 +10,7 @@ from docai.edo.cli import app as edo_app
 from docai.eval.cli import eval_command, eval_compare_command, eval_errors_command
 from docai.eval.matrix_cli import app as matrix_app
 from docai.extract.cli import extract
+from docai.finetune.cli import app as finetune_app
 from docai.labeling.cli import app as label_app
 from docai.rag.ask_cli import ask_command, index_command
 from docai.rag.cli import app as rag_app
@@ -26,6 +27,7 @@ app.add_typer(edo_app, name="edo")
 app.add_typer(label_app, name="label")
 app.add_typer(matrix_app, name="eval-matrix")
 app.add_typer(rag_app, name="rag")
+app.add_typer(finetune_app, name="finetune")
 rag_app.command(name="index")(index_command)
 rag_app.command(name="eval")(rag_eval_command)
 app.command(name="render")(render)

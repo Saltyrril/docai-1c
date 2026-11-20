@@ -1,0 +1,16 @@
+# docai-qwen35-2b-ft: Qwen3.5-2B + LoRA на синтетике docai-1c (шаг P21). GGUF Q8_0 + проектор картинок.
+# Такой же файл ноутбук кладёт рядом с GGUF (export/docai-qwen35-2b-ft/Modelfile).
+# Подключение: .\scripts\finetune_install.ps1 -Dir <папка с файлами> (или ollama create в этой папке).
+# Устройство — как у официальной qwen3.5:2b-q8_0: два FROM (модель и mmproj), шаблон чата
+# задаёт встроенный рендерер Ollama qwen3.5 (тот же формат, что шаблон Hugging Face при обучении).
+FROM ./docai-qwen35-2b-ft.Q8_0.gguf
+FROM ./docai-qwen35-2b-ft.mmproj-f16.gguf
+TEMPLATE {{ .Prompt }}
+RENDERER qwen3.5
+PARSER qwen3.5
+PARAMETER temperature 0
+PARAMETER top_k 20
+PARAMETER top_p 0.95
+PARAMETER presence_penalty 0
+PARAMETER num_ctx 8192
+LICENSE """Apache-2.0: базовая модель Qwen3.5-2B, https://huggingface.co/Qwen/Qwen3.5-2B"""

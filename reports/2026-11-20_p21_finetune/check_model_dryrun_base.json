@@ -1,0 +1,61 @@
+{
+  "model": "docai-ft-dryrun",
+  "capabilities": [
+    "completion",
+    "vision",
+    "tools",
+    "thinking"
+  ],
+  "rows": [
+    {
+      "file": "00041_act.pdf",
+      "route": "text (text)",
+      "valid_json": true,
+      "doc_type_ok": true,
+      "number_ok": true,
+      "date_ok": true,
+      "seconds": 57.182,
+      "errors": []
+    },
+    {
+      "file": "00003_bill.pdf",
+      "route": "text (text)",
+      "valid_json": true,
+      "doc_type_ok": true,
+      "number_ok": true,
+      "date_ok": true,
+      "seconds": 22.06,
+      "errors": []
+    },
+    {
+      "file": "00020_torg12_p1_clean_200dpi.png",
+      "route": "vision (clean)",
+      "valid_json": true,
+      "doc_type_ok": true,
+      "number_ok": true,
+      "date_ok": true,
+      "seconds": 23.42,
+      "errors": []
+    },
+    {
+      "file": "00031_upd_p1_scan_200dpi.jpg",
+      "route": "vision (scan)",
+      "valid_json": true,
+      "doc_type_ok": true,
+      "number_ok": true,
+      "date_ok": true,
+      "seconds": 32.817,
+      "errors": []
+    },
+    {
+      "file": "00033_vat_invoice_p1_photo_200dpi.jpg",
+      "route": "vision (photo)",
+      "valid_json": true,
+      "doc_type_ok": true,
+      "number_ok": true,
+      "date_ok": true,
+      "seconds": 29.526,
+      "errors": []
+    }
+  ]
+}

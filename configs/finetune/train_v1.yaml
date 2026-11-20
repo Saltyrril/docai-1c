@@ -1,0 +1,45 @@
+# Параметры дообучения Qwen3.5-2B в Google Colab (шаг P21, D77).
+# Файл попадает в архив датасета (train_config.yaml), ноутбук notebooks/finetune_qwen35_2b.ipynb
+# берёт параметры из него; переопределить можно в ячейке «Настройки» (OVERRIDES).
+run_name: qwen35-2b-sft_v1
+seed: 42
+
+model:
+  base: unsloth/Qwen3.5-2B      # исходные веса bf16 (Apache-2.0); не QLoRA: Unsloth не советует 4 бита для Qwen3.5
+  load_in_4bit: false           # 16-битная LoRA; на T4 нет bf16 — Unsloth считает в fp16
+  max_seq_length: 6144          # самый длинный пример ≈ 5 900 токенов (текстовый слой 25 строк); длиннее — отбрасываются, не обрезаются
+
+lora:
+  r: 16                         # ранг: 16 — умолчание Unsloth; задача узкая (одна схема JSON), больше не нужно
+  alpha: 16                     # alpha = r — масштаб 1, как советует Unsloth
+  dropout: 0.0                  # с 0 Unsloth быстрее; 1 эпоха — переобучиться не успевает
+  finetune_vision_layers: false # энкодер картинок не трогаем: mmproj остаётся как у базовой модели (D77)
+  finetune_language_layers: true
+  finetune_attention_modules: true
+  finetune_mlp_modules: true
+
+train:
+  batch_size: 1                 # примеры по 1,5–6 тыс. токенов; 1 — меньше памяти и нет паддинга
+  grad_accum: 8                 # эффективный батч 8
+  max_steps: 150                # 1200 примеров / 8 = 150 шагов = 1 эпоха
+  learning_rate: 1.0e-4         # вдвое ниже, чем в демо Unsloth (2e-4 на 30 шагов): 150 шагов, узкая задача
+  lr_scheduler: cosine
+  warmup_steps: 10
+  weight_decay: 0.01
+  optim: adamw_8bit             # состояние оптимизатора в 8 бит — меньше памяти; на качество почти не влияет
+  gradient_checkpointing: unsloth  # пересчёт активаций вместо хранения: длинные примеры помещаются в 15 ГБ T4
+  save_steps: 10                # чекпоинт в Google Drive каждые 10 шагов (~5–10 мин)
+  save_total_limit: 3
+  eval_examples: 48             # val loss на первых 48 примерах val.jsonl
+  eval_steps: 50
+  time_budget_min: 150          # в одной сессии учиться не дольше: потом чекпоинт и остановка, продолжение — в следующей
+
+data:
+  train_only_on_responses: true # loss только по ответу модели, не по промпту и картинке
+  n_train: null                 # null — все примеры train.jsonl; число — первые N
+  drop_text_examples: false     # true — только картинки (запасной вариант, если коллатор не примет примеры без картинки)
+
+export:
+  name: docai-qwen35-2b-ft      # имя файлов и модели в Ollama
+  model_outtype: q8_0           # GGUF основной модели
+  mmproj_outtype: f16           # проектор картинок

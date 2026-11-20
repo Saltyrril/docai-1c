@@ -1,0 +1,98 @@
+{
+  "name": "sft_v1",
+  "config": {
+    "name": "sft_v1",
+    "seed": 42,
+    "dataset": "data\\datasets\\v1",
+    "out": "data\\finetune\\sft_v1",
+    "n_train": 1200,
+    "n_val": 100,
+    "mix": {
+      "text": 0.25,
+      "clean": 0.25,
+      "scan": 0.25,
+      "photo": 0.25
+    },
+    "vision_prompt": "vision_v2",
+    "text_prompt": "text_v3",
+    "max_image_side": 1280,
+    "max_text_chars": 12000,
+    "text_tables": "grid",
+    "feedback": {
+      "enabled": true,
+      "data_dir": "data\\service",
+      "synthetic_dirs": [
+        "data\\synth",
+        "data\\demo"
+      ],
+      "include_unknown": false
+    },
+    "archive": true,
+    "train_config": "configs\\finetune\\train_v1.yaml"
+  },
+  "git_commit": "512625a",
+  "counts": {
+    "train": {
+      "examples": 1200,
+      "documents": 1102,
+      "by_kind": {
+        "clean": 301,
+        "photo": 300,
+        "scan": 299,
+        "text": 300
+      },
+      "by_doc_type": {
+        "act": 166,
+        "bill": 251,
+        "torg12": 238,
+        "upd": 367,
+        "vat_invoice": 178
+      },
+      "multipage_parts": 196,
+      "with_generator_errors": 68,
+      "from_feedback": 0,
+      "target_chars_mean": 1629.1,
+      "target_chars_max": 5903,
+      "prompt_chars_max": 8483
+    },
+    "val": {
+      "examples": 100,
+      "documents": 92,
+      "by_kind": {
+        "clean": 25,
+        "photo": 25,
+        "scan": 25,
+        "text": 25
+      },
+      "by_doc_type": {
+        "act": 11,
+        "bill": 23,
+        "torg12": 18,
+        "upd": 39,
+        "vat_invoice": 9
+      },
+      "multipage_parts": 16,
+      "with_generator_errors": 7,
+      "from_feedback": 0,
+      "target_chars_mean": 1551.8,
+      "target_chars_max": 4886,
+      "prompt_chars_max": 7436
+    }
+  },
+  "feedback": {
+    "enabled": true,
+    "jobs_with_feedback": 17,
+    "by_status": {
+      "synthetic": 9,
+      "xml": 8
+    },
+    "changed_fields_total": 3,
+    "include_unknown": false,
+    "synthetic_matches": [
+      "data/datasets/v1/images/00002_upd_p1_scan_200dpi.jpg",
+      "data/synth/pdf/00001_bill.pdf",
+      "data/synth/pdf/00002_upd.pdf"
+    ]
+  },
+  "format": "messages (UnslothVisionDataCollator); image — путь относительно папки"
+}
