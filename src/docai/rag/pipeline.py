@@ -144,6 +144,10 @@ class RagPipeline:
             self._load_reranker = False
         return self._reranker
 
+    def share_index(self, index: RagIndex) -> None:
+        """Взять уже загруженный индекс (оценка гоняет несколько конвейеров на одном индексе)."""
+        self._index = index
+
     def warm_up(self) -> None:
         """Загрузить модели CPU заранее (иначе первый вопрос дольше на 10–20 с)."""
         with self._lock:
@@ -160,7 +164,7 @@ class RagPipeline:
             raise ValueError("пустой вопрос")
         with self._lock:
             started = time.perf_counter()
-            route = route_question(question)
+            route = route_question(question) if self.config.use_router else "rag"
             if route == "sql" and self.registry_db is not None:
                 result = self._ask_sql(question)
             else:
@@ -195,7 +199,7 @@ class RagPipeline:
         result.filters = {"query": info.as_dict()}
         timings["analyze_s"] = round(time.perf_counter() - started, 3)
 
-        reason = self._missing(info)
+        reason = self.missing_reason(info)
         if reason is not None:
             result.reason = reason
             return result
@@ -227,7 +231,7 @@ class RagPipeline:
             result.filters["uncited_sentences"] = parsed.uncited_sentences
         return result
 
-    def _missing(self, info: QueryInfo) -> str | None:
+    def missing_reason(self, info: QueryInfo) -> str | None:
         """Названный в вопросе контрагент или договор отсутствует в корпусе — ответа нет."""
         if info.unknown_orgs and not info.counterparties:
             return "в документах нет контрагента " + ", ".join(info.unknown_orgs)

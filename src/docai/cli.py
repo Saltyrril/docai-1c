@@ -13,6 +13,7 @@ from docai.extract.cli import extract
 from docai.labeling.cli import app as label_app
 from docai.rag.ask_cli import ask_command, index_command
 from docai.rag.cli import app as rag_app
+from docai.rag.eval_cli import eval_command as rag_eval_command
 from docai.render.cli import render
 from docai.service.cli import serve
 from docai.synth.cli import app as synth_app
@@ -26,6 +27,7 @@ app.add_typer(label_app, name="label")
 app.add_typer(matrix_app, name="eval-matrix")
 app.add_typer(rag_app, name="rag")
 rag_app.command(name="index")(index_command)
+rag_app.command(name="eval")(rag_eval_command)
 app.command(name="render")(render)
 app.command(name="augment")(augment)
 app.command(name="extract")(extract)

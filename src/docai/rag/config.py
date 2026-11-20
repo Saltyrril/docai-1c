@@ -51,6 +51,8 @@ class RerankerConfig(BaseModel):
 class RetrievalConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    # Какие поиски используются: оба с RRF (умолчание) или один из них — для абляций P20.
+    mode: Literal["hybrid", "bm25", "vector"] = "hybrid"
     bm25_top_k: int = 30
     vector_top_k: int = 30
     rrf_k: int = 60
@@ -95,6 +97,8 @@ class RagConfig(BaseModel):
     index_dir: Path = Path("data/rag_index")
     # «Сегодня» для вопросов «за этот год», «последний документ» (дата набора P18, D64).
     today: str = "2026-11-19"
+    # Маршрутизатор «агрегат по реестру → SQL». Выключен — всё идёт в RAG (абляция P20).
+    use_router: bool = True
     max_chunk_chars: int = 1200
     our_company: OurCompany = Field(default_factory=OurCompany)
     embedding: EmbeddingConfig = Field(default_factory=EmbeddingConfig)

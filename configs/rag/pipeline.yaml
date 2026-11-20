@@ -5,6 +5,7 @@ corpus_dir: data/rag/corpus          # договоры, доп. соглаше�
 registry_csv: data/rag/registry.csv  # реестр первичных документов → SQLite для текста-в-SQL
 index_dir: data/rag_index            # индекс: куски, леммы, Chroma, registry.sqlite
 today: "2026-11-19"                  # «сегодня» набора P18 (D64)
+use_router: true                     # false: все вопросы в RAG, без SQL по реестру (абляция P20)
 max_chunk_chars: 1200                # пункт длиннее режется по предложениям
 our_company:
   names: ["АО «Тайга-Строй»"]
@@ -23,6 +24,7 @@ reranker:                            # на CPU; выбор — D67
   prefix_cache: true                 # Qwen3: префикс «инструкция + вопрос» считается один раз
   instruction: "Given a question in Russian about company contracts or internal regulations, judge whether the clause answers it"
 retrieval:
+  mode: hybrid                        # hybrid | bm25 | vector (абляция P20)
   bm25_top_k: 30
   vector_top_k: 30
   rrf_k: 60

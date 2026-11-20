@@ -182,16 +182,21 @@ class Retriever:
         timings: dict[str, float] = {}
         allowed, filters = self.index.allowed(info) if cfg.use_filters else (None, {})
 
+        # mode ≠ hybrid — абляция: второй поиск не запускается, список «слияния» один.
+        bm25: list[int] = []
+        vector: list[int] = []
         started = time.perf_counter()
-        bm25 = [i for i, _ in self.index.bm25.search(lemmas(question), cfg.bm25_top_k, allowed)]
+        if cfg.mode != "vector":
+            bm25 = [i for i, _ in self.index.bm25.search(lemmas(question), cfg.bm25_top_k, allowed)]
         timings["bm25_s"] = time.perf_counter() - started
 
         started = time.perf_counter()
-        vector = self.vector_search(question, allowed, cfg.vector_top_k)
+        if cfg.mode != "bm25":
+            vector = self.vector_search(question, allowed, cfg.vector_top_k)
         timings["vector_s"] = time.perf_counter() - started
 
         bm25_ranks, vector_ranks = _rank_map(bm25), _rank_map(vector)
-        fused = rrf([bm25, vector], k=cfg.rrf_k)
+        fused = rrf([ranking for ranking in (bm25, vector) if ranking], k=cfg.rrf_k)
         hits = [
             Hit(self.index.chunks[i], score, bm25_ranks.get(i), vector_ranks.get(i))
             for i, score in fused
