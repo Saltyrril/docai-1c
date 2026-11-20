@@ -4,11 +4,11 @@ import json
 import shutil
 import subprocess
 import urllib.error
-import urllib.request
 from collections.abc import Callable
 from typing import Any
 
 from docai.extract.config import ExtractConfig
+from docai.extract.ollama import urlopen
 from docai.service.models import GpuHealth, OllamaHealth
 
 HealthProbe = Callable[[], tuple[OllamaHealth, GpuHealth]]
@@ -17,7 +17,7 @@ _TIMEOUT_S = 2.0
 
 
 def _get_json(url: str) -> dict[str, Any]:
-    with urllib.request.urlopen(url, timeout=_TIMEOUT_S) as response:
+    with urlopen(url, timeout=_TIMEOUT_S) as response:
         return json.loads(response.read())
 
 

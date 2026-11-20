@@ -87,7 +87,7 @@ class BodyLimitMiddleware:
     async def _reject(self, send: Send) -> None:
         body = json.dumps({"detail": TOO_LARGE}, ensure_ascii=False).encode()
         headers = [
-            (b"content-type", b"application/json"),
+            (b"content-type", b"application/json; charset=utf-8"),
             (b"content-length", str(len(body)).encode()),
             (b"connection", b"close"),
         ]
@@ -110,6 +110,34 @@ def default_rag_factory(settings: ServiceSettings) -> RagFactory:
         return RagPipeline(load_rag_config(settings.rag_config))
 
     return make
+
+
+class Utf8JsonMiddleware:
+    """Дописывает `charset=utf-8` к `application/json` во всех ответах, включая ошибки.
+
+    Без него Windows PowerShell 5.1 (`Invoke-RestMethod`) читает тело как ISO-8859-1 и
+    показывает кириллицу кракозябрами (D75). JSON и так всегда в UTF-8 (RFC 8259).
+    """
+
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        async def send_with_charset(message: Message) -> None:
+            if message["type"] == "http.response.start":
+                message["headers"] = [
+                    (k, b"application/json; charset=utf-8")
+                    if k.lower() == b"content-type" and v == b"application/json"
+                    else (k, v)
+                    for k, v in message.get("headers", [])
+                ]
+            await send(message)
+
+        await self.app(scope, receive, send_with_charset)
 
 
 def detect_upload(head: bytes) -> tuple[InputKind, str]:
@@ -281,6 +309,7 @@ def create_app(
     app.state.exchange = exchange
     app.add_middleware(BodyLimitMiddleware, max_bytes=settings.max_upload_bytes + _BODY_OVERHEAD)
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts)
+    app.add_middleware(Utf8JsonMiddleware)
 
     def get_row(job_id: str) -> JobRow:
         row = store.get_job(job_id)

@@ -52,6 +52,7 @@ from docai.eval.sample import (
     select_real_items,
 )
 from docai.extract import ExtractConfig, Mode
+from docai.extract.ollama import urlopen
 
 log = logging.getLogger("docai.eval")
 
@@ -238,7 +239,7 @@ def _api(url: str, path: str, body: dict | None = None, timeout: float = 900) ->
         url.rstrip("/") + path, data=data, headers={"Content-Type": "application/json"}
     )
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
+        with urlopen(request, timeout=timeout) as response:
             return json.loads(response.read().decode("utf-8"))
     except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
         raise RuntimeError(

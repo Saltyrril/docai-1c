@@ -712,9 +712,13 @@ def test_rag_endpoint(mini: RagConfig, tmp_path: Path) -> None:
     with TestClient(app, base_url="http://127.0.0.1") as client:
         response = client.post("/v1/rag/ask", json={"question": "Какая арендная плата у Орлова?"})
         assert response.status_code == 200
+        # Кодировка в заголовке: иначе Windows PowerShell 5.1 читает кириллицу как Latin-1.
+        assert response.headers["content-type"] == "application/json; charset=utf-8"
         body = response.json()
         assert body["found"] and body["citations"][0]["fragment_id"] == "K-0002#1.1"
-        assert client.post("/v1/rag/ask", json={"question": ""}).status_code == 422
+        invalid = client.post("/v1/rag/ask", json={"question": ""})
+        assert invalid.status_code == 422
+        assert invalid.headers["content-type"] == "application/json; charset=utf-8"
 
 
 def test_rag_endpoint_errors(tmp_path: Path) -> None:
@@ -728,6 +732,7 @@ def test_rag_endpoint_errors(tmp_path: Path) -> None:
     with TestClient(app, base_url="http://127.0.0.1") as client:
         response = client.post("/v1/rag/ask", json={"question": "Срок оплаты?"})
         assert response.status_code == 503 and "индекс" in response.json()["detail"]
+        assert response.headers["content-type"] == "application/json; charset=utf-8"
     build_index(config, FakeEmbedder)
     app = create_app(
         settings,
@@ -795,3 +800,34 @@ def test_stratified_is_deterministic() -> None:
     assert first == stratified(questions, {"a": 3, "b": 2}, seed=1)
     assert len(first) == 5
     assert not {q["id"] for q in stratified(questions, {"a": 3}, 1, exclude=["Q1"])} & {"Q1"}
+
+
+# --- Прокси -------------------------------------------------------------------------------
+
+
+def test_local_urls_bypass_system_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Запрос к 127.0.0.1 не уходит на прокси, даже если NO_PROXY не задан (D74)."""
+    import http.server
+    import threading
+
+    from docai.extract.ollama import urlopen
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self) -> None:
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b'{"version": "test"}')
+
+        def log_message(self, *args: object) -> None:
+            pass
+
+    server = http.server.HTTPServer(("127.0.0.1", 0), Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    for name in ("NO_PROXY", "no_proxy"):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("HTTP_PROXY", "http://127.0.0.1:9")  # закрытый порт: через прокси — ошибка
+    try:
+        with urlopen(f"http://127.0.0.1:{server.server_port}/api/version", timeout=5) as response:
+            assert json.loads(response.read()) == {"version": "test"}
+    finally:
+        server.shutdown()

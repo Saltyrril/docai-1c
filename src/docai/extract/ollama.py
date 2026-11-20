@@ -2,12 +2,26 @@
 
 import json
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any
 
 from docai.extract.config import ExtractConfig
+
+_LOOPBACK = {"127.0.0.1", "localhost", "::1"}
+# Без прокси: на Windows urllib берёт системный прокси из реестра, а исключение «<local>»
+# действует только на имена без точки — запрос к 127.0.0.1 уходил на прокси (502, D74).
+_DIRECT = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+
+def urlopen(request: urllib.request.Request | str, timeout: float) -> Any:
+    """Открыть URL; к своему компьютеру (Ollama, сервис) — всегда напрямую, мимо прокси."""
+    url = request.full_url if isinstance(request, urllib.request.Request) else request
+    if urllib.parse.urlsplit(url).hostname in _LOOPBACK:
+        return _DIRECT.open(request, timeout=timeout)
+    return urllib.request.urlopen(request, timeout=timeout)
 
 
 class OllamaError(RuntimeError):
@@ -68,7 +82,7 @@ def chat(config: ExtractConfig, body: dict[str, Any]) -> ChatResult:
         headers={"Content-Type": "application/json; charset=utf-8"},
     )
     try:
-        with urllib.request.urlopen(request, timeout=config.timeout_s) as response:
+        with urlopen(request, timeout=config.timeout_s) as response:
             data = json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
